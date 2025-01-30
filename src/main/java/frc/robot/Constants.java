@@ -71,8 +71,12 @@ public final class Constants {
   public static final double swerveAutoTurnMaxSpeed = 1.0; //the max speed Swerve is allowed to turn at when turning itself
   public static final double swerveAutoTurnDeadZone = 2.0; //if swerve is pointing within this many degrees of where it wants to point, it stops rotating.
   public static final double swerveAngleVariation = 1.0; //swerve has to be within this many degrees of the right direction for the shooter to shoot
-  //Swerve Drive To Constants
+  //Swerve Drive To/Auto Constants
+  public static final double pathPlannerPMult = 1.;
+  public static final double pathPlannerAngularPMult = 1.;
   public static final double swerveDriveToPMult = 1.0;
+  public static final double robotMaxVelocity = 7.0; //measured max velocity of robot when going straight with max input
+  public static final double robotMaxRotationalVelocity = 8.0; //max rotational velocity of robot in radians
   public static final double swerveDriveToDMult = 0.14;
   public static final double swerveDriveToDeadZone = 0.03; //if the robot is within this many meters of the target position, it stops moving.
   public static final double swerveSquareDriveToDeadZone = 0.03;

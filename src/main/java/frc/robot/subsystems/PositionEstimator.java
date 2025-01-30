@@ -95,6 +95,10 @@ public class PositionEstimator extends SubsystemBase {
     return targetCheck && ((result1.getTargets().size() >= 2 && distance < 5) || (ambiguity1 < 0.05 && ambiguity1 > 0 && distance < 3));
   }
 
+  public static void ResetAngle() {
+    Constants.gyro.setYaw(180);
+  }
+  
   public static Boolean camCheck2() {
     //var result2 = camera2.getLatestResult();
     double distance = 100;

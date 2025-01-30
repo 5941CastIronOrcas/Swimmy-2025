@@ -5,6 +5,9 @@
 package frc.robot;
 
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -24,6 +27,10 @@ import frc.robot.subsystems.SwerveSubsystem;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private static double oldTime = 0.;
+  private static double newTime = 0.;
+  private static double deltaTime = 0.;
+  public static PathPlannerAuto auto;
   public static Boolean isRedAlliance = true;
   public static Boolean isBlueAlliance = false;
   public static boolean robotLimp = true;
@@ -39,11 +46,13 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    auto = new PathPlannerAuto("Auto 1");
     Arduino.ArduinoConnect();
     Constants.climber1.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
     Constants.climber2.getEncoder().setPosition(0);
@@ -60,6 +69,7 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+  
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -70,7 +80,13 @@ public class Robot extends TimedRobot {
     isRedAlliance = DriverStation.getAlliance().toString().equals("Optional[Red]");
     isBlueAlliance = DriverStation.getAlliance().toString().equals("Optional[Blue]");
     selectedAutoSequence = (int)DriverDisplay.AutoSequence.getInteger(Constants.defaultAutoSequence);
-    
+    oldTime = newTime;
+    newTime = Timer.getFPGATimestamp();
+    deltaTime = newTime-oldTime;
+  }
+
+  public static double DeltaTime() {
+    return deltaTime;
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -300,8 +316,6 @@ public class Robot extends TimedRobot {
         framesNoteNotPresent = 0;
       }
     }*/
-    
-    
   }  
   public static boolean noteIgnoranceGetInpt(String inptStr) {
     return inptStr.toLowerCase().equals("n") || inptStr.toLowerCase().equals("no") || inptStr.toLowerCase().equals("none") || inptStr.toLowerCase().equals("0");
