@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "reef 1 to coral station"
+            "pathName": "reef 1 to bottom coral station"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "reef 5 to coral station"
+            "pathName": "reef 5 to bottom coral station"
           }
         }
       ]
