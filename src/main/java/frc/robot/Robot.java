@@ -5,12 +5,25 @@
 package frc.robot;
 
 
+import java.net.http.HttpClient;
+import java.util.Map;
+
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Arduino;
@@ -50,9 +63,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+
+    //camserver
+    CameraServer.startAutomaticCapture();
+    //final HttpCamera camera = new HttpCamera("front camera", "camserver.local:5800/?action=stream");
+    Shuffleboard.getTab("SmartDashboard").addCamera("Camera Stream", "front camera", "mjpeg:camserver.local:5800/?action=stream").withProperties(Map.of("showControls", false)).withPosition(0, 0).withSize(3, 3);  
+
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    auto = new PathPlannerAuto("Auto 1");
+    //auto = new PathPlannerAuto("Auto 1");
     Arduino.ArduinoConnect();
     Constants.climber1.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
     Constants.climber2.getEncoder().setPosition(0);
