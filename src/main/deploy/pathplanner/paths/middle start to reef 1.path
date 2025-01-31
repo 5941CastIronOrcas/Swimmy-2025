@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.191005247956314,
-        "y": 3.988255958719702
+        "x": 6.15277803264399,
+        "y": 4.057923060227964
       },
       "isLocked": true,
       "linkedName": null
@@ -20,11 +20,11 @@
         "y": 4.005236486487925
       },
       "prevControl": {
-        "x": 7.787569580942688,
-        "y": 3.9312169381600217
+        "x": 7.7499081562612835,
+        "y": 3.9961141702343785
       },
       "nextControl": null,
-      "isLocked": false,
+      "isLocked": true,
       "linkedName": "reef 1"
     }
   ],
