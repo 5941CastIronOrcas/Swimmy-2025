@@ -250,9 +250,7 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.armHasNote.setBoolean(ArmSubsystem.hasNote);
     DriverDisplay.motorPower1.setDouble(Constants.elevator1.getOutputCurrent());
     DriverDisplay.motorPower2.setDouble(Constants.elevator2.getOutputCurrent());
-    DriverDisplay.range.setDouble(PositionEstimator.distToSpeaker());
     DriverDisplay.IntakeTotalPower.setDouble(Constants.coralIntake.getOutputCurrent());
-    DriverDisplay.atSpeakerAngle.setBoolean(PositionEstimator.atSpeakerAngle());
     DriverDisplay.correctArmAngle.setBoolean(ArmSubsystem.correctArmAngle);
     DriverDisplay.shooterFast.setBoolean(ArmSubsystem.shooterFast);
     DriverDisplay.inRange.setBoolean(ArmSubsystem.inRange);

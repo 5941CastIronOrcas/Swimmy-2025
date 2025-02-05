@@ -13,18 +13,18 @@ import frc.robot.Constants;
 
 public class GamePieceDetector extends SubsystemBase {
 
-  public static PhotonCamera camera = new PhotonCamera(Constants.noteDetectionCameraName);
+  //public static PhotonCamera camera = new PhotonCamera(Constants.noteDetectionCameraName);
   public static boolean noteVisible = false;
   public static double notePitch = 0;
   public static double noteYaw = 0;
   public static double noteDist = 0;
-  public static PhotonPipelineResult result = camera.getLatestResult();
-  public static PhotonTrackedTarget target = result.getBestTarget();
+ // public static PhotonPipelineResult result = camera.getLatestResult();
+ // public static PhotonTrackedTarget target = result.getBestTarget();
   
 
   public GamePieceDetector() {}
 
-  public static Boolean camCheck() {
+ /*  public static Boolean camCheck() {
     return result.hasTargets();
   }
   
@@ -68,5 +68,5 @@ public class GamePieceDetector extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
-  }
+  }*/
 }

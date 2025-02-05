@@ -92,7 +92,7 @@ public class PositionEstimator extends SubsystemBase {
       //System.out.println("Caught Error: " + e);
     }
     
-    return targetCheck && ((result1.getTargets().size() >= 2 && distance < 5) || (ambiguity1 < 0.05 && ambiguity1 > 0 && distance < 3));
+    return targetCheck && ((result1.getTargets().size() >= 1 && distance < 5) || (ambiguity1 < 0.05 && ambiguity1 > 0 && distance < 3));
   }
 
   public static void ResetAngle() {
@@ -126,7 +126,7 @@ public class PositionEstimator extends SubsystemBase {
     catch (Exception e) {
       //System.out.println("Caught Error: " + e);
     }
-    return targetCheck && ((result2.getTargets().size() >= 2 && distance < 5) || (ambiguity2 < 0.05 && ambiguity2 > 0 && distance < 3));
+    return targetCheck && ((result2.getTargets().size() >= 1 && distance < 5) || (ambiguity2 < 0.05 && ambiguity2 > 0 && distance < 3));
   }
 
   public static PhotonTrackedTarget obtainTarget1() {
@@ -431,8 +431,8 @@ public class PositionEstimator extends SubsystemBase {
 //     SmartDashboard.putNumber("RawVisionY", RawVisionY);
 
 
-    
-  }
+
+}
 
   // truespeed = deltaBuffer[camera1.getLatestResult().getLatencyMillis() / 20.0];
 

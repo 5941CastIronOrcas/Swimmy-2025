@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   private static double oldTime = 0.;
   private static double newTime = 0.;
   private static double deltaTime = 0.;
-  public static PathPlannerAuto auto;
+  //public static PathPlannerAuto auto;
   public static Boolean isRedAlliance = true;
   public static Boolean isBlueAlliance = false;
   public static boolean robotLimp = true;
@@ -65,10 +65,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
 
     //camserver
-    CameraServer.startAutomaticCapture();
-    //final HttpCamera camera = new HttpCamera("front camera", "camserver.local:5800/?action=stream");
-    Shuffleboard.getTab("SmartDashboard").addCamera("Camera Stream", "front camera", "mjpeg:camserver.local:5800/?action=stream").withProperties(Map.of("showControls", false)).withPosition(0, 0).withSize(3, 3);  
-
+    //CameraServer.startAutomaticCapture();
+    //CameraServer.addCamera(new HttpCamera("front camera", "http://camserver.local:5800/?action=stream"));
+    //final HttpCamera camera = new HttpCamera("front camera", "mjpeg:http://camserver.local:5800/?action=stream");
+    //CameraServer.addCamera(camera);
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //auto = new PathPlannerAuto("Auto 1");
@@ -312,7 +312,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    AutoSequences.AutoStart();
+    //AutoSequences.AutoStart();
 
   }
 

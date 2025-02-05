@@ -162,9 +162,9 @@ public final class Constants {
   public static final double noteCameraForwardOffset = 0.54; // forward distance from robot center to note detector camera in meters
   public static final double noteCameraAngle = -20; //for note detector
   public static final double swerveMaxSpeed = 4.4; //the max speed we're capable of moving at in m/s (used for discarding impossible data)
-  public static final String apriltagCamera1Name = "Arducam_OV9281_USB_Camera 1"; //LEFT (shooter forward)
-  public static final String apriltagCamera2Name = "Arducam_OV9281_USB_Camera 2"; //RIGHT (shooter forward)
-  public static final String noteDetectionCameraName = "Arducam_OV9782_USB_Camera";
+  public static final String apriltagCamera1Name = "camLeft"; //LEFT (shooter forward)
+  public static final String apriltagCamera2Name = "camRight"; //RIGHT (shooter forward)
+ // public static final String noteDetectionCameraName = "Arducam_OV9782_USB_Camera";
   public static final double FieldDisplayOffsetX = 1.1225;
   public static final double FieldDisplayOffsetY = 0.326;
 
