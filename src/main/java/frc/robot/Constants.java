@@ -135,6 +135,7 @@ public final class Constants {
   public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
   public static final SparkMax climber1 = new SparkMax(35, MotorType.kBrushless);
   public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
+  public static final SparkMax climberclaw = new SparkMax(37, MotorType.kBrushless);
   public static DigitalInput lClimberSwitch = new DigitalInput(2);
   public static DigitalInput rClimberSwitch = new DigitalInput(3);
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
