@@ -54,7 +54,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    autoChooser = AutoBuilder.buildAutoChooser("auto 1");
+    autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser.addOption("Auto 1", new PathPlannerAuto("Auto 1"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
@@ -83,9 +84,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
     //return Autos.exampleAuto(m_exampleSubsystem);
-    return new PathPlannerAuto("Auto 1");
-    //return autoChooser.getSelected();
+    //return new PathPlannerAuto("Auto 1");
+    return autoChooser.getSelected();
   }
 }
