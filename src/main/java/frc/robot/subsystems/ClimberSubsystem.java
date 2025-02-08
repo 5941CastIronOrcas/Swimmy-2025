@@ -30,32 +30,23 @@ public class ClimberSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  public static void moveClimbers(double in, double difference) { //moves the climbers, adding or subtracting half of difference to make the difference between the two climber powers equal to that number.
-    Constants.climber1.set(Functions.Clamp(in+(difference/2.0)*(Constants.climber1Invert?-1:1), 
-    !Constants.lClimberSwitch.get()?0: Functions.Clamp(Constants.climberReductionMult*(lClimberAngle-Constants.climberSmoothingEnd)-Constants.climberMaxHitSpeed, -1, -Constants.climberMaxHitSpeed), 
+  public static void moveClimbers(double in) { //moves the climbers, adding or subtracting half of difference to make the difference between the two climber powers equal to that number.
+    Constants.climber1.set(Functions.Clamp(in*(Constants.climber1Invert?-1:1), 
+    !Constants.lClimberSwitch.get()?0: Functions.Clamp(Constants.climberReductionMult*
+    (lClimberAngle-Constants.climberSmoothingEnd)-Constants.climberMaxHitSpeed, -1, -Constants.climberMaxHitSpeed), 
     lClimberAngle>=Constants.climberMaxHeight?0:1));
 
-    Constants.climber2.set(Functions.Clamp(in-(difference/2.0)*(Constants.climber2Invert?-1:1), 
-    !Constants.rClimberSwitch.get()?0:Functions.Clamp(Constants.climberReductionMult*(lClimberAngle-Constants.climberSmoothingEnd)-Constants.climberMaxHitSpeed, -1, -Constants.climberMaxHitSpeed), 
+    Constants.climber2.set(Functions.Clamp(in*(Constants.climber2Invert?-1:1), 
+    !Constants.rClimberSwitch.get()?0:Functions.Clamp(Constants.climberReductionMult*
+    (lClimberAngle-Constants.climberSmoothingEnd)-Constants.climberMaxHitSpeed, -1, -Constants.climberMaxHitSpeed), 
     rClimberAngle>=Constants.climberMaxHeight?0:1));
   }
 
-  public static void moveClimbersIndependent(double Rspeed, double Lspeed){ //moves each climber seperately, instead of together.
-     Constants.climber1.set(Functions.Clamp(Lspeed*(Constants.climber1Invert?-1:1), 
-    !Constants.lClimberSwitch.get()?0: Functions.Clamp(Constants.climberReductionMult*(lClimberAngle-Constants.climberSmoothingEnd)-Constants.climberMaxHitSpeed, -1, -Constants.climberMaxHitSpeed), 
-    lClimberAngle>=Constants.climberMaxHeight?0:1));
-
-    Constants.climber2.set(Functions.Clamp(Rspeed*(Constants.climber2Invert?-1:1), 
-    !Constants.rClimberSwitch.get()?0:Functions.Clamp(Constants.climberReductionMult*(lClimberAngle-Constants.climberSmoothingEnd)-Constants.climberMaxHitSpeed, -1, -Constants.climberMaxHitSpeed), 
-    rClimberAngle>=Constants.climberMaxHeight?0:1));
+  public static void moveClaw(double speed) {
+    Constants.climberclaw.set(speed);
   }
 
-  public static void moveClimbersTo(double rightpos, double leftpos, double speed){ //uses a P controller to move the climbers to a given angle.
-    moveClimbersIndependent(Functions.Clamp((rightpos-rClimberAngle)*Constants.climberGoToPMult, -speed, speed), Functions.Clamp((leftpos-lClimberAngle)*Constants.climberGoToPMult, -speed, speed));
-  }
-
-  public static void autoBalance(double speed) { //uses a P controller to make the robot level with the ground, while still climbing onto the stage.
-    moveClimbers(speed,Functions.Clamp((Constants.climberBalancePMult*(-Constants.gyro.getRoll().getValueAsDouble())), 
-    -1, 1));
+  public static void rotateClimber(double speed) {
+    Constants.climber.set(speed);
   }
 }
