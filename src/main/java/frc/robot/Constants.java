@@ -101,33 +101,42 @@ public final class Constants {
   public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
   
   //Arm Sensor Declarations
-  public static DutyCycleEncoder armJointEncoder = new DutyCycleEncoder(1);
+  public static DutyCycleEncoder coralEncoder = new DutyCycleEncoder(1);
 
+  //ALL PIDS STILL NEED TO BE CALIBRATED
   //public static final DigitalInput[] noteDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
-  //Arm Control Constants
-  public static final double armMotorPMult = 1.0/10.0;
-  public static final double armMotorDMult = 0.0;
-  public static final double armMotorGravMult = 0.02; //how much the arm PID compensates for gravity
-  public static final double maxArmSpeed = 1.0; //Max speed the arm PID is allowed to output to the arm motor
-  public static final double armAngleVariation = 1.0; //how close the arm has to be to the target angle in degrees to allow shooting
-  public static final double armAngleOffset = 60;
-  public static final double minArmAngle = 2;
-  public static final double maxArmAngle = 99;
-  //Intake / Shooter Control Constants
-  public static final double minShootRpm = 5000; //the minimum RPM the shooter needs to be at to shoot
-  public static final double intakeAngle = 0.0; //the angle in degrees the arm should be at to intake a ring
-  public static final double ampDepositAngle = 99.0; //the angle the arm should be at to do the amp
-  public static final double trapShootAngle = 30;
-  public static final double trapShootSpeed = 0.5;
-  public static final double trapMinRPM = 2000;
-  public static final double launchSpeed = 10.0; //speed of ring after being launched in m/s
-  public static final double gravity = 9.81; //gravity acceleration in m/s^2
-  public static final double defaultShooterSpeed = 1.0;
-  public static final double bottomRpmMult = 1.0;
-  public static final double shootYawOffset = 3.5 ;
-  public static final double maxShootingRange = 3.5;
-  // theshold for sonic sensor
-  public static final double hasNoteTreshold = 10;
+  //Elevator Control Constants
+  public static final double elevatorPMult = 0.1;
+  public static final double elevatorDMult = 0.0;
+  public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
+  public static final double maxElevatorSpeed = 1.0; //Max speed the elevator PID is allowed to output to the elevator motor
+  public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
+  public static final double intakeHeight = 20.;
+  public static final double reef1Height = 18.;
+  public static final double reef2Height = 31.875;
+  public static final double reef3Height = 47.625;
+  public static final double reef4Height = 72.;
+  //Coral Intake Control Constants
+  public static final double coralPMult = 1.0;
+  public static final double coralDMult = 1.0; 
+  public static final double coralGravMult = 1.0;
+  public static final double maxCoralPivotSpeed = 1.0;
+  public static final double coralAngleVariation = 1.0;
+  public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
+  public static final double reef1Angle = 10.0;
+  public static final double reef2Angle = 75.8;
+  public static final double reef4Angle = 90.;
+  public static final double coralIntakeSpeed = 1.;
+  public static final double reef1Speed = 0.2;
+  //Algae Intake Control Constants
+  public static final double algaePMult = 1.;
+  public static final double algaeDMult = 1.;
+  public static final double algaeGravMult = 1.;
+  public static final double maxAlgaePivotSpeed = 1.;
+  public static final double algaeAngleVariation = 1.;
+  public static final double algaeIntakeAngle = 0.;
+  public static final double processorAngle = 0.;
+  public static final double algaeIntakeSpeed = 1.;
   
   
   //CLIMBER STUFF
@@ -141,6 +150,8 @@ public final class Constants {
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   public static final Boolean climber1Invert = false;
   public static final Boolean climber2Invert = false;
+  //Climber Sensor Declarations
+  public static DutyCycleEncoder climberEncoder = new DutyCycleEncoder(2);
   //Climber Control Constants
   public static final double climberBalancePMult = 0.01;
   public static final double climberBalanceDMult = 0.01;
@@ -176,6 +187,8 @@ public final class Constants {
   public static final Vector2D[] centerNotesPos = new Vector2D[] {new Vector2D(8.2956, 0.7529), new Vector2D(8.2956, 2.4293), new Vector2D(8.2956, 4.1057), new Vector2D(8.2956, 5.7821), new Vector2D(8.2956, 7.4585)};
   public static Vector2D[] allNotesPos = new Vector2D[centerNotesPos.length + redNotesPos.length];
   
+  //OTHER CONSTANTS:
+  public static final double gravity = 9.81; //gravitational acceleration in m/s^2
   //ANSI Color Codes:
   public static final String ansiRESET = "\u001B[0m";
   public static final String ansiBLK = "\u001B[30m";
