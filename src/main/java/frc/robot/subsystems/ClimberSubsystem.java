@@ -47,6 +47,6 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public static void rotateClimber(double speed) {
-    Constants.climber.set(speed);
+    Constants.climberPivot.set(speed);
   }
 }

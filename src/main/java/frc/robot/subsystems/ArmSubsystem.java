@@ -25,11 +25,11 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    armAngle = -(Constants.armJointEncoder.get() * 360)+212.2; //sets the ArmAngle appropriately
+   // armAngle = -(Constants.armJointEncoder.get() * 360)+212.2; //sets the ArmAngle appropriately
     oldSpeakerAngle = newSpeakerAngle; 
     newSpeakerAngle = GetSpeakerAngle();
     dist = PositionEstimator.distToSpeaker();
-    inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
+   // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
 
     //recalledValue = Arduino.getCallArduino((byte) 0x2e); //????????
     //if (!(recalledValue < 0)) {
@@ -70,10 +70,10 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public static void moveArmTo(double a) { //uses a pd controller to go to a given angle.
-    a = Functions.Clamp(a, Constants.minArmAngle, Constants.maxArmAngle);
-    rotateArm(Functions.Clamp((Constants.armMotorPMult*(a - armAngle)) 
-    -(Constants.armMotorDMult*armEncoder.getVelocity()), 
-    -Constants.maxArmSpeed, Constants.maxArmSpeed));
+   // a = Functions.Clamp(a, Constants.minArmAngle, Constants.maxArmAngle);
+   // rotateArm(Functions.Clamp((Constants.armMotorPMult*(a - armAngle)) 
+   // -(Constants.armMotorDMult*armEncoder.getVelocity()), 
+    //-Constants.maxArmSpeed, Constants.maxArmSpeed));
      DriverDisplay.armTarget.setDouble(a);
   }
 
@@ -82,7 +82,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
   
   public static void rotateArm(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(armAngle-Constants.minArmAngle), 0, 1), Functions.Clamp(-(0.2*(armAngle-Constants.maxArmAngle)), 0, 1)) + (Constants.armMotorGravMult*Math.cos(Math.toRadians(armAngle)));
+    //t = Functions.Clamp(t, -Functions.Clamp(0.2*(armAngle-Constants.minArmAngle), 0, 1), Functions.Clamp(-(0.2*(armAngle-Constants.maxArmAngle)), 0, 1)) + (Constants.armMotorGravMult*Math.cos(Math.toRadians(armAngle)));
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
     DriverDisplay.armThrottle.setDouble(t);
@@ -97,7 +97,7 @@ public class ArmSubsystem extends SubsystemBase {
     SpinIntake((hasNote)?0:input);
   }
   public static void IntakeRing() { //moves the arm to the intake position, and tries to pick up a Note
-    moveArmTo(Constants.intakeAngle);
+    //moveArmTo(Constants.intakeAngle);
     Intake(0.75);
   }
   // public static void ShootAtAngle(double a) {
@@ -123,10 +123,10 @@ public class ArmSubsystem extends SubsystemBase {
     }
     return 0.0;*/
   }
-  public static double GetPredictedSpeakerAngle() { //this takes the angle to speakers's rate of change and multiplies it by the time it would take for the note to reach the speaker. this gives the predicted angle the robot should be at while moving.
+ /*  public static double GetPredictedSpeakerAngle() { //this takes the angle to speakers's rate of change and multiplies it by the time it would take for the note to reach the speaker. this gives the predicted angle the robot should be at while moving.
     double aSpeed = (newSpeakerAngle - oldSpeakerAngle) * 50;
     return GetSpeakerAngle() + (aSpeed * (Functions.Pythagorean(PositionEstimator.distToSpeaker(), Constants.speakerHeight) / Constants.launchSpeed));
   }
 
-
+*/
 }

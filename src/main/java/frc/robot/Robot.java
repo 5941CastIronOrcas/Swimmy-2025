@@ -180,13 +180,13 @@ public class Robot extends TimedRobot {
     //Arm
     if(Constants.controller2.getBackButton()) {
       ArmSubsystem.moveArmTo(0);
-      ClimberSubsystem.moveClimbers(-1,0);
+     // ClimberSubsystem.moveClimbers(-1,0);
     }
     else if (Constants.controller2.getStartButtonPressed()) {
       RPSStart();
     }
     else if (Constants.controller2.getStartButton()) {
-      RPS();
+      //RPS();
     }
     else {
       timeSinceRPSstart = 0;
@@ -237,7 +237,7 @@ public class Robot extends TimedRobot {
         
       }
 
-      ClimberSubsystem.moveClimbers(RSY2, RSX2);
+     // ClimberSubsystem.moveClimbers(RSY2, RSX2);
     }
 
 
@@ -252,7 +252,7 @@ public class Robot extends TimedRobot {
     RPS = (int)(Math.random()*3);
   }
 
-  public void RPS() { //This function is called any time the start button is currently pressed down. It handles the climber and arm motion for rock paper scissors.
+ /*  public void RPS() { //This function is called any time the start button is currently pressed down. It handles the climber and arm motion for rock paper scissors.
     timeSinceRPSstart += 0.025;
     if (timeSinceRPSstart <= 4.0) {
       //The period of time when it's moving the climbers up and down and preparing to "shoot"
@@ -279,7 +279,7 @@ public class Robot extends TimedRobot {
           break;
       } 
     }
-  }
+  } */
 
   @Override
   public void testInit() {
