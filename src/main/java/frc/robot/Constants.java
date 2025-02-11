@@ -150,6 +150,8 @@ public final class Constants {
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   public static final Boolean climber1Invert = false;
   public static final Boolean climber2Invert = false;
+  public static final double minClimberAngle = 0;
+  public static final double maxClimberAngle = 0;
   //Climber Sensor Declarations
   public static DutyCycleEncoder climberEncoder = new DutyCycleEncoder(2);
   //Climber Control Constants

@@ -4,13 +4,19 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkMaxAlternateEncoder;
+
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Functions;
 
 public class ClimberSubsystem extends SubsystemBase {
-  public static double lClimberAngle;
-  public static double rClimberAngle;
+  public static double lClimberAngle = 0;
+  public static double rClimberAngle = 0;
   /** Creates a new ExampleSubsystem. */
   public ClimberSubsystem() { //initializes the climbers
     Constants.climber1.getEncoder().setPosition(0);
@@ -51,7 +57,11 @@ public class ClimberSubsystem extends SubsystemBase {
     Constants.climber2.set(speed);
   }
 
-  public static void climberPivot(double speed) {
-    Constants.climberPivot.set(speed);
+  public static void climberPivot(double angle) {
+    angle = Functions.Clamp(angle, Constants.minClimberAngle, Constants.maxClimberAngle);
+   climberPivot(Functions.Clamp((Constants.climberBalancePMult*(angle - 
+   Constants.climberPivot.set(rClimberAngle, lClimberAngle))) - 
+   (Constants.climberBalanceDMult*Constants.climberEncoder.get()), - 
+   Constants.maxClimberAngle, Constants.maxClimberAngle));
   }
 }
