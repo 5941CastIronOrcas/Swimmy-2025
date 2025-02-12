@@ -10,7 +10,8 @@ import frc.robot.Functions;
 
 public class ArmSubsystem extends SubsystemBase {
   public static RelativeEncoder armEncoder = Constants.elevator1.getEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
-  public static double armAngle = 0; //the current angle of the arm
+  public static double elevatorHeight = 0;
+  public static double coralAngle = 0; //the current angle of the coral intake
   public static double oldSpeakerAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker one frame ago
   public static double newSpeakerAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker
   public static double dist = 0; //the distance between the center of the robot and the speaker
@@ -25,9 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-   // armAngle = -(Constants.armJointEncoder.get() * 360)+212.2; //sets the ArmAngle appropriately
-    oldSpeakerAngle = newSpeakerAngle; 
-    newSpeakerAngle = GetSpeakerAngle();
+    armAngle = -(Constants.armJointEncoder.get() * 360)+212.2; //sets the ArmAngle appropriately
     dist = PositionEstimator.distToSpeaker();
    // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
 
@@ -76,10 +75,6 @@ public class ArmSubsystem extends SubsystemBase {
     //-Constants.maxArmSpeed, Constants.maxArmSpeed));
      DriverDisplay.armTarget.setDouble(a);
   }
-
-  public static void manualMoveArmTo() { //moves the arm to the angle it would need to be at if the robot was right up against the speaker.
-    moveArmTo(16.1);
-  }
   
   public static void rotateArm(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     //t = Functions.Clamp(t, -Functions.Clamp(0.2*(armAngle-Constants.minArmAngle), 0, 1), Functions.Clamp(-(0.2*(armAngle-Constants.maxArmAngle)), 0, 1)) + (Constants.armMotorGravMult*Math.cos(Math.toRadians(armAngle)));
@@ -97,36 +92,13 @@ public class ArmSubsystem extends SubsystemBase {
     SpinIntake((hasNote)?0:input);
   }
   public static void IntakeRing() { //moves the arm to the intake position, and tries to pick up a Note
-    //moveArmTo(Constants.intakeAngle);
+    moveArmTo(Constants.coralIntakeAngle);
     Intake(0.75);
   }
-  // public static void ShootAtAngle(double a) {
-  //   SpinShooter(1);
-  //   moveArmTo(a);
-  //   if ((Constants.lowerShooterMotor.getEncoder().getVelocity() >= Constants.minShootRpm) && Math.abs(a-armAngle) < Constants.armAngleVariation) {
-  //     SpinIntake(1);
-  //   } else {
-  //     SpinIntake(0);
-  //   }
-  // }
 
-  public static double GetSpeakerAngle() { //returns the angle that the arm should be at in order to shoot into the speaker
-    double a = -70.8237335782; //-3.366287681*Math.pow(10, 15);
-    double b = -0.349465145747;
-    double c = -0.262092184395;
-    double d = 87.2383991914;
-    return a*Math.pow(dist + b, c)+d; //+5
-    /*double s = Constants.launchSpeed + Functions.AltAxisCoord(PositionEstimator.velocity.x, PositionEstimator.velocity.y, SwerveSubsystem.angleToSpeaker);
-    double d = Math.pow(s,4)-g*((g*dist*dist)+(2*Constants.speakerHeight*s*s));
-    if (d>0) {
-      return (-Math.toDegrees(Math.atan2((s*s-d),(g*dist)))+Constants.armAngleOffset);
-    }
-    return 0.0;*/
-  }
- /*  public static double GetPredictedSpeakerAngle() { //this takes the angle to speakers's rate of change and multiplies it by the time it would take for the note to reach the speaker. this gives the predicted angle the robot should be at while moving.
-    double aSpeed = (newSpeakerAngle - oldSpeakerAngle) * 50;
-    return GetSpeakerAngle() + (aSpeed * (Functions.Pythagorean(PositionEstimator.distToSpeaker(), Constants.speakerHeight) / Constants.launchSpeed));
+
+  public static double angleToHeight (double angle) {
+    return angle/2302930293.;
   }
 
-*/
 }
