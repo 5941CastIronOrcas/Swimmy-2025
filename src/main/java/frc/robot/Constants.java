@@ -128,6 +128,8 @@ public final class Constants {
   public static final double reef4Angle = 90.;
   public static final double coralIntakeSpeed = 1.;
   public static final double reef1Speed = 0.2;
+  public static final double minCoralAngle = 0.;
+  public static final double maxCoralAngle = 130.;
   //Algae Intake Control Constants
   public static final double algaePMult = 1.;
   public static final double algaeDMult = 1.;
@@ -137,6 +139,8 @@ public final class Constants {
   public static final double algaeIntakeAngle = 0.;
   public static final double processorAngle = 0.;
   public static final double algaeIntakeSpeed = 1.;
+  public static final double minAlgaeAngle = 0.;
+  public static final double maxAlgaeAngle = 30.;
   
   
   //CLIMBER STUFF
@@ -148,15 +152,11 @@ public final class Constants {
   public static DigitalInput lClimberSwitch = new DigitalInput(2);
   public static DigitalInput rClimberSwitch = new DigitalInput(3);
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
-  public static final Boolean climber1Invert = false;
-  public static final Boolean climber2Invert = false;
-  public static final double minClimberAngle = 0;
-  public static final double maxClimberAngle = 0;
-  //Climber Sensor Declarations
-  public static DutyCycleEncoder climberEncoder = new DutyCycleEncoder(2);
   //Climber Control Constants
-  public static final double climberBalancePMult = 0.01;
-  public static final double climberBalanceDMult = 0.01;
+  public static final double climberPivotPMult = 0.01;
+  public static final double climberPivotDMult = 0.01;
+  public static final double climberPivotGravMult = 1.;
+  public static final double maxClimberPivotSpeed = 0.;
   public static final double climberMaxHitSpeed = 0.5;
   public static final double climberSmoothingStart = 20;
   public static final double climberSmoothingEnd = 10;
@@ -164,6 +164,10 @@ public final class Constants {
   //public static final double climberMaxSpeed = 1;
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
+  public static final Boolean climber1Invert = false;
+  public static final Boolean climber2Invert = false;
+  public static final double minClimberAngle = 0;
+  public static final double maxClimberAngle = 0;
 
   //POSITION ESTIMATION AND FIELD CONSTANTS:  
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);

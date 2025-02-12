@@ -15,9 +15,11 @@ import frc.robot.Constants;
 import frc.robot.Functions;
 
 public class ClimberSubsystem extends SubsystemBase {
+  public static RelativeEncoder climberEncoder = Constants.climberPivot.getAlternateEncoder();
+  public static double climberAngle = 0;
   public static double lClimberAngle = 0;
   public static double rClimberAngle = 0;
-  /** Creates a new ExampleSubsystem. */
+
   public ClimberSubsystem() { //initializes the climbers
     Constants.climber1.getEncoder().setPosition(0);
     Constants.climber2.getEncoder().setPosition(0);
@@ -27,6 +29,7 @@ public class ClimberSubsystem extends SubsystemBase {
   public void periodic() {
     if (!Constants.lClimberSwitch.get()) Constants.climber1.getEncoder().setPosition(0.0); //sets climber position to 0 if it's at the bottom
     if (!Constants.rClimberSwitch.get()) Constants.climber2.getEncoder().setPosition(0.0);
+    climberAngle = climberEncoder.getPosition();
     lClimberAngle = Constants.climber1.getEncoder().getPosition();
     rClimberAngle = Constants.climber2.getEncoder().getPosition();
   }
@@ -52,16 +55,22 @@ public class ClimberSubsystem extends SubsystemBase {
     Constants.climberclaw.set(speed);
   }
 
-  public static void rotateClimber(double speed) {
+  public static void moveClimber(double speed) {
     Constants.climber1.set(speed);
     Constants.climber2.set(speed);
   }
 
+  public static void rotateClimberPivot(double speed) {
+    Constants.climberPivot.set(Functions.Clamp(speed, 
+                              -Functions.Clamp(0.2*(climberAngle-Constants.minClimberAngle), 0, 1), 
+                              Functions.Clamp(-(0.2*(climberAngle-Constants.maxClimberAngle)), 0, 1)) 
+                              + (Constants.climberPivotGravMult*Math.cos(Math.toRadians(climberAngle))));
+  }
+
   public static void climberPivot(double angle) {
     angle = Functions.Clamp(angle, Constants.minClimberAngle, Constants.maxClimberAngle);
-   climberPivot(Functions.Clamp((Constants.climberBalancePMult*(angle - 
-   Constants.climberPivot.set(rClimberAngle, lClimberAngle))) - 
-   (Constants.climberBalanceDMult*Constants.climberEncoder.get()), - 
-   Constants.maxClimberAngle, Constants.maxClimberAngle));
+   rotateClimberPivot(Functions.Clamp((Constants.climberPivotPMult*(angle - Constants.climberPivot.get()))
+   - (Constants.climberPivotDMult*climberEncoder.getVelocity()), - 
+   Constants.maxClimberPivotSpeed, Constants.maxClimberPivotSpeed));
   }
 }
