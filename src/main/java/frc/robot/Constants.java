@@ -95,6 +95,7 @@ public final class Constants {
   public static final SparkMax coralIntakePivot = new SparkMax(30, MotorType.kBrushless);
   public static final SparkMax coralIntake = new SparkMax(31, MotorType.kBrushless);
   public static final SparkMaxConfig coralIntakeConfig = new SparkMaxConfig();
+  public static final Boolean coralIntakePivotInvert = false;
   //Algae Intake Motor Declarations
   public static final SparkMax algaeIntakePivot = new SparkMax(32, MotorType.kBrushless);
   public static final SparkMax algaeIntake = new SparkMax(33, MotorType.kBrushless);

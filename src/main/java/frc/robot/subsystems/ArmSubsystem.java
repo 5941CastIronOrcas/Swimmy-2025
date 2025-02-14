@@ -69,13 +69,18 @@ public class ArmSubsystem extends SubsystemBase {
     -Constants.maxElevatorSpeed, Constants.maxElevatorSpeed));
      DriverDisplay.armTarget.setDouble(h);
   }
-  
   public static void moveElevator(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     t = Functions.Clamp(t, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
     DriverDisplay.armThrottle.setDouble(t);
   }
+
+  public static void rotateIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
+    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + (Constants.coralGravMult*Math.cos(Math.toRadians(coralAngle)));
+    Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
+  }
+
   public static void SpinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
     Constants.coralIntake.set(Functions.Clamp(-input, -1, coralAngle < 15 ? 0 : 1));
