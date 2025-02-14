@@ -27,7 +27,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 public class PositionEstimator extends SubsystemBase {
-  public static ArrayList<Vector2D> realNoteList = new ArrayList<>();
+  public static ArrayList<Vector2D> realCoralList = new ArrayList<>();
   public static double robotYawDriverRelative = 0;
   private static double gyroYawOld = 0;
   public static double robotYawRate = 0;
@@ -58,7 +58,7 @@ public class PositionEstimator extends SubsystemBase {
   public static double ambiguity1;
   public static double ambiguity2;
 
-  private static int currentAutoNote = 0;
+  private static int currentAutoCoral = 0;
 
   public static double lastTimestamp1 = 0;
   public static double lastTimestamp2 = 0;
@@ -224,14 +224,14 @@ public class PositionEstimator extends SubsystemBase {
   {
     return 90-Math.toDegrees(Math.atan2((Robot.isRedAlliance?Constants.redSpeaker.y:Constants.blueSpeaker.y) - robotPosition.getY(),(Robot.isRedAlliance?Constants.redSpeaker.x:Constants.blueSpeaker.x) - robotPosition.getX()));// + Constants.shootYawOffset;
   }
-  public static int nearestAutoNote() { 
+  public static int nearestAutoCoral() { 
     try {
     int id = 0;
       double minDist = 100000;
-      for (int i = 0; i < realNoteList.size(); i++) {
-        double d = Functions.Pythagorean(realNoteList.get(i).x - robotPosition.getX(), realNoteList.get(i).y - robotPosition.getY());
+      for (int i = 0; i < realCoralList.size(); i++) {
+        double d = Functions.Pythagorean(realCoralList.get(i).x - robotPosition.getX(), realCoralList.get(i).y - robotPosition.getY());
         if (d < minDist) {
-          id = AutoSequences.noteList[i];
+          id = AutoSequences.coralList[i];
           minDist = d;
         }
       }
@@ -241,57 +241,57 @@ public class PositionEstimator extends SubsystemBase {
       return 0;
     }
   }
-  public static double distToClosestNote() {
-    int n = nearestAutoNote();
+  public static double distToClosestCoral() {
+    int n = nearestAutoCoral();
     try
     {
-      return Functions.Pythagorean(realNoteList.get(n).x - robotPosition.getX(), realNoteList.get(n).y - robotPosition.getY());
+      return Functions.Pythagorean(realCoralList.get(n).x - robotPosition.getX(), realCoralList.get(n).y - robotPosition.getY());
     }
     catch(Exception e)
     {
       return 10000000;
     }
   }
-  public static double angleToClosestNote() {
-    int n = nearestAutoNote();
-    return Math.toDegrees(Math.atan2(realNoteList.get(n).x - robotPosition.getX(), realNoteList.get(n).y - robotPosition.getY()));
+  public static double angleToClosestCoral() {
+    int n = nearestAutoCoral();
+    return Math.toDegrees(Math.atan2(realCoralList.get(n).x - robotPosition.getX(), realCoralList.get(n).y - robotPosition.getY()));
   }
-  public static int currentAutoNote() {
-    return currentAutoNote;
+  public static int currentAutoCoral() {
+    return currentAutoCoral;
   }
-  public static void nextAutoNote() {
-    currentAutoNote ++;
+  public static void nextAutoCoral() {
+    currentAutoCoral ++;
   }
-  public static double distToCurrentNote() {
-    int n = currentAutoNote;
+  public static double distToCurrentCoral() {
+    int n = currentAutoCoral;
     try
     {
-      return Functions.Pythagorean(realNoteList.get(n).x - robotPosition.getX(), realNoteList.get(n).y - robotPosition.getY());
+      return Functions.Pythagorean(realCoralList.get(n).x - robotPosition.getX(), realCoralList.get(n).y - robotPosition.getY());
     }
     catch(Exception e)
     {
       return 10000000;
     }
   }
-  public static double angleToCurrentNote() {
-    int n = currentAutoNote;
+  public static double angleToCurrentCoral() {
+    int n = currentAutoCoral;
 
 
-    return Math.toDegrees(Math.atan2(realNoteList.get(n).x - robotPosition.getX(), realNoteList.get(n).y - robotPosition.getY()));
+    return Math.toDegrees(Math.atan2(realCoralList.get(n).x - robotPosition.getX(), realCoralList.get(n).y - robotPosition.getY()));
   }
   public static boolean atSpeakerAngle() {
     return Math.abs(Functions.DeltaAngleDeg(angleToSpeaker(), robotPosition.getRotation().getDegrees()))<Constants.speakerAngleVariation;
   }
 
-  public static void removeClosestNote() {
-    realNoteList.remove(nearestAutoNote());
+  public static void removeClosestCoral() {
+    realCoralList.remove(nearestAutoCoral());
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("notes remaining", realNoteList.size());
-    SmartDashboard.putNumber("nearestAutoNote", nearestAutoNote());
-    SmartDashboard.putNumber("distClosestNote", distToClosestNote());
+    SmartDashboard.putNumber("corals remaining", realCoralList.size());
+    SmartDashboard.putNumber("nearestAutoCoral", nearestAutoCoral());
+    SmartDashboard.putNumber("distClosestCoral", distToClosestCoral());
     // This method will be called once per scheduler run
     robotYawDriverRelative = Functions.DeltaAngleDeg(0, -Constants.gyro.getYaw().getValueAsDouble());
     //robotYawRate = Constants.gyro.getRate();

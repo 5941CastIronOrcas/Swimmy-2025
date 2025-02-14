@@ -13,11 +13,11 @@ import frc.robot.Constants;
 
 public class GamePieceDetector extends SubsystemBase {
 
-  //public static PhotonCamera camera = new PhotonCamera(Constants.noteDetectionCameraName);
-  public static boolean noteVisible = false;
-  public static double notePitch = 0;
-  public static double noteYaw = 0;
-  public static double noteDist = 0;
+  //public static PhotonCamera camera = new PhotonCamera(Constants.coralDetectionCameraName);
+  public static boolean coralVisible = false;
+  public static double coralPitch = 0;
+  public static double coralYaw = 0;
+  public static double coralDist = 0;
  // public static PhotonPipelineResult result = camera.getLatestResult();
  // public static PhotonTrackedTarget target = result.getBestTarget();
   
@@ -39,14 +39,14 @@ public class GamePieceDetector extends SubsystemBase {
     // This method will be called once per scheduler run
     result = camera.getLatestResult();
     target = obtainTarget();
-    noteVisible = camCheck() && ArmSubsystem.armAngle < 40;
+    coralVisible = camCheck() && ArmSubsystem.armAngle < 40;
   
-    if(noteVisible)
+    if(coralVisible)
     {
       try
       {
-        notePitch = target.getPitch() + ArmSubsystem.armAngle;
-        noteYaw = target.getYaw();
+        coralPitch = target.getPitch() + ArmSubsystem.armAngle;
+        coralYaw = target.getYaw();
       }
       catch (Exception e)
       {
@@ -55,11 +55,11 @@ public class GamePieceDetector extends SubsystemBase {
     }
     else
     {
-      notePitch = 0;
-      noteYaw = 0;
+      coralPitch = 0;
+      coralYaw = 0;
     }
 
-    noteDist = Constants.noteCameraForwardOffset-Constants.noteCameraHeight / Math.tan(Math.toRadians(notePitch + Constants.noteCameraAngle));
+    coralDist = Constants.coralCameraForwardOffset-Constants.coralCameraHeight / Math.tan(Math.toRadians(coralPitch + Constants.coralCameraAngle));
   }
 
   

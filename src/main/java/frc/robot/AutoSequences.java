@@ -14,21 +14,21 @@ import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.utilityObjects.Vector2D;
 
 public class AutoSequences {
-  public static int[] noteList;
+  public static int[] coralList;
 
-  public static boolean wasInDriveToNote = false;
-  public static boolean hadNote = false;
+  public static boolean wasInDriveToCoral = false;
+  public static boolean hadCoral = false;
   public static int succesfulShots = 0;
 
   public static void AutoStart() {
-    wasInDriveToNote = false;
-    hadNote = false;
+    wasInDriveToCoral = false;
+    hadCoral = false;
     succesfulShots = 0;
     Constants.gyro.setYaw(DriverDisplay.angleToAssign);
-    PositionEstimator.realNoteList = new ArrayList<>();
-    for (int i = 0; i < noteList.length; i++) 
+    PositionEstimator.realCoralList = new ArrayList<>();
+    for (int i = 0; i < coralList.length; i++) 
     {
-        PositionEstimator.realNoteList.add(Constants.allNotesPos[noteList[i]-1]);
+        PositionEstimator.realCoralList.add(Constants.allCoralsPos[coralList[i]-1]);
       
     }
   }
@@ -111,11 +111,11 @@ public class AutoSequences {
 
   // Retract Climbers, Shoot Basic, Collect Nearest, Shoot
     public static void autoSequence7() {
-      if (isAutoTimeBetween(0, 15) && succesfulShots <= 2 && PositionEstimator.realNoteList.size() > 0) {
+      if (isAutoTimeBetween(0, 15) && succesfulShots <= 2 && PositionEstimator.realCoralList.size() > 0) {
         ClimberSubsystem.moveClimbers(-1, 0);
         ArmSubsystem.SpinShooter(1);
-        if (ArmSubsystem.hasNote) {
-          hadNote = true;
+        if (ArmSubsystem.hasCoral) {
+          hadCoral = true;
           ArmSubsystem.PrepShooter(Constants.defaultShooterSpeed);
           if (ArmSubsystem.dist < Constants.maxShootingRange) {
             ArmSubsystem.ShootSpeaker();
@@ -129,20 +129,20 @@ public class AutoSequences {
           }
 
         } else {
-          if (hadNote) {
+          if (hadCoral) {
             succesfulShots++;
-            if (wasInDriveToNote) PositionEstimator.removeClosestNote();
-            wasInDriveToNote = false;
+            if (wasInDriveToCoral) PositionEstimator.removeClosestCoral();
+            wasInDriveToCoral = false;
           }
-          hadNote = false;
-          if (GamePieceDetector.noteVisible && GamePieceDetector.noteDist < 3) {
+          hadCoral = false;
+          if (GamePieceDetector.coralVisible && GamePieceDetector.coralDist < 3) {
             ArmSubsystem.IntakeRing();
-            SwerveSubsystem.CollectNote(0, 0, 0.5);        
+            SwerveSubsystem.CollectCoral(0, 0, 0.5);        
           } else {
-            wasInDriveToNote = true;
-            Vector2D closestNote = Constants.allNotesPos[PositionEstimator.nearestAutoNote()];
-            if (SwerveSubsystem.atTargetAngle) SwerveSubsystem.DriveTo(closestNote.x, closestNote.y, PositionEstimator.angleToClosestNote()+180, 0.5, 0.5, 0, 0);
-            else SwerveSubsystem.DriveDriverOrientedAtAngle(0, 0, PositionEstimator.angleToClosestNote()+180, 0.5); 
+            wasInDriveToCoral = true;
+            Vector2D closestCoral = Constants.allCoralsPos[PositionEstimator.nearestAutoCoral()];
+            if (SwerveSubsystem.atTargetAngle) SwerveSubsystem.DriveTo(closestCoral.x, closestCoral.y, PositionEstimator.angleToClosestCoral()+180, 0.5, 0.5, 0, 0);
+            else SwerveSubsystem.DriveDriverOrientedAtAngle(0, 0, PositionEstimator.angleToClosestCoral()+180, 0.5); 
           }
         }
       } else {
@@ -152,10 +152,10 @@ public class AutoSequences {
 
   // Retract Climbers, Shoot Aimbot, Collect Nearest, Shoot
   public static void autoSequence8() {
-      if (isAutoTimeBetween(0, 15) && succesfulShots <= 2 && PositionEstimator.realNoteList.size() > 0) {
+      if (isAutoTimeBetween(0, 15) && succesfulShots <= 2 && PositionEstimator.realCoralList.size() > 0) {
         ClimberSubsystem.moveClimbers(-1, 0);
         ArmSubsystem.SpinShooter(1);
-        if (ArmSubsystem.hasNote) {
+        if (ArmSubsystem.hasCoral) {
           if (ArmSubsystem.dist < Constants.maxShootingRange) {
             SwerveSubsystem.FaceSpeaker(0, 0, 1);
             ArmSubsystem.PrepShooter(1);
@@ -167,20 +167,20 @@ public class AutoSequences {
           }
           
         } else {
-          if (hadNote) {
+          if (hadCoral) {
             succesfulShots++;
-            if (wasInDriveToNote) PositionEstimator.removeClosestNote();
-            wasInDriveToNote = false;
+            if (wasInDriveToCoral) PositionEstimator.removeClosestCoral();
+            wasInDriveToCoral = false;
           }
-          hadNote = false;
+          hadCoral = false;
           ArmSubsystem.IntakeRing();
-          if (GamePieceDetector.noteVisible && GamePieceDetector.noteDist < 3) {
-            SwerveSubsystem.CollectNote(0, 0, 0.5);        
+          if (GamePieceDetector.coralVisible && GamePieceDetector.coralDist < 3) {
+            SwerveSubsystem.CollectCoral(0, 0, 0.5);        
           } else {
-            wasInDriveToNote = true;
-            Vector2D closestNote = PositionEstimator.realNoteList.get(PositionEstimator.nearestAutoNote());
-            if (SwerveSubsystem.atTargetAngle) SwerveSubsystem.DriveTo(closestNote.x, closestNote.y, PositionEstimator.angleToClosestNote()+180, 0.5, 0.5, 0, 0);
-            else SwerveSubsystem.DriveDriverOrientedAtAngle(0, 0, PositionEstimator.angleToClosestNote()+180, 0.5); 
+            wasInDriveToCoral = true;
+            Vector2D closestCoral = PositionEstimator.realCoralList.get(PositionEstimator.nearestAutoCoral());
+            if (SwerveSubsystem.atTargetAngle) SwerveSubsystem.DriveTo(closestCoral.x, closestCoral.y, PositionEstimator.angleToClosestCoral()+180, 0.5, 0.5, 0, 0);
+            else SwerveSubsystem.DriveDriverOrientedAtAngle(0, 0, PositionEstimator.angleToClosestCoral()+180, 0.5); 
           }
         }
       } else {
@@ -191,11 +191,11 @@ public class AutoSequences {
 
   // Retract Climbers, Shoot Basic, Collect and Shoot as Many as Possible
   public static void autoSequence9() {
-      if (isAutoTimeBetween(0, 15) && PositionEstimator.realNoteList.size() > 0) {
+      if (isAutoTimeBetween(0, 15) && PositionEstimator.realCoralList.size() > 0) {
         ClimberSubsystem.moveClimbers(-1, 0);
         ArmSubsystem.SpinShooter(1);
-        if (ArmSubsystem.hasNote) {
-          hadNote = true;
+        if (ArmSubsystem.hasCoral) {
+          hadCoral = true;
           ArmSubsystem.PrepShooter(1);
           if (ArmSubsystem.dist < Constants.maxShootingRange) {
             ArmSubsystem.ShootSpeaker();
@@ -210,20 +210,20 @@ public class AutoSequences {
           }
 
         } else {
-          if (hadNote) {
+          if (hadCoral) {
             succesfulShots++;
-            if (wasInDriveToNote) PositionEstimator.removeClosestNote();
-            wasInDriveToNote = false;
+            if (wasInDriveToCoral) PositionEstimator.removeClosestCoral();
+            wasInDriveToCoral = false;
           }
-          hadNote = false;
-          if (GamePieceDetector.noteVisible && GamePieceDetector.noteDist < 3) {
+          hadCoral = false;
+          if (GamePieceDetector.coralVisible && GamePieceDetector.coralDist < 3) {
             ArmSubsystem.IntakeRing();
-            SwerveSubsystem.CollectNote(0, 0, 0.5);        
+            SwerveSubsystem.CollectCoral(0, 0, 0.5);        
           } else {
-            wasInDriveToNote = true;
-            Vector2D closestNote = Constants.allNotesPos[PositionEstimator.nearestAutoNote()];
-            if (SwerveSubsystem.atTargetAngle) SwerveSubsystem.DriveTo(closestNote.x, closestNote.y, PositionEstimator.angleToClosestNote()+180, 0.5, 0.5, 0, 0);
-            else SwerveSubsystem.DriveDriverOrientedAtAngle(0, 0, PositionEstimator.angleToClosestNote()+180, 0.5); 
+            wasInDriveToCoral = true;
+            Vector2D closestCoral = Constants.allCoralsPos[PositionEstimator.nearestAutoCoral()];
+            if (SwerveSubsystem.atTargetAngle) SwerveSubsystem.DriveTo(closestCoral.x, closestCoral.y, PositionEstimator.angleToClosestCoral()+180, 0.5, 0.5, 0, 0);
+            else SwerveSubsystem.DriveDriverOrientedAtAngle(0, 0, PositionEstimator.angleToClosestCoral()+180, 0.5); 
           }
         }
       } else {
@@ -234,11 +234,11 @@ public class AutoSequences {
   // Retract Climbers, Shoot Aimbot, Collect and Shoot as Many as Possible
   public static void autoSequence10() {
     SmartDashboard.putNumber("Fuckin auto", succesfulShots);
-      if (isAutoTimeBetween(0, 15) && !(!(PositionEstimator.realNoteList.size() > 0) && !ArmSubsystem.hasNote)) {
+      if (isAutoTimeBetween(0, 15) && !(!(PositionEstimator.realCoralList.size() > 0) && !ArmSubsystem.hasCoral)) {
         ClimberSubsystem.moveClimbers(-1, 0);
         ArmSubsystem.SpinShooter(1);
-        if (ArmSubsystem.hasNote) {
-          hadNote = true;
+        if (ArmSubsystem.hasCoral) {
+          hadCoral = true;
           if (ArmSubsystem.dist < Constants.maxShootingRange) {
             SwerveSubsystem.FaceSpeaker(0, 0, 1);
             ArmSubsystem.PrepShooter(1);
@@ -250,23 +250,23 @@ public class AutoSequences {
           }
           
         } else {
-          if (hadNote) {
+          if (hadCoral) {
             succesfulShots++;
-            if (wasInDriveToNote && succesfulShots > 1) {
-              PositionEstimator.removeClosestNote();
-              System.out.println("Trying to remove the note, I promise!!!");
+            if (wasInDriveToCoral && succesfulShots > 1) {
+              PositionEstimator.removeClosestCoral();
+              System.out.println("Trying to remove the coral, I promise!!!");
             }
-            wasInDriveToNote = false;
+            wasInDriveToCoral = false;
           }
-          hadNote = false;
+          hadCoral = false;
           ArmSubsystem.IntakeRing();
-          if (GamePieceDetector.noteVisible && GamePieceDetector.noteDist < 2) {
-            wasInDriveToNote = true;
-            SwerveSubsystem.CollectNote(0, 0, 0.8);        
+          if (GamePieceDetector.coralVisible && GamePieceDetector.coralDist < 2) {
+            wasInDriveToCoral = true;
+            SwerveSubsystem.CollectCoral(0, 0, 0.8);        
           } else {
-            Vector2D closestNote = PositionEstimator.realNoteList.get(PositionEstimator.nearestAutoNote());
-            if (Math.abs(Functions.DeltaAngleDeg(PositionEstimator.robotPosition.getRotation().getDegrees(), PositionEstimator.angleToClosestNote()+180)) < 10) SwerveSubsystem.DriveTo(closestNote.x, closestNote.y, PositionEstimator.angleToClosestNote()+180, 0.8, 0.5, 0, 0);
-            else SwerveSubsystem.DriveFieldOrientedAtAngle(0, 0, PositionEstimator.angleToClosestNote()+180, 0.5); 
+            Vector2D closestCoral = PositionEstimator.realCoralList.get(PositionEstimator.nearestAutoCoral());
+            if (Math.abs(Functions.DeltaAngleDeg(PositionEstimator.robotPosition.getRotation().getDegrees(), PositionEstimator.angleToClosestCoral()+180)) < 10) SwerveSubsystem.DriveTo(closestCoral.x, closestCoral.y, PositionEstimator.angleToClosestCoral()+180, 0.8, 0.5, 0, 0);
+            else SwerveSubsystem.DriveFieldOrientedAtAngle(0, 0, PositionEstimator.angleToClosestCoral()+180, 0.5); 
           }
         }
       } else {

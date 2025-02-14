@@ -35,25 +35,27 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry gyroOrientationDisplay = AutoStuff.add("Gyro Angle Selected", "N/A").getEntry();
 
   // Auto Sequences selector
-  public static GenericEntry noteIgnorancePreset = AutoStuff.add("notePatternPreset", "N/A").getEntry();
-  //public static GenericEntry noteIgnoranceHEX = AutoStuff.add("notePatternHEX", "N/A").getEntry();
-  public static GenericEntry noteIgnoranceCheck = AutoStuff.add("Selected Note Ignorance [0 - ignore, 1 - include]", "N/A").getEntry();
+  public static GenericEntry coralIgnorancePreset = AutoStuff.add("coralPatternPreset", "N/A").getEntry();
+  //public static GenericEntry coralIgnoranceHEX = AutoStuff.add("coralPatternHEX", "N/A").getEntry();
+  public static GenericEntry coralIgnoranceCheck = AutoStuff.add("Selected Coral Ignorance [0 - ignore, 1 - include]", "N/A").getEntry();
 
-  public static GenericEntry notesIgnorance = AutoStuff.add("notesToggleInput", "12345678").getEntry();
+  public static GenericEntry coralsIgnorance = AutoStuff.add("coralsToggleInput", "12345678").getEntry();
 
-  //NoteDetector
-  public static ShuffleboardTab noteDetector = Shuffleboard.getTab("NoteDetector");
-  public static GenericEntry showNote = noteDetector.add("Note Visible",false).getEntry();
-  public static GenericEntry showNotePitch = noteDetector.add("Note Pitch", 0).getEntry();
-  public static GenericEntry showNoteYaw = noteDetector.add("Note Yaw", 0).getEntry();
-  public static GenericEntry noteDistance = noteDetector.add("Note Distance", 0).getEntry();
+  //CoralDetector
+  public static ShuffleboardTab coralDetector = Shuffleboard.getTab("CoralDetector");
+  public static GenericEntry showCoral = coralDetector.add("Coral Visible",false).getEntry();
+  public static GenericEntry showCoralPitch = coralDetector.add("Coral Pitch", 0).getEntry();
+  public static GenericEntry showCoralYaw = coralDetector.add("Coral Yaw", 0).getEntry();
+  public static GenericEntry coralDistance = coralDetector.add("Coral Distance", 0).getEntry();
  
   //Arm
   public static ShuffleboardTab arm = Shuffleboard.getTab("Arm");
   public static GenericEntry armAngle = arm.add("Arm Angle", 0).getEntry();
   public static GenericEntry correctArmAngle = arm.add("Arm at correct angle", false).getEntry();
+  public static GenericEntry elevatorBottomSwitch = arm.add("Elevator Bottom Switch", false).getEntry();
+  public static GenericEntry elevatorTopSwitch = arm.add("Elevator Top Switch", false).getEntry();
   public static GenericEntry arduinoRecall = arm.add("Arduino Recall", 0).getEntry();
-  public static GenericEntry armHasNote = arm.add("Has Note", false).getEntry();
+  public static GenericEntry armHasCoral = arm.add("Has Coral", false).getEntry();
   public static GenericEntry armTarget = arm.add("Arm Target", 0).getEntry();
   public static GenericEntry armThrottle = arm.add("Arm Throttle", 0).getEntry();
   public static GenericEntry shooterFast = arm.add("Shooter fast", false).getEntry();
@@ -94,8 +96,6 @@ public class DriverDisplay extends SubsystemBase {
   public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
   public static GenericEntry lClimberAngle = climber.add("LPosition", 0).getEntry();
   public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry(); 
-  public static GenericEntry lClimberSwitch = climber.add("LSwitch", false).getEntry();
-  public static GenericEntry rClimberSwitch = climber.add("RSwitch", false).getEntry();
   public static GenericEntry robotRoll = climber.add("RobotRoll", 0).getEntry();
   public static GenericEntry climberR = climber.add("ClimberR Input", 0).getEntry();
   public static GenericEntry climberL = climber.add("ClimberL Input", 0).getEntry();
@@ -132,7 +132,7 @@ public class DriverDisplay extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //if(ArmSubsystem.hasNote) ControllerRumble.RumbleBothControllersBothSides(0.5);
+    //if(ArmSubsystem.hasCoral) ControllerRumble.RumbleBothControllersBothSides(0.5);
     //else ControllerRumble.RumbleBothControllersBothSides(0);
     
     AutoSuccesfullShots.setInteger((int)AutoSequences.succesfulShots);
@@ -224,30 +224,32 @@ public class DriverDisplay extends SubsystemBase {
 
 
         
-    // note choosing
-    String noteIgnoranceInpt = DriverDisplay.notesIgnorance.getString("12345678");
+    // coral choosing
+    String coralIgnoranceInpt = DriverDisplay.coralsIgnorance.getString("12345678");
 
-    if (noteIgnoranceInpt.length() >= 8) noteIgnoranceInpt = noteIgnoranceInpt.substring(0, 8);
-    if (noteIgnoranceInpt.length() < 1) noteIgnoranceInpt = "12345678";
-    noteIgnoranceInpt = Functions.RemoveMultiples(noteIgnoranceInpt);
-    //for (int i = 0; i < 8; i++) noteIgnoranceInpt = noteIgnoranceInpt.substring(0, i) + (noteIgnoranceInpt.charAt(i) == '0' ? '0' : '1') + noteIgnoranceInpt.substring(i, noteIgnoranceInpt.length() - 1);
-      //for (int i = 0; i < noteIgnoranceInpt.length(); i++) AutoSequences.notesIncluded[i] = noteIgnoranceInpt.charAt(i) == '1' ? true : false;
-    AutoSequences.noteList = new int[noteIgnoranceInpt.length()];
+    if (coralIgnoranceInpt.length() >= 8) coralIgnoranceInpt = coralIgnoranceInpt.substring(0, 8);
+    if (coralIgnoranceInpt.length() < 1) coralIgnoranceInpt = "12345678";
+    coralIgnoranceInpt = Functions.RemoveMultiples(coralIgnoranceInpt);
+    //for (int i = 0; i < 8; i++) coralIgnoranceInpt = coralIgnoranceInpt.substring(0, i) + (coralIgnoranceInpt.charAt(i) == '0' ? '0' : '1') + coralIgnoranceInpt.substring(i, coralIgnoranceInpt.length() - 1);
+      //for (int i = 0; i < coralIgnoranceInpt.length(); i++) AutoSequences.coralsIncluded[i] = coralIgnoranceInpt.charAt(i) == '1' ? true : false;
+    AutoSequences.coralList = new int[coralIgnoranceInpt.length()];
     
-    for (int i = 0; i < noteIgnoranceInpt.length(); i++) {
-      AutoSequences.noteList[i] = Character.getNumericValue(noteIgnoranceInpt.charAt(i));
+    for (int i = 0; i < coralIgnoranceInpt.length(); i++) {
+      AutoSequences.coralList[i] = Character.getNumericValue(coralIgnoranceInpt.charAt(i));
     }
     String outputString = "";
-    for (int i = 0; i < AutoSequences.noteList.length; i++) outputString += AutoSequences.noteList[i] + ", "; 
-    DriverDisplay.noteIgnoranceCheck.setString("Enabled Notes" + outputString);
+    for (int i = 0; i < AutoSequences.coralList.length; i++) outputString += AutoSequences.coralList[i] + ", "; 
+    DriverDisplay.coralIgnoranceCheck.setString("Enabled Corals" + outputString);
 
     DriverDisplay.AutoSequenceDisplay.setString(selectedAutoName);
     DriverDisplay.rng.setDouble(Math.random());
 
     //Arm
-    DriverDisplay.armAngle.setDouble(ArmSubsystem.armAngle);
+    DriverDisplay.armAngle.setDouble(0.);
     DriverDisplay.arduinoRecall.setDouble(1.0);
-    DriverDisplay.armHasNote.setBoolean(ArmSubsystem.hasNote);
+    DriverDisplay.elevatorBottomSwitch.setBoolean(Constants.elevatorBottom.get());
+    DriverDisplay.elevatorTopSwitch.setBoolean(Constants.elevatorTop.get());
+    DriverDisplay.armHasCoral.setBoolean(ArmSubsystem.hasCoral);
     DriverDisplay.motorPower1.setDouble(Constants.elevator1.getOutputCurrent());
     DriverDisplay.motorPower2.setDouble(Constants.elevator2.getOutputCurrent());
     DriverDisplay.IntakeTotalPower.setDouble(Constants.coralIntake.getOutputCurrent());
@@ -274,18 +276,16 @@ public class DriverDisplay extends SubsystemBase {
    
     
 
-    //Note Detector
-    DriverDisplay.showNoteYaw.setDouble(GamePieceDetector.noteYaw);
-    DriverDisplay.showNotePitch.setDouble(GamePieceDetector.notePitch);
-    DriverDisplay.showNote.setBoolean(GamePieceDetector.noteVisible);
-    DriverDisplay.noteDistance.setDouble(GamePieceDetector.noteDist);
+    //Coral Detector
+    DriverDisplay.showCoralYaw.setDouble(GamePieceDetector.coralYaw);
+    DriverDisplay.showCoralPitch.setDouble(GamePieceDetector.coralPitch);
+    DriverDisplay.showCoral.setBoolean(GamePieceDetector.coralVisible);
+    DriverDisplay.coralDistance.setDouble(GamePieceDetector.coralDist);
 
 
     //climber
     DriverDisplay.lClimberAngle.setDouble(ClimberSubsystem.lClimberAngle);
     DriverDisplay.rClimberAngle.setDouble(ClimberSubsystem.rClimberAngle);
-    DriverDisplay.lClimberSwitch.setBoolean(Constants.lClimberSwitch.get());
-    DriverDisplay.rClimberSwitch.setBoolean(Constants.rClimberSwitch.get());
     DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
     DriverDisplay.climberR.setDouble(Constants.climber2.get());
     DriverDisplay.climberL.setDouble(Constants.climber1.get());

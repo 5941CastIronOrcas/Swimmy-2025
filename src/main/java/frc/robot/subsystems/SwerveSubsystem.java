@@ -146,22 +146,22 @@ public class SwerveSubsystem extends SubsystemBase {
     DriveTo(target.x, PositionEstimator.robotPosition.getY(), 0, speedLimit, turnLimit, XOffset, YOffset);
   }
 
-  public static void CollectNote(double XOffset, double YOffset, double speedLimit) { //if the note is visible, it will drive toward it, and intake the note.
-    /*if (NoteDetector.noteVisible && !ArmSubsystem.hasNote) {
-      double a = PositionEstimator.robotYawDriverRelative + NoteDetector.noteYaw;
-      double x = -Math.cos(Math.toRadians(-a+90)) * NoteDetector.noteDist + XOffset;
-      double y = -Math.sin(Math.toRadians(-a+90)) * NoteDetector.noteDist + YOffset;
-      DriveDriverOrientedAtAngle(Functions.Clamp(x * Constants.swerveCollectNotePMult, -speedLimit, speedLimit), 
-        Functions.Clamp(y * Constants.swerveCollectNotePMult, -speedLimit, speedLimit), 
+  public static void CollectCoral(double XOffset, double YOffset, double speedLimit) { //if the coral is visible, it will drive toward it, and intake the coral.
+    /*if (CoralDetector.coralVisible && !ArmSubsystem.hasCoral) {
+      double a = PositionEstimator.robotYawDriverRelative + CoralDetector.coralYaw;
+      double x = -Math.cos(Math.toRadians(-a+90)) * CoralDetector.coralDist + XOffset;
+      double y = -Math.sin(Math.toRadians(-a+90)) * CoralDetector.coralDist + YOffset;
+      DriveDriverOrientedAtAngle(Functions.Clamp(x * Constants.swerveCollectCoralPMult, -speedLimit, speedLimit), 
+        Functions.Clamp(y * Constants.swerveCollectCoralPMult, -speedLimit, speedLimit), 
         a, speedLimit);
     }*/
     speedLimit = Functions.Clamp(speedLimit, 0, 1);
-    double a = PositionEstimator.robotYawDriverRelative + GamePieceDetector.noteYaw;
+    double a = PositionEstimator.robotYawDriverRelative + GamePieceDetector.coralYaw;
     double x = 0;
     double y = 0;
-    if(GamePieceDetector.noteVisible && !ArmSubsystem.hasNote && Math.abs(Functions.DeltaAngleDeg(a, PositionEstimator.robotYawDriverRelative)) < 15 && ArmSubsystem.armAngle < 2)
+    if(GamePieceDetector.coralVisible && !ArmSubsystem.hasCoral && Math.abs(Functions.DeltaAngleDeg(a, PositionEstimator.robotYawDriverRelative)) < 15 && ArmSubsystem.elevatorHeight < 2)
     {
-      double goSpeed = Constants.swerveCollectNotePMult * GamePieceDetector.noteDist;
+      double goSpeed = Constants.swerveCollectCoralPMult * GamePieceDetector.coralDist;
       x = goSpeed * -Math.cos(Math.toRadians(-a+90));
       y = goSpeed * -Math.sin(Math.toRadians(-a+90));
     }
@@ -173,7 +173,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public static void Drive(double x, double y, double rotate) { //this is the basis of the swerve code
     double currentMaxAccel = Constants.swerveMaxAccel;
     //uncomment the below line to enable adaptive acceleration limiter
-    currentMaxAccel = Functions.Clamp(Constants.swerveMaxAccelExtended + (Math.cos(Math.toRadians(ArmSubsystem.armAngle))*(Constants.swerveMaxAccel-Constants.swerveMaxAccelExtended)), 0.1, 2.0);
+    currentMaxAccel = Functions.Clamp(Constants.swerveMaxAccelExtended + (Math.cos(Math.toRadians(ArmSubsystem.elevatorHeight))*(Constants.swerveMaxAccel-Constants.swerveMaxAccelExtended)), 0.1, 2.0);
     xOut += Functions.Clamp(x-xOut, -currentMaxAccel, currentMaxAccel); //xOut and yOut are x and y, but the acceleration is limited.
     yOut += Functions.Clamp(y-yOut, -currentMaxAccel, currentMaxAccel);
     double flx =  xOut + (Constants.turnMult * rotate); //the x and y coordinates of each wheel. since the rotation affects each wheel differently, rotation is either added or subtracted from x and y.

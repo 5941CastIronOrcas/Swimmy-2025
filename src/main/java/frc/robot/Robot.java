@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
   public static Boolean isRedAlliance = true;
   public static Boolean isBlueAlliance = false;
   public static boolean robotLimp = true;
-  public static short framesNoteNotPresent = 0;
+  public static short framesCoralNotPresent = 0;
   public static int selectedAutoSequence = Constants.defaultAutoSequence;
   public static double timeSinceRPSstart = 0;
   public static int RPS = -1; //variable that chooses which thing in RPS
@@ -76,8 +76,8 @@ public class Robot extends TimedRobot {
     Constants.climber1.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
     Constants.climber2.getEncoder().setPosition(0);
     Constants.gyro.setYaw(180);
-    for (int i = 0; i < Constants.redNotesPos.length; i++) Constants.allNotesPos[i] = Robot.isRedAlliance ? Constants.redNotesPos[i] : Constants.blueNotesPos[i]; //gets the values in either redNotesPos or blueNotesPos depending on the current team, and adds them to the start of the allNotesPos array.
-    for (int i = 0; i < Constants.centerNotesPos.length; i++) Constants.allNotesPos[i + Constants.redNotesPos.length] = Constants.centerNotesPos[i]; //adds the center notes to the end of the allNotesPos array.
+    for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
+    for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.
      
   }
 
@@ -162,7 +162,7 @@ public class Robot extends TimedRobot {
     //Swerve
     if(Constants.controller1.getBButton())
     {
-      SwerveSubsystem.CollectNote(LSX, LSY, speed);
+      SwerveSubsystem.CollectCoral(LSX, LSY, speed);
     }
     else if(Constants.controller1.getXButton())
     {
@@ -179,7 +179,7 @@ public class Robot extends TimedRobot {
 
     //Arm
     if(Constants.controller2.getBackButton()) {
-      ArmSubsystem.moveArmTo(0);
+      ArmSubsystem.moveElevatorTo(0);
      // ClimberSubsystem.moveClimbers(-1,0);
     }
     else if (Constants.controller2.getStartButtonPressed()) {
@@ -212,11 +212,11 @@ public class Robot extends TimedRobot {
         {
           if(Constants.controller2.getRightBumper())
           {
-            ArmSubsystem.manualMoveArmTo();
+            //ArmSubsystem.manualMoveArmTo();
           }
           else
           {
-            ArmSubsystem.rotateArm(LSY2);
+            ArmSubsystem.moveElevator(LSY2);
           }
           
         }
@@ -242,7 +242,7 @@ public class Robot extends TimedRobot {
 
 
 
-    //if(ArmSubsystem.hasNote) ControllerRumble.RumbleBothControllersBothSides(0.5);
+    //if(ArmSubsystem.hasCoral) ControllerRumble.RumbleBothControllersBothSides(0.5);
     //else ControllerRumble.RumbleBothControllersBothSides(0);
     
   }
@@ -303,7 +303,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    //for (int i = 0; i < Constants.allNotesPos.length; i++) PositionEstimator.realNoteList.add(Constants.allNotesPos[i]);
+    //for (int i = 0; i < Constants.allCoralsPos.length; i++) PositionEstimator.realCoralList.add(Constants.allCoralsPos[i]);
     Constants.timeSinceStartAtAutoStart = Timer.getFPGATimestamp();
     
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -323,20 +323,20 @@ public class Robot extends TimedRobot {
     
     /*if(selectedAutoSequence >= 7 && AutoSequences.isAutoTimeBetween(0.1, 16))
     {
-      if (Math.abs(Functions.DeltaAngleDeg(PositionEstimator.angleToClosestNote()+180, PositionEstimator.robotPosition.getRotation().getDegrees())) < 15 && PositionEstimator.distToClosestNote() > 0.2+Constants.noteCameraForwardOffset && PositionEstimator.distToClosestNote() < 3+Constants.noteCameraForwardOffset && !NoteDetector.noteVisible) {
-      framesNoteNotPresent++;
-      if (framesNoteNotPresent >= 40) {
-        PositionEstimator.removeClosestNote();
-        framesNoteNotPresent = 0;
+      if (Math.abs(Functions.DeltaAngleDeg(PositionEstimator.angleToClosestCoral()+180, PositionEstimator.robotPosition.getRotation().getDegrees())) < 15 && PositionEstimator.distToClosestCoral() > 0.2+Constants.coralCameraForwardOffset && PositionEstimator.distToClosestCoral() < 3+Constants.coralCameraForwardOffset && !CoralDetector.coralVisible) {
+      framesCoralNotPresent++;
+      if (framesCoralNotPresent >= 40) {
+        PositionEstimator.removeClosestCoral();
+        framesCoralNotPresent = 0;
       }
     }
     else
       {
-        framesNoteNotPresent = 0;
+        framesCoralNotPresent = 0;
       }
     }*/
   }  
-  public static boolean noteIgnoranceGetInpt(String inptStr) {
+  public static boolean coralIgnoranceGetInpt(String inptStr) {
     return inptStr.toLowerCase().equals("n") || inptStr.toLowerCase().equals("no") || inptStr.toLowerCase().equals("none") || inptStr.toLowerCase().equals("0");
   }
   /*

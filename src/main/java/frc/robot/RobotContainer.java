@@ -38,7 +38,7 @@ public class RobotContainer {
   private final PositionEstimator positionEstimator = new PositionEstimator();
   private final ArmSubsystem armSubsystem = new ArmSubsystem();
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-  private final GamePieceDetector noteDetector = new GamePieceDetector();
+  private final GamePieceDetector coralDetector = new GamePieceDetector();
   private final DriverDisplay driverDisplay = new DriverDisplay();
   private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   private final ControllerRumble controllerRumble = new ControllerRumble();

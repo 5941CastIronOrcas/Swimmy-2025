@@ -81,7 +81,7 @@ public final class Constants {
   public static final double swerveDriveToDeadZone = 0.03; //if the robot is within this many meters of the target position, it stops moving.
   public static final double swerveSquareDriveToDeadZone = 0.03;
   //Swerve Collect Ring Constants
-  public static final double swerveCollectNotePMult = 0.5;
+  public static final double swerveCollectCoralPMult = 0.5;
   
   
   //GAME PIECE MANIPULATION STUFF:
@@ -102,20 +102,24 @@ public final class Constants {
   
   //Arm Sensor Declarations
   public static DutyCycleEncoder coralEncoder = new DutyCycleEncoder(1);
+  public static DigitalInput elevatorBottom = new DigitalInput(2);
+  public static DigitalInput elevatorTop = new DigitalInput(3);
 
   //ALL PIDS STILL NEED TO BE CALIBRATED
-  //public static final DigitalInput[] noteDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
+  //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorPMult = 0.1;
   public static final double elevatorDMult = 0.0;
   public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
   public static final double maxElevatorSpeed = 1.0; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
+  public static final double angleToHeightRatio = 10000000;
   public static final double intakeHeight = 20.;
   public static final double reef1Height = 18.;
   public static final double reef2Height = 31.875;
   public static final double reef3Height = 47.625;
   public static final double reef4Height = 72.;
+  public static final double maxElevatorHeight = 10.;
   //Coral Intake Control Constants
   public static final double coralPMult = 1.0;
   public static final double coralDMult = 1.0; 
@@ -149,8 +153,6 @@ public final class Constants {
   public static final SparkMax climber1 = new SparkMax(35, MotorType.kBrushless);
   public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
   public static final SparkMax climberclaw = new SparkMax(37, MotorType.kBrushless);
-  public static DigitalInput lClimberSwitch = new DigitalInput(2);
-  public static DigitalInput rClimberSwitch = new DigitalInput(3);
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   //Climber Control Constants
   public static final double climberPivotPMult = 0.01;
@@ -176,22 +178,22 @@ public final class Constants {
   public static final Vector2D blueAmpDepositPosition = new Vector2D(1.8415, 8.24);
   public static final double speakerHeight = 2.05; //height of speaker opening in meters
   public static final double speakerAngleVariation = 5.0; //how many degrees the arm angle can be from the target and still shoot
-  public static final double noteCameraHeight = 0.22; //in meters for note detector
-  public static final double noteCameraForwardOffset = 0.54; // forward distance from robot center to note detector camera in meters
-  public static final double noteCameraAngle = -20; //for note detector
+  public static final double coralCameraHeight = 0.22; //in meters for coral detector
+  public static final double coralCameraForwardOffset = 0.54; // forward distance from robot center to coral detector camera in meters
+  public static final double coralCameraAngle = -20; //for coral detector
   public static final double swerveMaxSpeed = 4.4; //the max speed we're capable of moving at in m/s (used for discarding impossible data)
   public static final String apriltagCamera1Name = "camLeft"; //LEFT (shooter forward)
   public static final String apriltagCamera2Name = "camRight"; //RIGHT (shooter forward)
- // public static final String noteDetectionCameraName = "Arducam_OV9782_USB_Camera";
+ // public static final String coralDetectionCameraName = "Arducam_OV9782_USB_Camera";
   public static final double FieldDisplayOffsetX = 1.1225;
   public static final double FieldDisplayOffsetY = 0.326;
 
 
 
-  public static final Vector2D[] blueNotesPos = new Vector2D[] {new Vector2D(2.9464, 4.1057), new Vector2D(2.9464, 5.5535), new Vector2D(2.9464, 7.0013)}; 
-  public static final Vector2D[] redNotesPos = new Vector2D[] {new Vector2D(13.6449, 4.1057), new Vector2D(13.6449, 5.5535), new Vector2D(13.6449, 7.0013)};
-  public static final Vector2D[] centerNotesPos = new Vector2D[] {new Vector2D(8.2956, 0.7529), new Vector2D(8.2956, 2.4293), new Vector2D(8.2956, 4.1057), new Vector2D(8.2956, 5.7821), new Vector2D(8.2956, 7.4585)};
-  public static Vector2D[] allNotesPos = new Vector2D[centerNotesPos.length + redNotesPos.length];
+  public static final Vector2D[] blueCoralsPos = new Vector2D[] {new Vector2D(2.9464, 4.1057), new Vector2D(2.9464, 5.5535), new Vector2D(2.9464, 7.0013)}; 
+  public static final Vector2D[] redCoralsPos = new Vector2D[] {new Vector2D(13.6449, 4.1057), new Vector2D(13.6449, 5.5535), new Vector2D(13.6449, 7.0013)};
+  public static final Vector2D[] centerCoralsPos = new Vector2D[] {new Vector2D(8.2956, 0.7529), new Vector2D(8.2956, 2.4293), new Vector2D(8.2956, 4.1057), new Vector2D(8.2956, 5.7821), new Vector2D(8.2956, 7.4585)};
+  public static Vector2D[] allCoralsPos = new Vector2D[centerCoralsPos.length + redCoralsPos.length];
   
   //OTHER CONSTANTS:
   public static final double gravity = 9.81; //gravitational acceleration in m/s^2
