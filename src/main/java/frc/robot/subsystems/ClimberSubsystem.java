@@ -50,19 +50,17 @@ public class ClimberSubsystem extends SubsystemBase {
   }*/
 
   public static void moveClaw(double speed) {
-    Constants.climberclaw.set(speed);
+    Constants.climberClaw.set(Constants.climberClawInvert?-speed:speed);
   }
 
   public static void moveClimber(double speed) {
-    Constants.climber1.set(speed);
-    Constants.climber2.set(speed);
+    Constants.climber1.set((Constants.climber1Invert)?-speed:speed);
+    Constants.climber2.set((Constants.climber2Invert)?-speed:speed);
   }
 
   public static void rotateClimberPivot(double speed) {
-    Constants.climberPivot.set(Functions.Clamp(speed, 
-                              -Functions.Clamp(0.2*(climberAngle-Constants.minClimberAngle), 0, 1), 
-                              Functions.Clamp(-(0.2*(climberAngle-Constants.maxClimberAngle)), 0, 1)) 
-                              + (Constants.climberPivotGravMult*Math.cos(Math.toRadians(climberAngle))));
+    speed = Functions.Clamp(speed, -Functions.Clamp(0.2*(climberAngle-Constants.minClimberAngle), 0, 1), Functions.Clamp(-(0.2*(climberAngle-Constants.maxClimberAngle)), 0, 1)) + (Constants.climberPivotGravMult*Math.cos(Math.toRadians(climberAngle)));
+    Constants.climberPivot.set(Constants.climberPivotInvert?-speed:speed);
   }
 
   public static void climberPivot(double angle) {

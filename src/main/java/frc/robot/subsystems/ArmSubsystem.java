@@ -22,7 +22,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static boolean hasCoral = false; //whether or not the robot is currently holding a coral
   public static boolean shooterFast = false; //whether or not the shooter is spinning at or above the minimum shoot speed
   public static boolean correctArmAngle = false; //whether or not the arm is close enough to the correct angle to shoot to get the coral in the speaker
-  public static boolean lineBreak; //the distance measured by the ultrasonic hooked into the arduino
+  public static boolean lineBreak = false; //the distance measured by the ultrasonic hooked into the arduino
   public static boolean elevatorBottom = Constants.elevatorBottom.get();
   public static boolean elevatorTop = Constants.elevatorTop.get();
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
@@ -41,19 +41,20 @@ public class ArmSubsystem extends SubsystemBase {
       elevator1Encoder.setPosition(Constants.maxElevatorHeight);
       elevator2Encoder.setPosition(Constants.maxElevatorHeight);
     }
-    coralAngle = -(coralEncoder.getPosition() * 1.)+0.; //sets the ArmAngle appropriately
+    coralAngle = -(coralEncoder.getPosition() * 1.)+0.; //sets the coralAngle appropriately
     elevatorHeight = angleToHeight(elevator1Encoder.getPosition());
     dist = PositionEstimator.distToSpeaker();
    // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
+    lineBreak = Constants.linebreakSensor.get();
 
     //recalledValue = Arduino.getCallArduino((byte) 0x2e); //????????
-      if(!lineBreak) //if linebreak can see a coral
-      {
-        hasCoral = true; //immediately assume the coral is real
-        noCoralFrames = 0; //set the number of frames since a coral was seen to 0
-      }
-      else noCoralFrames++; //if linebreak can't see a coral, increase noCoralFrames
-      if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
+    if(!lineBreak) //if linebreak can see a coral
+    {
+      hasCoral = true; //immediately assume the coral is real
+      noCoralFrames = 0; //set the number of frames since a coral was seen to 0
+    }
+    else noCoralFrames++; //if linebreak can't see a coral, increase noCoralFrames
+    if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
 
   }
 
@@ -67,7 +68,7 @@ public class ArmSubsystem extends SubsystemBase {
    moveElevator(Functions.Clamp((Constants.elevatorPMult*(h - elevatorHeight)) 
     -(Constants.elevatorDMult*elevator1Encoder.getVelocity()), 
     -Constants.maxElevatorSpeed, Constants.maxElevatorSpeed));
-     DriverDisplay.armTarget.setDouble(h);
+    DriverDisplay.armTarget.setDouble(h);
   }
   public static void moveElevator(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     t = Functions.Clamp(t, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
@@ -76,23 +77,30 @@ public class ArmSubsystem extends SubsystemBase {
     DriverDisplay.armThrottle.setDouble(t);
   }
 
-  public static void rotateIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
+  public static void rotateCoralIntakeTo(double a) {
+    a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
+    rotateCoralIntake(Functions.Clamp((Constants.coralPMult*(a - coralAngle)) 
+    -(Constants.coralDMult*coralEncoder.getVelocity()), 
+    -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed));
+    DriverDisplay.armTarget.setDouble(a);
+  }
+  public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + (Constants.coralGravMult*Math.cos(Math.toRadians(coralAngle)));
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
-  public static void SpinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
+  public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
     Constants.coralIntake.set(Functions.Clamp(-input, -1, coralAngle < 15 ? 0 : 1));
   }
-  public static void Intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.  
+  public static void intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.  
   {
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
-    SpinIntake((hasCoral)?0:input);
+    spinIntake((hasCoral)?0:input);
   }
   public static void IntakeRing() { //moves the arm to the intake position, and tries to pick up a Coral
     moveElevatorTo(Constants.intakeHeight);
-    Intake(0.75);
+    intake(0.75);
   }
 
 

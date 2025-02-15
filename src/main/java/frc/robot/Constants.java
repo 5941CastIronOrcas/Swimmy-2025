@@ -96,6 +96,7 @@ public final class Constants {
   public static final SparkMax coralIntake = new SparkMax(31, MotorType.kBrushless);
   public static final SparkMaxConfig coralIntakeConfig = new SparkMaxConfig();
   public static final Boolean coralIntakePivotInvert = false;
+  public static final Boolean coralIntakeInvert = false;
   //Algae Intake Motor Declarations
   public static final SparkMax algaeIntakePivot = new SparkMax(32, MotorType.kBrushless);
   public static final SparkMax algaeIntake = new SparkMax(33, MotorType.kBrushless);
@@ -105,6 +106,7 @@ public final class Constants {
   public static DutyCycleEncoder coralEncoder = new DutyCycleEncoder(1);
   public static DigitalInput elevatorBottom = new DigitalInput(2);
   public static DigitalInput elevatorTop = new DigitalInput(3);
+  public static DigitalInput linebreakSensor = new DigitalInput(4);
 
   //ALL PIDS STILL NEED TO BE CALIBRATED
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
@@ -153,7 +155,11 @@ public final class Constants {
   public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
   public static final SparkMax climber1 = new SparkMax(35, MotorType.kBrushless);
   public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
-  public static final SparkMax climberclaw = new SparkMax(37, MotorType.kBrushless);
+  public static final SparkMax climberClaw = new SparkMax(37, MotorType.kBrushless);
+  public static final Boolean climber1Invert = false;
+  public static final Boolean climber2Invert = false;
+  public static final Boolean climberPivotInvert = false;
+  public static final Boolean climberClawInvert = false;
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   //Climber Control Constants
   public static final double climberPivotPMult = 0.01;
@@ -167,8 +173,6 @@ public final class Constants {
   //public static final double climberMaxSpeed = 1;
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
-  public static final Boolean climber1Invert = false;
-  public static final Boolean climber2Invert = false;
   public static final double minClimberAngle = 0;
   public static final double maxClimberAngle = 0;
 
