@@ -50,23 +50,21 @@ public class DriverDisplay extends SubsystemBase {
  
   //Arm
   public static ShuffleboardTab arm = Shuffleboard.getTab("Arm");
-  public static GenericEntry armAngle = arm.add("Arm Angle", 0).getEntry();
-  public static GenericEntry correctArmAngle = arm.add("Arm at correct angle", false).getEntry();
+  public static GenericEntry elevatorMotorAngle = arm.add("Elevator Height Motor Angle", 0).getEntry();
+  public static GenericEntry elevatorHeight = arm.add("Elevator Height", 0).getEntry();
+  public static GenericEntry correctElevatorHeight = arm.add("Elevator at Correct Height", false).getEntry();
   public static GenericEntry elevatorBottomSwitch = arm.add("Elevator Bottom Switch", false).getEntry();
   public static GenericEntry elevatorTopSwitch = arm.add("Elevator Top Switch", false).getEntry();
+  public static GenericEntry elevatorAngle = arm.add("Elevator Angle", 0).getEntry();
+  public static GenericEntry correctElevatorAngle = arm.add("Elevator at Correct Angle", false).getEntry();
   public static GenericEntry arduinoRecall = arm.add("Arduino Recall", 0).getEntry();
-  public static GenericEntry armHasCoral = arm.add("Has Coral", false).getEntry();
+  public static GenericEntry hasCoral = arm.add("Has Coral", false).getEntry();
   public static GenericEntry armTarget = arm.add("Arm Target", 0).getEntry();
   public static GenericEntry armThrottle = arm.add("Arm Throttle", 0).getEntry();
-  public static GenericEntry shooterFast = arm.add("Shooter fast", false).getEntry();
   public static GenericEntry motorPower1 = arm.add("ArmMotor1 Amps", 0).getEntry();
   public static GenericEntry motorPower2 = arm.add("ArmMotor2 Amps", 0).getEntry();
-  public static GenericEntry motor1Rpm = arm.add("LowShooterRpm", 0).getEntry();
-  public static GenericEntry motor2Rpm = arm.add("UpShooterRpm", 0).getEntry();
   public static GenericEntry range = arm.add("Range", 0).getEntry();
-  public static GenericEntry ShootTotalPower = arm.add("Shooter Amps", 0).getEntry();
-  public static GenericEntry IntakeTotalPower = arm.add("Intake Amps", 0).getEntry();
-  public static GenericEntry atSpeakerAngle = arm.add("Facing speaker", false).getEntry();
+  public static GenericEntry atReefAngle = arm.add("Facing Reef", false).getEntry();
   public static GenericEntry inRange = arm.add("In Range", false).getEntry();
 
 
