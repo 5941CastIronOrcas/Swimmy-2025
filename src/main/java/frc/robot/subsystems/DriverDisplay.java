@@ -55,17 +55,30 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry correctElevatorHeight = arm.add("Elevator at Correct Height", false).getEntry();
   public static GenericEntry elevatorBottomSwitch = arm.add("Elevator Bottom Switch", false).getEntry();
   public static GenericEntry elevatorTopSwitch = arm.add("Elevator Top Switch", false).getEntry();
-  public static GenericEntry elevatorAngle = arm.add("Elevator Angle", 0).getEntry();
-  public static GenericEntry correctElevatorAngle = arm.add("Elevator at Correct Angle", false).getEntry();
+  public static GenericEntry intakeAngle = arm.add("Intake Angle", 0).getEntry();
+  public static GenericEntry correctIntakeAngle = arm.add("Intake at Correct Angle", false).getEntry();
   public static GenericEntry arduinoRecall = arm.add("Arduino Recall", 0).getEntry();
   public static GenericEntry hasCoral = arm.add("Has Coral", false).getEntry();
-  public static GenericEntry armTarget = arm.add("Arm Target", 0).getEntry();
-  public static GenericEntry armThrottle = arm.add("Arm Throttle", 0).getEntry();
-  public static GenericEntry motorPower1 = arm.add("ArmMotor1 Amps", 0).getEntry();
-  public static GenericEntry motorPower2 = arm.add("ArmMotor2 Amps", 0).getEntry();
-  public static GenericEntry range = arm.add("Range", 0).getEntry();
-  public static GenericEntry atReefAngle = arm.add("Facing Reef", false).getEntry();
+  public static GenericEntry elevatorTarget = arm.add("Elevator Target", 0).getEntry();
+  public static GenericEntry intakeTarget = arm.add("Elevator Target", 0).getEntry();
+  public static GenericEntry elevatorThrottle = arm.add("Elevator Throttle", 0).getEntry();
+  public static GenericEntry motorPower1 = arm.add("Elevator1 Amps", 0).getEntry();
+  public static GenericEntry motorPower2 = arm.add("Elevator2 Amps", 0).getEntry();
+  public static GenericEntry intakePivotPower = arm.add("Intake Pivot Amps", 0).getEntry();
+  public static GenericEntry intakePower = arm.add("Intake Amps", 0).getEntry();
   public static GenericEntry inRange = arm.add("In Range", false).getEntry();
+
+
+  //Climber
+  public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
+  //public static GenericEntry climberR = climber.add("ClimberR Input", 0).getEntry();
+  public static GenericEntry climberInput = climber.add("Climber Input", 0).getEntry();
+  public static GenericEntry climberAngle = climber.add("Climber Motor Angle", 0).getEntry();
+  //public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry(); 
+  public static GenericEntry climberPivotAngle = climber.add("Climber Pivot Angle", 0).getEntry();
+  public static GenericEntry climberTarget = climber.add("Climber Target Angle", 0).getEntry();
+  public static GenericEntry robotRoll = climber.add("RobotRoll", 0).getEntry();
+  public static GenericEntry robotPitch = climber.add("RobotPitch", 0).getEntry();
 
 
   //Swerve
@@ -78,25 +91,17 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry flVelocity = swerve.add("Fl Velocity", 0).getEntry();
   public static GenericEntry brVelocity = swerve.add("Br Velocity", 0).getEntry();
   public static GenericEntry blVelocity = swerve.add("Bl Velocity", 0).getEntry();
-  public static GenericEntry driveX = swerve.add("driveX", 0).getEntry();
-  public static GenericEntry driveY = swerve.add("driveY", 0).getEntry();
-  public static GenericEntry driveRotate = swerve.add("driveSpin", 0).getEntry();
-  public static GenericEntry totalDriveAmps = swerve.add("Total Amps", 0).getEntry();
-  public static GenericEntry atTargetPosition = swerve.add("atTargetPos", false).getEntry();
-  public static GenericEntry atTargetAngle = swerve.add("atTargetAngle", false).getEntry();
+  public static GenericEntry driveX = swerve.add("Drive X", 0).getEntry();
+  public static GenericEntry driveY = swerve.add("Drive Y", 0).getEntry();
+  public static GenericEntry driveRotate = swerve.add("Drive Spin", 0).getEntry();
+  public static GenericEntry xVelocity = swerve.add("Robot X Velocity", 0).getEntry();
+  public static GenericEntry yVelocity = swerve.add("Robot Y Velocity", 0).getEntry();
+  public static GenericEntry rotVelocity = swerve.add("Robot Rotational Velocity", 0).getEntry();
+  public static GenericEntry totalDriveAmps = swerve.add("Total Drive Amps", 0).getEntry();
+  public static GenericEntry atTargetPosition = swerve.add("At Target Position", false).getEntry();
+  public static GenericEntry atTargetAngle = swerve.add("At Target Angle", false).getEntry();
   
 
-
-
-
-
-  //Climber
-  public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
-  public static GenericEntry lClimberAngle = climber.add("LPosition", 0).getEntry();
-  public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry(); 
-  public static GenericEntry robotRoll = climber.add("RobotRoll", 0).getEntry();
-  public static GenericEntry climberR = climber.add("ClimberR Input", 0).getEntry();
-  public static GenericEntry climberL = climber.add("ClimberL Input", 0).getEntry();
 
 
 
@@ -243,18 +248,31 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.rng.setDouble(Math.random());
 
     //Arm
-    DriverDisplay.armAngle.setDouble(0.);
-    DriverDisplay.arduinoRecall.setDouble(1.0);
-    DriverDisplay.elevatorBottomSwitch.setBoolean(Constants.elevatorBottom.get());
-    DriverDisplay.elevatorTopSwitch.setBoolean(Constants.elevatorTop.get());
-    DriverDisplay.armHasCoral.setBoolean(ArmSubsystem.hasCoral);
+    DriverDisplay.elevatorMotorAngle.setDouble(ArmSubsystem.elevator1Encoder.getPosition());
+    DriverDisplay.elevatorHeight.setDouble(ArmSubsystem.elevatorHeight);
+    DriverDisplay.correctElevatorHeight.setBoolean(ArmSubsystem.correctHeight);
+    DriverDisplay.elevatorBottomSwitch.setBoolean(ArmSubsystem.elevatorBottom);
+    DriverDisplay.elevatorTopSwitch.setBoolean(ArmSubsystem.elevatorTop);
+    DriverDisplay.intakeAngle.setDouble(ArmSubsystem.coralAngle);
+    DriverDisplay.correctIntakeAngle.setBoolean(ArmSubsystem.correctAngle);
+    DriverDisplay.arduinoRecall.setDouble(1.234);
+    DriverDisplay.hasCoral.setBoolean(ArmSubsystem.hasCoral);
     DriverDisplay.motorPower1.setDouble(Constants.elevator1.getOutputCurrent());
     DriverDisplay.motorPower2.setDouble(Constants.elevator2.getOutputCurrent());
-    DriverDisplay.IntakeTotalPower.setDouble(Constants.coralIntake.getOutputCurrent());
-    DriverDisplay.correctArmAngle.setBoolean(ArmSubsystem.correctArmAngle);
-    DriverDisplay.shooterFast.setBoolean(ArmSubsystem.shooterFast);
+    DriverDisplay.intakePivotPower.setDouble(Constants.coralIntakePivot.getOutputCurrent());
+    DriverDisplay.intakePower.setDouble(Constants.coralIntake.getOutputCurrent());
     DriverDisplay.inRange.setBoolean(ArmSubsystem.inRange);
 
+
+    //Climber
+    DriverDisplay.climberInput.setDouble(Constants.climber.get());
+    //DriverDisplay.climberR.setDouble(Constants.climber2.get());
+    DriverDisplay.climberAngle.setDouble(ClimberSubsystem.climberAngle);
+    //DriverDisplay.rClimberAngle.setDouble(ClimberSubsystem.rClimberAngle);
+    DriverDisplay.climberPivotAngle.setDouble(ClimberSubsystem.climberPivotAngle);
+    DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
+    DriverDisplay.robotPitch.setDouble(Constants.gyro.getPitch().getValueAsDouble());
+    
 
 
     //swerve
@@ -266,6 +284,9 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.flVelocity.setDouble(SwerveSubsystem.flModule.GetVelocity());
     DriverDisplay.brVelocity.setDouble(SwerveSubsystem.brModule.GetVelocity());
     DriverDisplay.blVelocity.setDouble(SwerveSubsystem.blModule.GetVelocity());
+    DriverDisplay.xVelocity.setDouble(SwerveSubsystem.currentSpeed.vxMetersPerSecond);
+    DriverDisplay.yVelocity.setDouble(SwerveSubsystem.currentSpeed.vyMetersPerSecond);;
+    DriverDisplay.rotVelocity.setDouble(SwerveSubsystem.currentSpeed.omegaRadiansPerSecond);;
     DriverDisplay.totalDriveAmps.setDouble(Constants.fraMotor.getOutputCurrent() + Constants.flaMotor.getOutputCurrent() + Constants.braMotor.getOutputCurrent() + Constants.blaMotor.getOutputCurrent());
     DriverDisplay.atTargetPosition.setBoolean(SwerveSubsystem.atTargetPosition);
     DriverDisplay.atTargetAngle.setBoolean(SwerveSubsystem.atTargetAngle);
@@ -281,12 +302,7 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.coralDistance.setDouble(GamePieceDetector.coralDist);
 
 
-    //climber
-    DriverDisplay.lClimberAngle.setDouble(ClimberSubsystem.lClimberAngle);
-    DriverDisplay.rClimberAngle.setDouble(ClimberSubsystem.rClimberAngle);
-    DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
-    DriverDisplay.climberR.setDouble(Constants.climber2.get());
-    DriverDisplay.climberL.setDouble(Constants.climber1.get());
+    
     //position estimator
     DriverDisplay.isPresent1.setBoolean(PositionEstimator.camCheck1());
     DriverDisplay.isPresent2.setBoolean(PositionEstimator.camCheck2());

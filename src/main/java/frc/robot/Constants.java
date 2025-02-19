@@ -153,11 +153,11 @@ public final class Constants {
   //CLIMBER STUFF
   //Climber Motor Declarations
   public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
-  public static final SparkMax climber1 = new SparkMax(35, MotorType.kBrushless);
-  public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
+  public static final SparkMax climber = new SparkMax(35, MotorType.kBrushless);
+  //public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
   public static final SparkMax climberClaw = new SparkMax(37, MotorType.kBrushless);
-  public static final Boolean climber1Invert = false;
-  public static final Boolean climber2Invert = false;
+  public static final Boolean climberInvert = false;
+  //public static final Boolean climber2Invert = false;
   public static final Boolean climberPivotInvert = false;
   public static final Boolean climberClawInvert = false;
   public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);

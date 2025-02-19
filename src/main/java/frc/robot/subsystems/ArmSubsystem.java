@@ -21,10 +21,11 @@ public class ArmSubsystem extends SubsystemBase {
   public static double g = Constants.gravity; //gravitational acceleration m/s/s
   public static boolean hasCoral = false; //whether or not the robot is currently holding a coral
   public static boolean shooterFast = false; //whether or not the shooter is spinning at or above the minimum shoot speed
-  public static boolean correctArmAngle = false; //whether or not the arm is close enough to the correct angle to shoot to get the coral in the speaker
+  public static boolean correctHeight = false; //whether or not the arm is close enough to the correct angle to shoot to get the coral in the speaker
+  public static boolean correctAngle = false;
   public static boolean lineBreak = false; //the distance measured by the ultrasonic hooked into the arduino
-  public static boolean elevatorBottom = Constants.elevatorBottom.get();
-  public static boolean elevatorTop = Constants.elevatorTop.get();
+  public static boolean elevatorBottom = false;
+  public static boolean elevatorTop = false;
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
   
   public ArmSubsystem() {
@@ -33,13 +34,15 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    elevatorBottom = Constants.elevatorBottom.get();
+    elevatorTop = Constants.elevatorTop.get();
     if (elevatorBottom) {
       elevator1Encoder.setPosition(0);
       elevator2Encoder.setPosition(0);
     }
     if (elevatorTop) {
-      elevator1Encoder.setPosition(Constants.maxElevatorHeight);
-      elevator2Encoder.setPosition(Constants.maxElevatorHeight);
+      //elevator1Encoder.setPosition(Constants.maxElevatorHeight);
+      //elevator2Encoder.setPosition(Constants.maxElevatorHeight);
     }
     coralAngle = -(coralEncoder.getPosition() * 1.)+0.; //sets the coralAngle appropriately
     elevatorHeight = angleToHeight(elevator1Encoder.getPosition());
@@ -68,13 +71,13 @@ public class ArmSubsystem extends SubsystemBase {
    moveElevator(Functions.Clamp((Constants.elevatorPMult*(h - elevatorHeight)) 
     -(Constants.elevatorDMult*elevator1Encoder.getVelocity()), 
     -Constants.maxElevatorSpeed, Constants.maxElevatorSpeed));
-    DriverDisplay.armTarget.setDouble(h);
+    DriverDisplay.elevatorTarget.setDouble(h);
   }
   public static void moveElevator(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     t = Functions.Clamp(t, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
-    DriverDisplay.armThrottle.setDouble(t);
+    DriverDisplay.elevatorThrottle.setDouble(t);
   }
 
   public static void rotateCoralIntakeTo(double a) {
@@ -82,7 +85,7 @@ public class ArmSubsystem extends SubsystemBase {
     rotateCoralIntake(Functions.Clamp((Constants.coralPMult*(a - coralAngle)) 
     -(Constants.coralDMult*coralEncoder.getVelocity()), 
     -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed));
-    DriverDisplay.armTarget.setDouble(a);
+    DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + (Constants.coralGravMult*Math.cos(Math.toRadians(coralAngle)));

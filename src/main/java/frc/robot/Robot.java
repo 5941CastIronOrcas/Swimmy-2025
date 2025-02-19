@@ -73,8 +73,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     //auto = new PathPlannerAuto("Auto 1");
     Arduino.ArduinoConnect();
-    Constants.climber1.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
-    Constants.climber2.getEncoder().setPosition(0);
+    Constants.climber.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
+    //Constants.climber2.getEncoder().setPosition(0);
     Constants.gyro.setYaw(180);
     for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
     for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.

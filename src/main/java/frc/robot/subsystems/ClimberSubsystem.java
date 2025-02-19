@@ -16,20 +16,20 @@ import frc.robot.Functions;
 
 public class ClimberSubsystem extends SubsystemBase {
   public static RelativeEncoder climberEncoder = Constants.climberPivot.getAlternateEncoder();
+  public static double climberPivotAngle = 0;
   public static double climberAngle = 0;
-  public static double lClimberAngle = 0;
-  public static double rClimberAngle = 0;
+  //public static double rClimberAngle = 0;
 
   public ClimberSubsystem() { //initializes the climbers
-    Constants.climber1.getEncoder().setPosition(0);
-    Constants.climber2.getEncoder().setPosition(0);
+    Constants.climber.getEncoder().setPosition(0);
+    //Constants.climber2.getEncoder().setPosition(0);
   }
 
   @Override
   public void periodic() {
-    climberAngle = climberEncoder.getPosition();
-    lClimberAngle = Constants.climber1.getEncoder().getPosition();
-    rClimberAngle = Constants.climber2.getEncoder().getPosition();
+    climberPivotAngle = climberEncoder.getPosition();
+    climberAngle = Constants.climber.getEncoder().getPosition();
+    //rClimberAngle = Constants.climber2.getEncoder().getPosition();
   }
 
   @Override
@@ -54,8 +54,8 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public static void moveClimber(double speed) {
-    Constants.climber1.set((Constants.climber1Invert)?-speed:speed);
-    Constants.climber2.set((Constants.climber2Invert)?-speed:speed);
+    Constants.climber.set((Constants.climberInvert)?-speed:speed);
+    //Constants.climber2.set((Constants.climber2Invert)?-speed:speed);
   }
 
   public static void rotateClimberPivot(double speed) {
@@ -68,5 +68,6 @@ public class ClimberSubsystem extends SubsystemBase {
    rotateClimberPivot(Functions.Clamp((Constants.climberPivotPMult*(angle - Constants.climberPivot.get()))
    - (Constants.climberPivotDMult*climberEncoder.getVelocity()), - 
    Constants.maxClimberPivotSpeed, Constants.maxClimberPivotSpeed));
+   DriverDisplay.climberTarget.setDouble(angle);
   }
 }

@@ -129,8 +129,8 @@ public class Functions {
         Constants.coralIntakePivot.stopMotor();
         Constants.algaeIntake.stopMotor();
         Constants.algaeIntakePivot.stopMotor();
-        Constants.climber2.stopMotor();
-        Constants.climber1.stopMotor();
+        //Constants.climber2.stopMotor();
+        Constants.climber.stopMotor();
         Constants.elevator1.stopMotor();
         Constants.elevator2.stopMotor();
         Constants.blaMotor.stopMotor();
@@ -155,8 +155,8 @@ public class Functions {
     public static void killAllArm() {
         Constants.coralIntake.stopMotor();
         Constants.coralIntakePivot.stopMotor();
-        Constants.climber2.stopMotor();
-        Constants.climber1.stopMotor();
+        //Constants.climber2.stopMotor();
+        Constants.climber.stopMotor();
         Constants.elevator1.stopMotor();
         Constants.elevator2.stopMotor();
     }
