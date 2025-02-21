@@ -39,14 +39,14 @@ public final class Constants {
   //Gyro
   public static final Pigeon2 gyro = new Pigeon2(54); 
   //Swerve Motor Declarations
-  public static final SparkMax flaMotor = new SparkMax(27, MotorType.kBrushless); //front left angle motor
-  public static final SparkMax fltMotor = new SparkMax(26, MotorType.kBrushless); //front left throttle motor
-  public static final SparkMax fraMotor = new SparkMax(25, MotorType.kBrushless); //front right angle motor
-  public static final SparkMax frtMotor = new SparkMax(24, MotorType.kBrushless); //front right throttle motor
-  public static final SparkMax blaMotor = new SparkMax(21, MotorType.kBrushless); //back left angle motor
-  public static final SparkMax bltMotor = new SparkMax(20, MotorType.kBrushless); //back left throttle motor
-  public static final SparkMax braMotor = new SparkMax(23, MotorType.kBrushless); //back right angle motor
-  public static final SparkMax brtMotor = new SparkMax(22, MotorType.kBrushless); //back right throttle motor
+  public static final SparkMax flaMotor = new SparkMax(20, MotorType.kBrushless); //front left angle motor
+  public static final SparkMax fltMotor = new SparkMax(21, MotorType.kBrushless); //front left throttle motor
+  public static final SparkMax fraMotor = new SparkMax(22, MotorType.kBrushless); //front right angle motor
+  public static final SparkMax frtMotor = new SparkMax(23, MotorType.kBrushless); //front right throttle motor
+  public static final SparkMax blaMotor = new SparkMax(26, MotorType.kBrushless); //back left angle motor
+  public static final SparkMax bltMotor = new SparkMax(27, MotorType.kBrushless); //back left throttle motor
+  public static final SparkMax braMotor = new SparkMax(24, MotorType.kBrushless); //back right angle motor
+  public static final SparkMax brtMotor = new SparkMax(25, MotorType.kBrushless); //back right throttle motor
   //Swerve Motor Inversions
   public static final boolean fltInvert = true;
   public static final boolean frtInvert = false;
@@ -98,15 +98,16 @@ public final class Constants {
   public static final Boolean coralIntakePivotInvert = false;
   public static final Boolean coralIntakeInvert = false;
   //Algae Intake Motor Declarations
-  public static final SparkMax algaeIntakePivot = new SparkMax(32, MotorType.kBrushless);
-  public static final SparkMax algaeIntake = new SparkMax(33, MotorType.kBrushless);
+  public static final SparkMax algaeIntakePivot = new SparkMax(37, MotorType.kBrushless);
+  public static final SparkMax algaeIntake = new SparkMax(38, MotorType.kBrushless);
   public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
   
   //Arm Sensor Declarations
-  public static DutyCycleEncoder coralEncoder = new DutyCycleEncoder(1);
-  public static DigitalInput elevatorBottom = new DigitalInput(2);
-  public static DigitalInput elevatorTop = new DigitalInput(3);
-  public static DigitalInput linebreakSensor = new DigitalInput(4);
+  public static SparkMax coralEncoderSpark = new SparkMax(32, MotorType.kBrushless);
+  //public static DutyCycleEncoder coralEncoder = new DutyCycleEncoder(1);
+  public static DigitalInput elevatorBottom = new DigitalInput(3);
+  public static DigitalInput elevatorTop = new DigitalInput(4);
+  public static DigitalInput linebreakSensor = new DigitalInput(0);
 
   //ALL PIDS STILL NEED TO BE CALIBRATED
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
@@ -155,12 +156,12 @@ public final class Constants {
   public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
   public static final SparkMax climber = new SparkMax(35, MotorType.kBrushless);
   //public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
-  public static final SparkMax climberClaw = new SparkMax(37, MotorType.kBrushless);
+  public static final SparkMax climberClaw = new SparkMax(36, MotorType.kBrushless);
   public static final Boolean climberInvert = false;
   //public static final Boolean climber2Invert = false;
   public static final Boolean climberPivotInvert = false;
   public static final Boolean climberClawInvert = false;
-  public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
+  //public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   //Climber Control Constants
   public static final double climberPivotPMult = 0.01;
   public static final double climberPivotDMult = 0.01;

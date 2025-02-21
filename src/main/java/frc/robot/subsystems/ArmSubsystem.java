@@ -9,7 +9,7 @@ import frc.robot.Functions;
 
 
 public class ArmSubsystem extends SubsystemBase {
-  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
+  public static RelativeEncoder coralEncoder = Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
   public static RelativeEncoder elevator1Encoder = Constants.elevator1.getEncoder();
   public static RelativeEncoder elevator2Encoder = Constants.elevator2.getEncoder();
   public static double elevatorHeight = 0;
