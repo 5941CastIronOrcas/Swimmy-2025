@@ -31,6 +31,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public static double newVelocityX  = 0.0;
   public static double oldVelocityY = 0.0;
   public static double newVelocityY  = 0.0;
+  public static double accelX = 0;
+  public static double accelY = 0;
   public static double angularVelocity = 0.;
   public static SwerveModule flModule = new SwerveModule(Constants.flaMotor,Constants.fltMotor,Constants.flEncoder,true,Constants.fltInvert,45); //assigns each swerve module
   public static SwerveModule frModule = new SwerveModule(Constants.fraMotor,Constants.frtMotor,Constants.frEncoder,true,Constants.frtInvert,-45);

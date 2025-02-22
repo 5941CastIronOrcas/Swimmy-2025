@@ -37,7 +37,7 @@ public final class Constants {
   public static double timeSinceStartAtAutoStart = 0;
   //SWERVE STUFF:
   //Gyro
-  public static final Pigeon2 gyro = new Pigeon2(54); 
+  public static final Pigeon2 gyro = new Pigeon2(44); 
   //Swerve Motor Declarations
   public static final SparkMax flaMotor = new SparkMax(20, MotorType.kBrushless); //front left angle motor
   public static final SparkMax fltMotor = new SparkMax(21, MotorType.kBrushless); //front left throttle motor
@@ -53,10 +53,10 @@ public final class Constants {
   public static final boolean bltInvert = false;
   public static final boolean brtInvert = false;
   //Swerve Encoder Declarations
-  public static final CANcoder flEncoder = new CANcoder(50);
-  public static final CANcoder frEncoder = new CANcoder(51);
-  public static final CANcoder blEncoder = new CANcoder(52);
-  public static final CANcoder brEncoder = new CANcoder(53);
+  public static final CANcoder flEncoder = new CANcoder(40);
+  public static final CANcoder frEncoder = new CANcoder(41);
+  public static final CANcoder blEncoder = new CANcoder(42);
+  public static final CANcoder brEncoder = new CANcoder(43);
   //Swerve Module Constants
   public static final double swerveDriveRatio = 1.00 / 6.75; //L2=1/6.75  L3=1/6.12
   public static final double swerveWheelCircumference = 0.096774 * Math.PI; // in m
@@ -104,7 +104,6 @@ public final class Constants {
   
   //Arm Sensor Declarations
   public static SparkMax coralEncoderSpark = new SparkMax(32, MotorType.kBrushless);
-  //public static DutyCycleEncoder coralEncoder = new DutyCycleEncoder(1);
   public static DigitalInput elevatorBottom = new DigitalInput(3);
   public static DigitalInput elevatorTop = new DigitalInput(4);
   public static DigitalInput linebreakSensor = new DigitalInput(0);
@@ -161,6 +160,7 @@ public final class Constants {
   //public static final Boolean climber2Invert = false;
   public static final Boolean climberPivotInvert = false;
   public static final Boolean climberClawInvert = false;
+  public static DutyCycleEncoder climberEncoder = new DutyCycleEncoder(5);
   //public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   //Climber Control Constants
   public static final double climberPivotPMult = 0.01;

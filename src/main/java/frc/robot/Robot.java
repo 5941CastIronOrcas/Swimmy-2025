@@ -76,6 +76,9 @@ public class Robot extends TimedRobot {
     Constants.climber.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
     //Constants.climber2.getEncoder().setPosition(0);
     Constants.gyro.setYaw(180);
+    
+    SwerveSubsystem.oldVelocityX=0;
+    SwerveSubsystem.oldVelocityY=0;
     for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
     for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.
      
@@ -147,6 +150,16 @@ public class Robot extends TimedRobot {
     double RSY2 = -Functions.Exponential(Functions.DeadZone(Constants.controller2.getRightY(), Constants.controllerDeadZone));
     double RSX2 = Functions.Exponential(Functions.DeadZone(Constants.controller2.getRightX(), Constants.controllerDeadZone));
     double RSAngle = 90-Math.toDegrees(Math.atan2(RSY, RSX)); //gets the angle the right stick on controller 1 is pointing to.
+    /* 
+    Constants.flaMotor.set(1);
+    Constants.fltMotor.set(1);
+    Constants.frtMotor.set(1);
+    Constants.fraMotor.set(1);
+    Constants.blaMotor.set(1);
+    Constants.bltMotor.set(1);
+    Constants.brtMotor.set(1);
+    Constants.braMotor.set(1);
+     */
     if(Constants.controller1.getLeftBumper()) //snaps to specific directions to climb and score amp
     {
       RSAngle = Math.abs(Functions.DeltaAngleDeg(0, RSAngle)) < 105.0 ? 90 * Math.round(RSAngle / 90.0) : 120.0 * Math.round(RSAngle / 120.0);

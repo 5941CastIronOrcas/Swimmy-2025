@@ -60,7 +60,7 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry arduinoRecall = arm.add("Arduino Recall", 0).getEntry();
   public static GenericEntry hasCoral = arm.add("Has Coral", false).getEntry();
   public static GenericEntry elevatorTarget = arm.add("Elevator Target", 0).getEntry();
-  public static GenericEntry intakeTarget = arm.add("Elevator Target", 0).getEntry();
+  public static GenericEntry intakeTarget = arm.add("Intake Target", 0).getEntry();
   public static GenericEntry elevatorThrottle = arm.add("Elevator Throttle", 0).getEntry();
   public static GenericEntry motorPower1 = arm.add("Elevator1 Amps", 0).getEntry();
   public static GenericEntry motorPower2 = arm.add("Elevator2 Amps", 0).getEntry();
@@ -94,12 +94,14 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry driveX = swerve.add("Drive X", 0).getEntry();
   public static GenericEntry driveY = swerve.add("Drive Y", 0).getEntry();
   public static GenericEntry driveRotate = swerve.add("Drive Spin", 0).getEntry();
+  public static GenericEntry totalDriveAmps = swerve.add("Total Drive Amps", 0).getEntry();
   public static GenericEntry xVelocity = swerve.add("Robot X Velocity", 0).getEntry();
   public static GenericEntry yVelocity = swerve.add("Robot Y Velocity", 0).getEntry();
   public static GenericEntry rotVelocity = swerve.add("Robot Rotational Velocity", 0).getEntry();
-  public static GenericEntry totalDriveAmps = swerve.add("Total Drive Amps", 0).getEntry();
   public static GenericEntry atTargetPosition = swerve.add("At Target Position", false).getEntry();
   public static GenericEntry atTargetAngle = swerve.add("At Target Angle", false).getEntry();
+  public static GenericEntry accelX = swerve.add("Acceleration X", 0).getEntry();
+  public static GenericEntry accelY = swerve.add("Acceleration Y", 0).getEntry();
   
 
 
@@ -284,12 +286,14 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.flVelocity.setDouble(SwerveSubsystem.flModule.GetVelocity());
     DriverDisplay.brVelocity.setDouble(SwerveSubsystem.brModule.GetVelocity());
     DriverDisplay.blVelocity.setDouble(SwerveSubsystem.blModule.GetVelocity());
+    DriverDisplay.totalDriveAmps.setDouble(Constants.fraMotor.getOutputCurrent() + Constants.flaMotor.getOutputCurrent() + Constants.braMotor.getOutputCurrent() + Constants.blaMotor.getOutputCurrent());
     DriverDisplay.xVelocity.setDouble(SwerveSubsystem.currentSpeed.vxMetersPerSecond);
     DriverDisplay.yVelocity.setDouble(SwerveSubsystem.currentSpeed.vyMetersPerSecond);;
     DriverDisplay.rotVelocity.setDouble(SwerveSubsystem.currentSpeed.omegaRadiansPerSecond);;
-    DriverDisplay.totalDriveAmps.setDouble(Constants.fraMotor.getOutputCurrent() + Constants.flaMotor.getOutputCurrent() + Constants.braMotor.getOutputCurrent() + Constants.blaMotor.getOutputCurrent());
     DriverDisplay.atTargetPosition.setBoolean(SwerveSubsystem.atTargetPosition);
     DriverDisplay.atTargetAngle.setBoolean(SwerveSubsystem.atTargetAngle);
+    DriverDisplay.accelX.setDouble(SwerveSubsystem.accelX);
+    DriverDisplay.accelY.setDouble(SwerveSubsystem.accelY);
     
 
    
