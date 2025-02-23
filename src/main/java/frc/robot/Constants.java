@@ -13,6 +13,8 @@ import com.revrobotics.spark.config.*;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.utilityObjects.Vector2D;
 
@@ -89,13 +91,13 @@ public final class Constants {
   //Elevator Motor Declarations
   public static final SparkMax elevator1 = new SparkMax(28, MotorType.kBrushless); //left arm motor viewing from the front of the robot
   public static final SparkMax elevator2 = new SparkMax( 29, MotorType.kBrushless); //right arm motor
-  public static final Boolean elevator1Invert = true;
-  public static final Boolean elevator2Invert = false;
+  public static final Boolean elevator1Invert = false;
+  public static final Boolean elevator2Invert = true;
   //Coral Intake Motor Declarations
   public static final SparkMax coralIntakePivot = new SparkMax(30, MotorType.kBrushless);
   public static final SparkMax coralIntake = new SparkMax(31, MotorType.kBrushless);
   public static final SparkMaxConfig coralIntakeConfig = new SparkMaxConfig();
-  public static final Boolean coralIntakePivotInvert = false;
+  public static final Boolean coralIntakePivotInvert = true;
   public static final Boolean coralIntakeInvert = false;
   //Algae Intake Motor Declarations
   public static final SparkMax algaeIntakePivot = new SparkMax(37, MotorType.kBrushless);
@@ -111,22 +113,24 @@ public final class Constants {
   //ALL PIDS STILL NEED TO BE CALIBRATED
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
+  public static final double elevatorAngleOffsetThreshold = 330;
   public static final double elevatorPMult = 0.1;
   public static final double elevatorDMult = 0.0;
   public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
   public static final double maxElevatorSpeed = 1.0; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
-  public static final double angleToHeightRatio = 10000000;
+  public static final double angleToHeightRatio = 42.75/5085.;
   public static final double intakeHeight = 20.;
   public static final double reef1Height = 18.;
   public static final double reef2Height = 31.875;
   public static final double reef3Height = 47.625;
   public static final double reef4Height = 72.;
-  public static final double maxElevatorHeight = 10.;
+  public static final double maxElevatorAngle = 5085.;
+  public static final double maxElevatorHeight = 42.75;
   //Coral Intake Control Constants
   public static final double coralPMult = 1.0;
   public static final double coralDMult = 1.0; 
-  public static final double coralGravMult = 1.0;
+  public static final double coralGravMult = 0.2;
   public static final double maxCoralPivotSpeed = 1.0;
   public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
@@ -153,7 +157,7 @@ public final class Constants {
   //CLIMBER STUFF
   //Climber Motor Declarations
   public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
-  public static final SparkMax climber = new SparkMax(35, MotorType.kBrushless);
+  public static final TalonFX climber = new TalonFX(45);
   //public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
   public static final SparkMax climberClaw = new SparkMax(36, MotorType.kBrushless);
   public static final Boolean climberInvert = false;
@@ -165,7 +169,7 @@ public final class Constants {
   //Climber Control Constants
   public static final double climberPivotPMult = 0.01;
   public static final double climberPivotDMult = 0.01;
-  public static final double climberPivotGravMult = 1.;
+  public static final double climberPivotGravMult = 0.02;
   public static final double maxClimberPivotSpeed = 0.;
   public static final double climberMaxHitSpeed = 0.5;
   public static final double climberSmoothingStart = 20;
@@ -175,7 +179,7 @@ public final class Constants {
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
   public static final double minClimberAngle = 0;
-  public static final double maxClimberAngle = 0;
+  public static final double maxClimberAngle = 80;
 
   //POSITION ESTIMATION AND FIELD CONSTANTS:  
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);

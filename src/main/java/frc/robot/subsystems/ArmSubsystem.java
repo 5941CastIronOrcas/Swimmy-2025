@@ -9,9 +9,12 @@ import frc.robot.Functions;
 
 
 public class ArmSubsystem extends SubsystemBase {
-  public static RelativeEncoder coralEncoder = Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
+  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
   public static RelativeEncoder elevator1Encoder = Constants.elevator1.getEncoder();
   public static RelativeEncoder elevator2Encoder = Constants.elevator2.getEncoder();
+  public static double oldElevatorAngle = 0;
+  public static double newElevatorAngle = 0;
+  public static double elevatorAngleOffset = 0;
   public static double elevatorHeight = 0;
   public static double coralAngle = 0; //the current angle of the coral intake
   public static double oldSpeakerAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker one frame ago
@@ -29,13 +32,13 @@ public class ArmSubsystem extends SubsystemBase {
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
   
   public ArmSubsystem() {
-    
+    coralEncoder.setPosition(0);
   }
 
   @Override
   public void periodic() {
-    elevatorBottom = Constants.elevatorBottom.get();
-    elevatorTop = Constants.elevatorTop.get();
+    elevatorBottom = !Constants.elevatorBottom.get();
+    elevatorTop = !Constants.elevatorTop.get();
     if (elevatorBottom) {
       elevator1Encoder.setPosition(0);
       elevator2Encoder.setPosition(0);
@@ -44,8 +47,12 @@ public class ArmSubsystem extends SubsystemBase {
       //elevator1Encoder.setPosition(Constants.maxElevatorHeight);
       //elevator2Encoder.setPosition(Constants.maxElevatorHeight);
     }
-    coralAngle = -(coralEncoder.getPosition() * 1.)+0.; //sets the coralAngle appropriately
-    elevatorHeight = angleToHeight(elevator1Encoder.getPosition());
+    coralAngle = -(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
+    oldElevatorAngle = newElevatorAngle;
+    if (oldElevatorAngle-newElevatorAngle>Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset += 360;
+    if (oldElevatorAngle-newElevatorAngle<-Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset -= 360;
+    newElevatorAngle = Math.toDegrees(elevator1Encoder.getPosition()) + elevatorAngleOffset;
+    elevatorHeight = angleToHeight(newElevatorAngle);
     dist = PositionEstimator.distToSpeaker();
    // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
     lineBreak = Constants.linebreakSensor.get();
@@ -88,7 +95,7 @@ public class ArmSubsystem extends SubsystemBase {
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + (Constants.coralGravMult*Math.cos(Math.toRadians(coralAngle)));
+    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + (-Constants.coralGravMult*Math.cos(Math.toRadians(coralAngle))+(Constants.coralGravMult/2.));
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 

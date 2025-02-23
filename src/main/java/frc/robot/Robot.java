@@ -72,8 +72,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //auto = new PathPlannerAuto("Auto 1");
-    Arduino.ArduinoConnect();
-    Constants.climber.getEncoder().setPosition(0); //sets all climber encoders and the robot's gyro to zero.
+    Arduino.ArduinoConnect(); //sets all climber encoders and the robot's gyro to zero.
     //Constants.climber2.getEncoder().setPosition(0);
     Constants.gyro.setYaw(180);
     
@@ -136,6 +135,7 @@ public class Robot extends TimedRobot {
       robotLimp = false;
       Functions.setRobotLimp(robotLimp);
     }
+    ArmSubsystem.coralEncoder.setPosition(0);
   }
 
   /** This function is called periodically during operator control. */
@@ -191,7 +191,9 @@ public class Robot extends TimedRobot {
     }
 
     //Arm
-    if(Constants.controller2.getBackButton()) {
+    ArmSubsystem.moveElevator(LSY2*0.35);
+    ClimberSubsystem.rotateClimber(RSY2*0.5);
+    /*if(Constants.controller2.getBackButton()) {
       ArmSubsystem.moveElevatorTo(0);
      // ClimberSubsystem.moveClimbers(-1,0);
     }
@@ -251,7 +253,7 @@ public class Robot extends TimedRobot {
       }
 
      // ClimberSubsystem.moveClimbers(RSY2, RSX2);
-    }
+    }*/
 
 
 

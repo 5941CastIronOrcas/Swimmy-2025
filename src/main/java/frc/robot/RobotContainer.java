@@ -85,7 +85,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     //return Autos.exampleAuto(m_exampleSubsystem);
-    return new PathPlannerAuto("Auto 1");
-    //return autoChooser.getSelected();
+    //return new PathPlannerAuto("Auto 1");
+    return autoChooser.getSelected();
   }
 }

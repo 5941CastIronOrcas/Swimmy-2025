@@ -250,7 +250,7 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.rng.setDouble(Math.random());
 
     //Arm
-    DriverDisplay.elevatorMotorAngle.setDouble(ArmSubsystem.elevator1Encoder.getPosition());
+    DriverDisplay.elevatorMotorAngle.setDouble(ArmSubsystem.newElevatorAngle);
     DriverDisplay.elevatorHeight.setDouble(ArmSubsystem.elevatorHeight);
     DriverDisplay.correctElevatorHeight.setBoolean(ArmSubsystem.correctHeight);
     DriverDisplay.elevatorBottomSwitch.setBoolean(ArmSubsystem.elevatorBottom);

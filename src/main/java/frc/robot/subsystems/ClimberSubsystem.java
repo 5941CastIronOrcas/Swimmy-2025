@@ -13,22 +13,26 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Functions;
+import frc.robot.Robot;
 
 public class ClimberSubsystem extends SubsystemBase {
-  public static RelativeEncoder climberEncoder = Constants.climberPivot.getAlternateEncoder();
+  public static DutyCycleEncoder climberEncoder = Constants.climberEncoder;
   public static double climberPivotAngle = 0;
+  public static double oldClimberAngle = 0;
   public static double climberAngle = 0;
+  public static double climberVelocity = 0;
   //public static double rClimberAngle = 0;
 
   public ClimberSubsystem() { //initializes the climbers
-    Constants.climber.getEncoder().setPosition(0);
     //Constants.climber2.getEncoder().setPosition(0);
   }
 
   @Override
   public void periodic() {
-    climberPivotAngle = climberEncoder.getPosition();
-    climberAngle = Constants.climber.getEncoder().getPosition();
+    climberPivotAngle = (360.*climberEncoder.get()-245.);
+    oldClimberAngle = climberAngle;
+    climberAngle = Math.toDegrees(Constants.climber.getPosition().getValueAsDouble());
+    climberVelocity = (climberAngle-oldClimberAngle)/Robot.DeltaTime();
     //rClimberAngle = Constants.climber2.getEncoder().getPosition();
   }
 
@@ -53,20 +57,26 @@ public class ClimberSubsystem extends SubsystemBase {
     Constants.climberClaw.set(Constants.climberClawInvert?-speed:speed);
   }
 
-  public static void moveClimber(double speed) {
+  public static void pullInClimber(double speed) {
+    speed = Functions.Clamp(speed, -Functions.Clamp(0.2*(climberPivotAngle-Constants.minClimberAngle), 0, 1), Functions.Clamp(-(0.2*(climberPivotAngle-Constants.maxClimberAngle)), 0, 1));
     Constants.climber.set((Constants.climberInvert)?-speed:speed);
     //Constants.climber2.set((Constants.climber2Invert)?-speed:speed);
   }
 
   public static void rotateClimberPivot(double speed) {
-    speed = Functions.Clamp(speed, -Functions.Clamp(0.2*(climberAngle-Constants.minClimberAngle), 0, 1), Functions.Clamp(-(0.2*(climberAngle-Constants.maxClimberAngle)), 0, 1)) + (Constants.climberPivotGravMult*Math.cos(Math.toRadians(climberAngle)));
+    speed = Functions.Clamp(speed, -Functions.Clamp(0.2*(climberPivotAngle-Constants.minClimberAngle), 0, 1), Functions.Clamp(-(0.2*(climberPivotAngle-Constants.maxClimberAngle)), 0, 1)) - (Constants.climberPivotGravMult*Math.cos(Math.toRadians(climberAngle)));
     Constants.climberPivot.set(Constants.climberPivotInvert?-speed:speed);
   }
 
-  public static void climberPivot(double angle) {
+  public static void rotateClimber(double speed) {
+    pullInClimber(speed);
+    rotateClimberPivot(speed/8.);
+  }
+
+  public static void climberToAngle(double angle) {
     angle = Functions.Clamp(angle, Constants.minClimberAngle, Constants.maxClimberAngle);
    rotateClimberPivot(Functions.Clamp((Constants.climberPivotPMult*(angle - Constants.climberPivot.get()))
-   - (Constants.climberPivotDMult*climberEncoder.getVelocity()), - 
+   - (Constants.climberPivotDMult*climberVelocity), - 
    Constants.maxClimberPivotSpeed, Constants.maxClimberPivotSpeed));
    DriverDisplay.climberTarget.setDouble(angle);
   }
