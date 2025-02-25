@@ -192,7 +192,8 @@ public class Robot extends TimedRobot {
 
     //Arm
     ArmSubsystem.moveElevator(LSY2*0.35);
-    ClimberSubsystem.rotateClimber(RSY2*0.5);
+    ArmSubsystem.rotateCoralIntake(RSY2*0.2);
+    //ClimberSubsystem.rotateClimber(RSY2*0.5);
     /*if(Constants.controller2.getBackButton()) {
       ArmSubsystem.moveElevatorTo(0);
      // ClimberSubsystem.moveClimbers(-1,0);

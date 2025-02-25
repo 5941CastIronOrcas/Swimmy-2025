@@ -6,10 +6,11 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Functions;
+import frc.robot.utilityObjects.Vector2D;
 
 
 public class ArmSubsystem extends SubsystemBase {
-  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
+  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getAlternateEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
   public static RelativeEncoder elevator1Encoder = Constants.elevator1.getEncoder();
   public static RelativeEncoder elevator2Encoder = Constants.elevator2.getEncoder();
   public static double oldElevatorAngle = 0;
@@ -17,8 +18,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static double elevatorAngleOffset = 0;
   public static double elevatorHeight = 0;
   public static double coralAngle = 0; //the current angle of the coral intake
-  public static double oldSpeakerAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker one frame ago
-  public static double newSpeakerAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker
+  public static double oldCoralAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker one frame ago
   public static double dist = 0; //the distance between the center of the robot and the speaker
   public static boolean inRange = false; //if the robot is within the minimum shooting range
   public static double g = Constants.gravity; //gravitational acceleration m/s/s
@@ -29,6 +29,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static boolean lineBreak = false; //the distance measured by the ultrasonic hooked into the arduino
   public static boolean elevatorBottom = false;
   public static boolean elevatorTop = false;
+  public static double coralCompensation = 0;
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
   
   public ArmSubsystem() {
@@ -47,6 +48,7 @@ public class ArmSubsystem extends SubsystemBase {
       //elevator1Encoder.setPosition(Constants.maxElevatorHeight);
       //elevator2Encoder.setPosition(Constants.maxElevatorHeight);
     }
+    oldCoralAngle = coralAngle;
     coralAngle = -(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
     oldElevatorAngle = newElevatorAngle;
     if (oldElevatorAngle-newElevatorAngle>Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset += 360;
@@ -95,7 +97,7 @@ public class ArmSubsystem extends SubsystemBase {
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + (-Constants.coralGravMult*Math.cos(Math.toRadians(coralAngle))+(Constants.coralGravMult/2.));
+    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1)) + getCompensation();
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
@@ -120,6 +122,18 @@ public class ArmSubsystem extends SubsystemBase {
 
   public static double heightToAngle (double height) {
     return height/Constants.angleToHeightRatio;
+  }
+
+  public static double getCompensation() {
+    if (Math.abs(coralAngle-oldCoralAngle)>Constants.compensationMinDeltaAngle) return coralCompensation;
+    double centerRadius = Constants.intakeCenterRadius;
+    double a = Math.toRadians(coralAngle+Constants.intakeCenterAngle);
+    Vector2D centerPos = new Vector2D(centerRadius*Math.cos(a), centerRadius*Math.sin(a));
+    double springDist = Functions.Pythagorean(centerPos.x, centerPos.y-Constants.springHeight);
+    double springAngle = Math.asin((Constants.springHeight*Math.sin(a))/springDist);
+    double netTorque = (Constants.gForceTimesRadius*Math.sin(a))-(Constants.sForceTimesRadius*Math.sin(springAngle));
+    coralCompensation = netTorque/2.6;
+    return coralCompensation;
   }
 
 }

@@ -37,6 +37,7 @@ public final class Constants {
   public static final int defaultAutoSequence = 0;
 
   public static double timeSinceStartAtAutoStart = 0;
+  public static final double gravity = 9.81; //gravitational acceleration in m/s^2
   //SWERVE STUFF:
   //Gyro
   public static final Pigeon2 gyro = new Pigeon2(44); 
@@ -141,6 +142,13 @@ public final class Constants {
   public static final double reef1Speed = 0.2;
   public static final double minCoralAngle = 0.;
   public static final double maxCoralAngle = 130.;
+  public static final double intakeMass = 1.81;
+  public static final double intakeCenterRadius = 0.17;
+  public static final double intakeCenterAngle = 35.;
+  public static final double springHeight = 0.11;
+  public static final double gForceTimesRadius = intakeMass*gravity*intakeCenterRadius;
+  public static final double sForceTimesRadius = 14.6346 * 2. * intakeCenterRadius;
+  public static final double compensationMinDeltaAngle = 0.1;
   //Algae Intake Control Constants
   public static final double algaePMult = 1.;
   public static final double algaeDMult = 1.;
@@ -205,8 +213,7 @@ public final class Constants {
   public static final Vector2D[] centerCoralsPos = new Vector2D[] {new Vector2D(8.2956, 0.7529), new Vector2D(8.2956, 2.4293), new Vector2D(8.2956, 4.1057), new Vector2D(8.2956, 5.7821), new Vector2D(8.2956, 7.4585)};
   public static Vector2D[] allCoralsPos = new Vector2D[centerCoralsPos.length + redCoralsPos.length];
   
-  //OTHER CONSTANTS:
-  public static final double gravity = 9.81; //gravitational acceleration in m/s^2
+  
   //ANSI Color Codes:
   public static final String ansiRESET = "\u001B[0m";
   public static final String ansiBLK = "\u001B[30m";
