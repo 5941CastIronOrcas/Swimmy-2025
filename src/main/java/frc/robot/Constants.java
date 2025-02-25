@@ -52,7 +52,7 @@ public final class Constants {
   //Swerve Motor Inversions
   public static final boolean fltInvert = true;
   public static final boolean frtInvert = false;
-  public static final boolean bltInvert = false;
+  public static final boolean bltInvert = true;
   public static final boolean brtInvert = false;
   //Swerve Encoder Declarations
   public static final CANcoder flEncoder = new CANcoder(40);
