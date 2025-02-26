@@ -127,11 +127,14 @@ public class ArmSubsystem extends SubsystemBase {
   public static double getCompensation() {
     if (Math.abs(coralAngle-oldCoralAngle)>Constants.compensationMinDeltaAngle) return coralCompensation;
     double centerRadius = Constants.intakeCenterRadius;
-    double a = Math.toRadians(coralAngle+Constants.intakeCenterAngle);
-    Vector2D centerPos = new Vector2D(centerRadius*Math.cos(a), centerRadius*Math.sin(a));
-    double springDist = Functions.Pythagorean(centerPos.x, centerPos.y-Constants.springHeight);
-    double springAngle = Math.asin((Constants.springHeight*Math.sin(a))/springDist);
-    double netTorque = (Constants.gForceTimesRadius*Math.sin(a))-(Constants.sForceTimesRadius*Math.sin(springAngle));
+    double centerAngle = Math.toRadians(coralAngle+Constants.intakeCenterAngle);
+    double springRadius = Constants.springRadius;
+    double springAngle = Math.toRadians(coralAngle-Constants.springAngle);
+    
+    Vector2D centerPos = new Vector2D(centerRadius*Math.cos(centerAngle), centerRadius*Math.sin(centerAngle));
+    double springDist = Functions.Pythagorean(centerPos.x, centerPos.y-Constants.springRadius);
+    double angleToSpring = Math.asin((Constants.springRadius*Math.sin(centerAngle))/springDist);
+    double netTorque = (Constants.gForceTimesRadius*Math.sin(centerAngle))-(Constants.sForceTimesRadius*Math.sin(angleToSpring));
     coralCompensation = netTorque/2.6;
     return coralCompensation;
   }
