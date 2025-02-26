@@ -115,10 +115,10 @@ public final class Constants {
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorAngleOffsetThreshold = 330;
-  public static final double elevatorPMult = 0.1;
+  public static final double elevatorPMult = 0.01;
   public static final double elevatorDMult = 0.0;
   public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
-  public static final double maxElevatorSpeed = 1.0; //Max speed the elevator PID is allowed to output to the elevator motor
+  public static final double maxElevatorSpeed = 0.1; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
   public static final double intakeHeight = 20.;
@@ -129,10 +129,10 @@ public final class Constants {
   public static final double maxElevatorAngle = 5085.;
   public static final double maxElevatorHeight = 42.75;
   //Coral Intake Control Constants
-  public static final double coralPMult = 1.0;
-  public static final double coralDMult = 1.0; 
+  public static final double coralPMult = 0.06;
+  public static final double coralDMult = 0.01; 
   public static final double coralGravMult = 0.2;
-  public static final double maxCoralPivotSpeed = 1.0;
+  public static final double maxCoralPivotSpeed = 0.1;
   public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
   public static final double reef1Angle = 10.0;
@@ -145,8 +145,8 @@ public final class Constants {
   public static final double intakeMass = 1.81;
   public static final double intakeCenterRadius = 0.157445929589;
   public static final double intakeCenterAngle = 20.3440038775;
-  public static final double springRadius = 0.394442501908;
-  public static final double springAngle = 0.113305058401;
+  public static final double springAngle = 0.384442501908;
+  public static final double springRadius = Math.toDegrees(0.113305058401);
   public static final Vector2D springEndPos = new Vector2D(0.0594868,0.1476248);
   public static final double springEndAngle = 0.383054972827;
   public static final double springEndDist = 0.15915954558;
@@ -192,6 +192,8 @@ public final class Constants {
   public static final double climberGoToPMult = 0.2;
   public static final double minClimberAngle = 0;
   public static final double maxClimberAngle = 80;
+  public static final double minClawAngle = 0;
+  public static final double maxClawAngle = 0;
 
   //POSITION ESTIMATION AND FIELD CONSTANTS:  
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);

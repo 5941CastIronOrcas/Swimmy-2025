@@ -131,7 +131,6 @@ public class Robot extends TimedRobot {
       robotLimp = false;
       Functions.setRobotLimp(robotLimp);
     }
-    ArmSubsystem.coralEncoder.setPosition(0);
   }
 
   /** This function is called periodically during operator control. */

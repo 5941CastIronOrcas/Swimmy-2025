@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.AbsoluteEncoderConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,7 +37,9 @@ public class ArmSubsystem extends SubsystemBase {
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
   
   public ArmSubsystem() {
-    coralEncoder.setPosition(0);
+    //coralEncoder.setPosition(0);
+    //Constants.coralIntakeConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+    //Constants.coralIntakeConfig.closedLoop.maxMotion.;
   }
 
   @Override
@@ -56,6 +62,7 @@ public class ArmSubsystem extends SubsystemBase {
     newElevatorAngle = Math.toDegrees(elevator1Encoder.getPosition()) + elevatorAngleOffset;
     elevatorHeight = angleToHeight(newElevatorAngle);
     dist = PositionEstimator.distToSpeaker();
+    coralCompensation = getCompensation();
    // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
     lineBreak = Constants.linebreakSensor.get();
 
@@ -97,7 +104,7 @@ public class ArmSubsystem extends SubsystemBase {
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1))-getCompensation();
+    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
