@@ -64,11 +64,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
 
-    //camserver
-    //CameraServer.startAutomaticCapture();
-    //CameraServer.addCamera(new HttpCamera("front camera", "http://camserver.local:5800/?action=stream"));
-    //final HttpCamera camera = new HttpCamera("front camera", "mjpeg:http://camserver.local:5800/?action=stream");
-    //CameraServer.addCamera(camera);
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //auto = new PathPlannerAuto("Auto 1");
