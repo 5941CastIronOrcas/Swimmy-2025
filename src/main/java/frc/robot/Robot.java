@@ -130,7 +130,6 @@ public class Robot extends TimedRobot {
       robotLimp = false;
       Functions.setRobotLimp(robotLimp);
     }
-    ArmSubsystem.coralEncoder.setPosition(0);
   }
 
   /** This function is called periodically during operator control. */
@@ -186,9 +185,9 @@ public class Robot extends TimedRobot {
     }
 
     //Arm
-    ArmSubsystem.rotateCoralIntake(-LSY2*0.2);
-    //ArmSubsystem.rotateCoralIntake(RSY2*0.1);
-    //if(Constants.controller2.getAButton())ArmSubsystem.moveElevatorTo(23);
+    ArmSubsystem.moveElevator(-LSY2*0.2);
+    ArmSubsystem.rotateCoralIntake(-RSY2*0.3);
+    if(Constants.controller2.getAButton())ArmSubsystem.rotateCoralIntakeTo(Constants.reef1Angle);
     ClimberSubsystem.rotateClimber(RSY2*.1);
     //ClimberSubsystem.rotateClimber(RSY2*0.5);
     /*if(Constants.controller2.getBackButton()) {

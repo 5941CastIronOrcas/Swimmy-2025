@@ -129,10 +129,10 @@ public final class Constants {
   public static final double maxElevatorAngle = 5085.;
   public static final double maxElevatorHeight = 42.75;
   //Coral Intake Control Constants
-  public static final double coralPMult = 1.0;
-  public static final double coralDMult = 1.0; 
+  public static final double coralPMult = 0.06;
+  public static final double coralDMult = 0.01; 
   public static final double coralGravMult = 0.2;
-  public static final double maxCoralPivotSpeed = 1.0;
+  public static final double maxCoralPivotSpeed = 0.1;
   public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
   public static final double reef1Angle = 10.0;
