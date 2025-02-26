@@ -192,6 +192,8 @@ public final class Constants {
   public static final double climberGoToPMult = 0.2;
   public static final double minClimberAngle = 0;
   public static final double maxClimberAngle = 80;
+  public static final double minClawAngle = 0;
+  public static final double maxClawAngle = 0;
 
   //POSITION ESTIMATION AND FIELD CONSTANTS:  
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);
