@@ -143,11 +143,15 @@ public final class Constants {
   public static final double minCoralAngle = 0.;
   public static final double maxCoralAngle = 130.;
   public static final double intakeMass = 1.81;
-  public static final double intakeCenterRadius = 0.17;
-  public static final double intakeCenterAngle = 35.;
-  public static final double springHeight = 0.11;
+  public static final double intakeCenterRadius = 0.157445929589;
+  public static final double intakeCenterAngle = 20.3440038775;
+  public static final double springRadius = 0.394442501908;
+  public static final double springAngle = 0.113305058401;
+  public static final Vector2D springEndPos = new Vector2D(0.0594868,0.1476248);
+  public static final double springEndAngle = 0.383054972827;
+  public static final double springEndDist = 0.15915954558;
   public static final double gForceTimesRadius = intakeMass*gravity*intakeCenterRadius;
-  public static final double sForceTimesRadius = 14.6346 * 2. * intakeCenterRadius;
+  public static final double sForceTimesRadius = 14.6346 * 2. * springRadius;
   public static final double compensationMinDeltaAngle = 0.1;
   //Algae Intake Control Constants
   public static final double algaePMult = 1.;
