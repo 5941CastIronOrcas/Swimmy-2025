@@ -130,10 +130,10 @@ public class ArmSubsystem extends SubsystemBase {
     double centerAngle = Math.toRadians(coralAngle+Constants.intakeCenterAngle);
     double springRadius = Constants.springRadius;
     double springAngle = Math.toRadians(coralAngle-Constants.springAngle);
-    
-    Vector2D centerPos = new Vector2D(centerRadius*Math.cos(centerAngle), centerRadius*Math.sin(centerAngle));
-    double springDist = Functions.Pythagorean(centerPos.x, centerPos.y-Constants.springRadius);
-    double angleToSpring = Math.asin((Constants.springRadius*Math.sin(centerAngle))/springDist);
+    Vector2D springPos = new Vector2D(springRadius*Math.cos(springAngle), springRadius*Math.sin(springAngle));
+    double totalSpringAngle = springAngle + Constants.springEndAngle;
+    double springDist = Functions.Pythagorean(springPos.x+Constants.springEndPos.x, springPos.y-Constants.springEndPos.y);
+    double angleToSpring = Math.asin((springDist*Math.sin(totalSpringAngle))/springRadius);
     double netTorque = (Constants.gForceTimesRadius*Math.sin(centerAngle))-(Constants.sForceTimesRadius*Math.sin(angleToSpring));
     coralCompensation = netTorque/2.6;
     return coralCompensation;
