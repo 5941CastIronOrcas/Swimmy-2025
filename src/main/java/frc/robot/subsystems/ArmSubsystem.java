@@ -103,14 +103,14 @@ public class ArmSubsystem extends SubsystemBase {
 
   public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
-    Constants.coralIntake.set(Functions.Clamp(-input, -1, coralAngle < 15 ? 0 : 1));
+    Constants.coralIntake.set(Functions.Clamp(-input, -1, coralAngle < 5 ? 0 : 1));
   }
   public static void intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.  
   {
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
-    spinIntake((hasCoral)?0:input);
+    spinIntake(input<0.?((hasCoral)?0:input):input);
   }
-  public static void IntakeRing() { //moves the arm to the intake position, and tries to pick up a Coral
+  public static void intakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
     moveElevatorTo(Constants.intakeHeight);
     intake(0.75);
   }

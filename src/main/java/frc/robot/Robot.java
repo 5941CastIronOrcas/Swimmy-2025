@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import java.net.CookieStore;
 import java.net.http.HttpClient;
 import java.util.Map;
 
@@ -188,6 +189,12 @@ public class Robot extends TimedRobot {
     //Arm
     ArmSubsystem.moveElevator(LSY2*0.35);
     ArmSubsystem.rotateCoralIntake(RSY2*0.1);
+    if (Constants.controller2.getLeftTriggerAxis()>0.1) ArmSubsystem.spinIntake(Constants.controller2.getLeftTriggerAxis());
+    else if (Constants.controller2.getRightTriggerAxis()>0.1) ArmSubsystem.spinIntake(-Constants.controller2.getRightTriggerAxis());
+    if (Constants.controller2.getPOV()==270) ClimberSubsystem.moveClaw(1.);
+    else if (Constants.controller2.getPOV()==90) ClimberSubsystem.moveClaw(-1.);
+    if (Constants.controller2.getAButton()) ClimberSubsystem.rotateClimber(0.2);
+    else if (Constants.controller2.getYButton()) ClimberSubsystem.rotateClimber(-0.2);
     //ClimberSubsystem.rotateClimber(RSY2*0.5);
     /*if(Constants.controller2.getBackButton()) {
       ArmSubsystem.moveElevatorTo(0);
