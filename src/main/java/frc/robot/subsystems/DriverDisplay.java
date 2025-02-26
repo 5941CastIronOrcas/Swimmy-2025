@@ -61,6 +61,7 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry hasCoral = arm.add("Has Coral", false).getEntry();
   public static GenericEntry elevatorTarget = arm.add("Elevator Target", 0).getEntry();
   public static GenericEntry intakeTarget = arm.add("Intake Target", 0).getEntry();
+  public static GenericEntry compensation = arm.add("Compensation", 0).getEntry();
   public static GenericEntry elevatorThrottle = arm.add("Elevator Throttle", 0).getEntry();
   public static GenericEntry motorPower1 = arm.add("Elevator1 Amps", 0).getEntry();
   public static GenericEntry motorPower2 = arm.add("Elevator2 Amps", 0).getEntry();
@@ -257,6 +258,7 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.elevatorTopSwitch.setBoolean(ArmSubsystem.elevatorTop);
     DriverDisplay.intakeAngle.setDouble(ArmSubsystem.coralAngle);
     DriverDisplay.correctIntakeAngle.setBoolean(ArmSubsystem.correctAngle);
+    DriverDisplay.compensation.setDouble(ArmSubsystem.coralCompensation);
     DriverDisplay.arduinoRecall.setDouble(1.234);
     DriverDisplay.hasCoral.setBoolean(ArmSubsystem.hasCoral);
     DriverDisplay.motorPower1.setDouble(Constants.elevator1.getOutputCurrent());

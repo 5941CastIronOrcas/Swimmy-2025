@@ -10,7 +10,7 @@ import frc.robot.utilityObjects.Vector2D;
 
 
 public class ArmSubsystem extends SubsystemBase {
-  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getAlternateEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
+  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
   public static RelativeEncoder elevator1Encoder = Constants.elevator1.getEncoder();
   public static RelativeEncoder elevator2Encoder = Constants.elevator2.getEncoder();
   public static double oldElevatorAngle = 0;
@@ -56,6 +56,7 @@ public class ArmSubsystem extends SubsystemBase {
     newElevatorAngle = Math.toDegrees(elevator1Encoder.getPosition()) + elevatorAngleOffset;
     elevatorHeight = angleToHeight(newElevatorAngle);
     dist = PositionEstimator.distToSpeaker();
+    coralCompensation = getCompensation();
    // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
     lineBreak = Constants.linebreakSensor.get();
 
@@ -97,7 +98,7 @@ public class ArmSubsystem extends SubsystemBase {
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1))-getCompensation();
+    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
