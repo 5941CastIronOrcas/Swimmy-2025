@@ -37,8 +37,8 @@ public class PositionEstimator extends SubsystemBase {
 
   public static AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2025Reefscape.loadAprilTagLayoutField();
  
-  public static Transform3d robotToCam1 = new Transform3d(new Translation3d(0.0254, 0.2794, 0.4572), new Rotation3d(0, Units.degreesToRadians(27),0));
-  public static Transform3d robotToCam2 = new Transform3d(new Translation3d(0.0254, -0.2794, 0.4572), new Rotation3d(0,Units.degreesToRadians(27),0));
+  public static Transform3d robotToCam1 = new Transform3d(new Translation3d(0.18318, 0.6653,0.20378), new Rotation3d(0, Units.degreesToRadians(-41),0));
+  public static Transform3d robotToCam2 = new Transform3d(new Translation3d(0.18227, 0.7103, -0.2038), new Rotation3d(0,Units.degreesToRadians(51),0));
   public static PhotonCamera camera1 = new PhotonCamera(Constants.apriltagCamera1Name);
   public static PhotonCamera camera2 = new PhotonCamera(Constants.apriltagCamera2Name);
   public static PhotonPipelineResult result1 = new PhotonPipelineResult();

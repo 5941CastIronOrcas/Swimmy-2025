@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "middle start to reef 1"
+            "pathName": "middle start to reef 1 left"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "reef 1 to bottom coral station"
+            "pathName": "reef 1 left to bottom coral station"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "coral station to reef 5"
+            "pathName": "bottom station to reef 5 left"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "reef 5 to bottom coral station"
+            "pathName": "reef 5 left to bottom coral station"
           }
         }
       ]
