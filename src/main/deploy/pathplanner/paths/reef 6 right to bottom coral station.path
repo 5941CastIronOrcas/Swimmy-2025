@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.378906250000001,
-        "y": 2.8650173611111107
+        "x": 4.9401562499999985,
+        "y": 2.377517361111111
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "reef 6 right"
     },
     {
       "anchor": {
-        "x": 5.546614583333333,
-        "y": 5.981597222222222
+        "x": 1.21875,
+        "y": 1.1
       },
       "prevControl": {
-        "x": 4.546614583333333,
-        "y": 5.981597222222222
+        "x": 0.9298919805543358,
+        "y": 0.9307699147681509
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "coral station bottom"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -125.00000000000001
   },
   "reversed": false,
   "folder": null,
