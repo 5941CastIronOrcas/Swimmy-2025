@@ -18,8 +18,8 @@ import frc.robot.Robot;
 public class ClimberSubsystem extends SubsystemBase {
   public static DutyCycleEncoder climberEncoder = Constants.climberEncoder;
   public static double climberPivotAngle = 0;
-  public static double oldClimberAngle = 0;
-  public static double climberAngle = 0;
+  public static double oldClimberPivotAngle = 0;
+  public static double winchAngle = 0;
   public static double climberVelocity = 0;
   public static double clawAngle = 0;
   //public static double rClimberAngle = 0;
@@ -31,10 +31,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    oldClimberPivotAngle = climberPivotAngle;
     climberPivotAngle = (360.*climberEncoder.get()-245.);
-    oldClimberAngle = climberAngle;
-    climberAngle = Math.toDegrees(Constants.climber.getPosition().getValueAsDouble());
-    climberVelocity = (climberAngle-oldClimberAngle)/Robot.DeltaTime();
+    winchAngle = Math.toDegrees(Constants.climber.getPosition().getValueAsDouble());
+    climberVelocity = (climberPivotAngle-oldClimberPivotAngle)/Robot.DeltaTime();
     clawAngle = Constants.climberClaw.getEncoder().getPosition();
     //rClimberAngle = Constants.climber2.getEncoder().getPosition();
   }
@@ -68,7 +68,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public static void rotateClimberPivot(double speed) {
-    speed = Functions.Clamp(speed, climberAngle<=0?0:-1, climberAngle>=90?0:1);//-Functions.Clamp(0.2*(climberPivotAngle-Constants.minClimberAngle), 0, 1), Functions.Clamp(-(0.2*(climberPivotAngle-Constants.maxClimberAngle)), 0, 1)); //+ (Constants.climberPivotGravMult*Math.sin(Math.toRadians(climberAngle)));
+    speed = Functions.Clamp(speed, climberPivotAngle<=0?0:-1, climberPivotAngle>=90?0:1);//-Functions.Clamp(0.2*(climberPivotAngle-Constants.minClimberAngle), 0, 1), Functions.Clamp(-(0.2*(climberPivotAngle-Constants.maxClimberAngle)), 0, 1)); //+ (Constants.climberPivotGravMult*Math.sin(Math.toRadians(climberAngle)));
     Constants.climberPivot.set(Constants.climberPivotInvert?-speed:speed);
 
   }

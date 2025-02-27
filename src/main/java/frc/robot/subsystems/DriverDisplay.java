@@ -75,7 +75,7 @@ public class DriverDisplay extends SubsystemBase {
   public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
   //public static GenericEntry climberR = climber.add("ClimberR Input", 0).getEntry();
   public static GenericEntry climberInput = climber.add("Climber Input", 0).getEntry();
-  public static GenericEntry climberAngle = climber.add("Climber Motor Angle", 0).getEntry();
+  public static GenericEntry climberAngle = climber.add("Winch Motor Angle", 0).getEntry();
   //public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry(); 
   public static GenericEntry climberPivotAngle = climber.add("Climber Pivot Angle", 0).getEntry();
   public static GenericEntry climberTarget = climber.add("Climber Target Angle", 0).getEntry();
@@ -274,7 +274,7 @@ public class DriverDisplay extends SubsystemBase {
     //Climber
     DriverDisplay.climberInput.setDouble(Constants.climber.get());
     //DriverDisplay.climberR.setDouble(Constants.climber2.get());
-    DriverDisplay.climberAngle.setDouble(ClimberSubsystem.climberAngle);
+    DriverDisplay.climberAngle.setDouble(ClimberSubsystem.winchAngle);
     //DriverDisplay.rClimberAngle.setDouble(ClimberSubsystem.rClimberAngle);
     DriverDisplay.climberPivotAngle.setDouble(ClimberSubsystem.climberPivotAngle);
     DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
