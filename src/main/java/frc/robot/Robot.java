@@ -170,15 +170,15 @@ public class Robot extends TimedRobot {
     //Swerve
     if(Constants.controller1.getBButton())
     {
-      SwerveSubsystem.CollectCoral(LSX, LSY, speed);
+      //SwerveSubsystem.CollectCoral(LSX, LSY, speed);
     }
     else if(Constants.controller1.getXButton())
     {
-      SwerveSubsystem.FaceSpeaker(LSX, LSY, speed);
+      //SwerveSubsystem.FaceSpeaker(LSX, LSY, speed);
     }
     else if(Constants.controller1.getYButton())
     {
-      SwerveSubsystem.GoToAmp(speed, speed, LSX, LSY);
+      //SwerveSubsystem.GoToAmp(speed, speed, LSX, LSY);
     }
     else
     {
@@ -187,13 +187,29 @@ public class Robot extends TimedRobot {
 
     //Arm
     ArmSubsystem.moveElevator(LSY2*0.35);
-    ArmSubsystem.rotateCoralIntake(RSY2*0.1);
-    if (Constants.controller2.getLeftTriggerAxis()>0.1) ArmSubsystem.spinIntake(Constants.controller2.getLeftTriggerAxis());
-    else if (Constants.controller2.getRightTriggerAxis()>0.1) ArmSubsystem.spinIntake(-Constants.controller2.getRightTriggerAxis());
-    if (Constants.controller2.getPOV()==270) ClimberSubsystem.moveClaw(1.);
-    else if (Constants.controller2.getPOV()==90) ClimberSubsystem.moveClaw(-1.);
-    if (Constants.controller2.getAButton()) ClimberSubsystem.rotateClimber(0.2);
-    else if (Constants.controller2.getYButton()) ClimberSubsystem.rotateClimber(-0.2);
+    if(Constants.controller2.getXButton())
+    {
+      ArmSubsystem.rotateCoralIntakeTo(90.);
+    }
+    else
+    {
+      ArmSubsystem.rotateCoralIntake(-RSY2*0.1);
+    }
+
+    ArmSubsystem.spinIntake(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
+
+    //Climber
+    if (Constants.controller2.getAButton()) ClimberSubsystem.pullInClimber(1.);
+    else if (Constants.controller2.getYButton()) ClimberSubsystem.pullInClimber(-1.);
+    else Constants.climber.set(0);
+
+    if (Constants.controller2.getRightBumper()) ClimberSubsystem.moveClaw(.1);
+    else if (Constants.controller2.getLeftBumper()) ClimberSubsystem.moveClaw(-.1);
+    else Constants.climberClaw.set(0);
+
+    if (Constants.controller2.getPOV()==0) ClimberSubsystem.rotateClimberPivot(0.05);
+    else if (Constants.controller2.getPOV()==180) ClimberSubsystem.rotateClimberPivot(-0.05);
+    else Constants.climberPivot.set(0);
     //ClimberSubsystem.rotateClimber(RSY2*0.5);
     /*if(Constants.controller2.getBackButton()) {
       ArmSubsystem.moveElevatorTo(0);
