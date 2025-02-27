@@ -8,6 +8,9 @@ import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Functions;
@@ -85,6 +88,18 @@ public class ArmSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
 
   }
+//commands
+  public Command movearm(){
+
+    this.run(() -> moveElevatorTo(Constants.intakeHeight));
+    this.run(() -> rotateCoralIntakeTo(Constants.coralIntakeAngle));
+    if(elevatorHeight < Constants.intakeHeight+8 && coralAngle < Constants.coralIntakeAngle +8){ 
+      movearm().end(true);
+    }
+    return movearm().withName(getName());
+  }
+
+
 
   public static void moveElevatorTo(double h) { //uses a pd controller to go to a given angle.
    h = Functions.Clamp(h, 0, Constants.maxElevatorHeight);
