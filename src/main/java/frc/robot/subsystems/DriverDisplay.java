@@ -68,7 +68,8 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry intakePivotPower = arm.add("Intake Pivot Amps", 0).getEntry();
   public static GenericEntry intakePower = arm.add("Intake Amps", 0).getEntry();
   public static GenericEntry inRange = arm.add("In Range", false).getEntry();
-
+  public static GenericEntry pivotVelocity = arm.add("Intake Pivot Velocity", 0.).getEntry();
+  public static GenericEntry pivotThrottle = arm.add("Intake Pivot Throttle", 0.).getEntry();
 
   //Climber
   public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
@@ -266,6 +267,8 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.intakePivotPower.setDouble(Constants.coralIntakePivot.getOutputCurrent());
     DriverDisplay.intakePower.setDouble(Constants.coralIntake.getOutputCurrent());
     DriverDisplay.inRange.setBoolean(ArmSubsystem.inRange);
+    DriverDisplay.pivotVelocity.setDouble(ArmSubsystem.coralEncoder.getVelocity()*100.);
+    DriverDisplay.pivotThrottle.setDouble(Constants.coralIntakePivot.get());
 
 
     //Climber

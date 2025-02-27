@@ -2,9 +2,15 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.AbsoluteEncoderConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Functions;
@@ -12,7 +18,7 @@ import frc.robot.utilityObjects.Vector2D;
 
 
 public class ArmSubsystem extends SubsystemBase {
-  public static RelativeEncoder coralEncoder = Constants.coralIntakePivot.getEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
+  public static SparkAbsoluteEncoder coralEncoder = Constants.coralIntake.getAbsoluteEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
   public static RelativeEncoder elevator1Encoder = Constants.elevator1.getEncoder();
   public static RelativeEncoder elevator2Encoder = Constants.elevator2.getEncoder();
   public static double oldElevatorAngle = 0;
@@ -21,6 +27,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static double elevatorHeight = 0;
   public static double coralAngle = 0; //the current angle of the coral intake
   public static double oldCoralAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker one frame ago
+  public static double coralAngleTarget = 0;
   public static double dist = 0; //the distance between the center of the robot and the speaker
   public static boolean inRange = false; //if the robot is within the minimum shooting range
   public static double g = Constants.gravity; //gravitational acceleration m/s/s
@@ -32,10 +39,13 @@ public class ArmSubsystem extends SubsystemBase {
   public static boolean elevatorBottom = false;
   public static boolean elevatorTop = false;
   public static double coralCompensation = 0;
+  public static double intakeIntegral = 0.;
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
   
   public ArmSubsystem() {
-    coralEncoder.setPosition(0);
+    //coralEncoder.setPosition(0);
+    //Constants.coralIntakeConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+    //Constants.coralIntakeConfig.closedLoop.maxMotion.;
   }
 
   @Override
@@ -47,18 +57,18 @@ public class ArmSubsystem extends SubsystemBase {
       elevator2Encoder.setPosition(0);
     }
     if (elevatorTop) {
-      //elevator1Encoder.setPosition(Constants.maxElevatorHeight);
-      //elevator2Encoder.setPosition(Constants.maxElevatorHeight);
+      elevator1Encoder.setPosition(Constants.maxElevatorAngle);
+      elevator2Encoder.setPosition(Constants.maxElevatorAngle);
     }
     oldCoralAngle = coralAngle;
-    coralAngle = -(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
+    coralAngle = coralEncoder.getPosition()*360;//-(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
     oldElevatorAngle = newElevatorAngle;
     if (oldElevatorAngle-newElevatorAngle>Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset += 360;
     if (oldElevatorAngle-newElevatorAngle<-Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset -= 360;
     newElevatorAngle = Math.toDegrees(elevator1Encoder.getPosition()) + elevatorAngleOffset;
     elevatorHeight = angleToHeight(newElevatorAngle);
     dist = PositionEstimator.distToSpeaker();
-    coralCompensation = getCompensation();
+    //coralCompensation = getCompensation();
    // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
     lineBreak = Constants.linebreakSensor.get();
 
@@ -66,17 +76,30 @@ public class ArmSubsystem extends SubsystemBase {
     if(!lineBreak) //if linebreak can see a coral
     {
       hasCoral = true; //immediately assume the coral is real
-      noCoralFrames = 0; //set the number of frames since a coral was seen to 0
+      //noCoralFrames = 0; //set the number of frames since a coral was seen to 0
     }
-    else noCoralFrames++; //if linebreak can't see a coral, increase noCoralFrames
-    if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
-
+    else hasCoral=false;
+    //else noCoralFrames++; //if linebreak can't see a coral, increase noCoralFrames
+    //if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
+    intakeIntegral += (coralAngleTarget - coralAngle)*Constants.coralIMult;
   }
 
   @Override
   public void simulationPeriodic() {
 
   }
+//commands
+  public Command movearm(){
+
+    this.run(() -> moveElevatorTo(Constants.intakeHeight));
+    this.run(() -> rotateCoralIntakeTo(Constants.coralIntakeAngle));
+    if(elevatorHeight < Constants.intakeHeight+8 && coralAngle < Constants.coralIntakeAngle +8){ 
+      movearm().end(true);
+    }
+    return movearm().withName(getName());
+  }
+
+
 
   public static void moveElevatorTo(double h) { //uses a pd controller to go to a given angle.
    h = Functions.Clamp(h, 0, Constants.maxElevatorHeight);
@@ -94,26 +117,27 @@ public class ArmSubsystem extends SubsystemBase {
 
   public static void rotateCoralIntakeTo(double a) {
     a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
-    rotateCoralIntake(Functions.Clamp((Constants.coralPMult*(a - coralAngle)) 
-    -(Constants.coralDMult*coralEncoder.getVelocity()), 
-    -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed));
+    coralAngleTarget = a;
+    rotateCoralIntake((Constants.coralPMult*Functions.DeltaAngleDeg(coralAngle, a)) 
+    -(Constants.coralDMult*coralEncoder.getVelocity()));
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
+    //t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
+    t = Functions.Clamp(t - Constants.coralGravMult*Math.sin(Math.toRadians(coralAngle)), -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
   public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
-    Constants.coralIntake.set(Functions.Clamp(-input, -1, coralAngle < 15 ? 0 : 1));
+    Constants.coralIntake.set(Functions.Clamp(-input, -0.5,  1));
   }
   public static void intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.  
   {
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
-    spinIntake((hasCoral)?0:input);
+    spinIntake(input<0.?((hasCoral)?0:input):input);
   }
-  public static void IntakeRing() { //moves the arm to the intake position, and tries to pick up a Coral
+  public static void intakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
     moveElevatorTo(Constants.intakeHeight);
     intake(0.75);
   }

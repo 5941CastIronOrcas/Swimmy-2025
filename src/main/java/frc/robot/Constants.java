@@ -109,7 +109,7 @@ public final class Constants {
   public static SparkMax coralEncoderSpark = new SparkMax(32, MotorType.kBrushless);
   public static DigitalInput elevatorBottom = new DigitalInput(3);
   public static DigitalInput elevatorTop = new DigitalInput(4);
-  public static DigitalInput linebreakSensor = new DigitalInput(0);
+  public static DigitalInput linebreakSensor = new DigitalInput(9);
 
   //ALL PIDS STILL NEED TO BE CALIBRATED
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
@@ -129,10 +129,12 @@ public final class Constants {
   public static final double maxElevatorAngle = 5085.;
   public static final double maxElevatorHeight = 42.75;
   //Coral Intake Control Constants
-  public static final double coralPMult = 0.06;
-  public static final double coralDMult = 0.01; 
-  public static final double coralGravMult = 0.2;
-  public static final double maxCoralPivotSpeed = 0.1;
+  public static final double coralPMult = 0.005;
+  public static final double coralDMult = 0.6; 
+  public static final double coralIMult = 0.01;
+  public static final double coralIClamp = 0.3;
+  public static final double coralGravMult = 0.05;
+  public static final double maxCoralPivotSpeed = 0.3;
   public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
   public static final double reef1Angle = 10.0;
@@ -181,7 +183,7 @@ public final class Constants {
   //Climber Control Constants
   public static final double climberPivotPMult = 0.01;
   public static final double climberPivotDMult = 0.01;
-  public static final double climberPivotGravMult = 0.02;
+  public static final double climberPivotGravMult = 0.1;
   public static final double maxClimberPivotSpeed = 0.;
   public static final double climberMaxHitSpeed = 0.5;
   public static final double climberSmoothingStart = 20;
@@ -191,7 +193,9 @@ public final class Constants {
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
   public static final double minClimberAngle = 0;
-  public static final double maxClimberAngle = 80;
+  public static final double maxClimberAngle = 90;
+  public static final double minClawAngle = -3600.;
+  public static final double maxClawAngle = 3600.;
 
   //POSITION ESTIMATION AND FIELD CONSTANTS:  
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);
