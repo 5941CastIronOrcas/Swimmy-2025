@@ -9,6 +9,12 @@
           "data": {
             "pathName": "bottom start to reef 5 right"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "move elevetor to intake height"
+          }
         }
       ]
     }
