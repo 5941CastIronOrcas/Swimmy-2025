@@ -61,6 +61,9 @@ public class RobotContainer {
    NamedCommands.registerCommand("move elevator to L2", armSubsystem.comMoveArm(2));
    NamedCommands.registerCommand("move elevator to L3", armSubsystem.comMoveArm(3));
    NamedCommands.registerCommand("move elevator to L4", armSubsystem.comMoveArm(4));
+   NamedCommands.registerCommand("intake coral", armSubsystem.comSpinIntake(1));
+   NamedCommands.registerCommand("spit coral", armSubsystem.comSpinIntake(2));
+   NamedCommands.registerCommand("stop intake", armSubsystem.comSpinIntake(0));
 
 
 

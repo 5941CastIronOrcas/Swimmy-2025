@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import javax.smartcardio.CommandAPDU;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
@@ -11,6 +13,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -120,11 +123,31 @@ public Command comMoveArm(int level){
                 DriverStation.reportError("height not set", false);
                 break;
         }
-    final double h2 = h;
-    final double a2 = a;
+        final double h2, a2;
+        h2 = h;
+        a2 = a;
 
-    return runOnce(() -> ArmSubsystem.moveArmTo(h2, a2));
+        return this.runOnce(() -> moveArmTo(h2, a2));
   }
+    public Command comSpinIntake(int i){
+        double speed;
+        switch (i) {
+            case 0:
+             speed = 0.0;
+                break;
+            case 1:
+             speed = 0.75;
+                break;
+            case 2:
+             speed = -0.75;
+                break;
+
+            default:
+                speed = 0.0;
+                break;
+        }
+        return this.run(() -> intake(speed));
+    }
 
 
 
