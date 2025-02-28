@@ -126,7 +126,7 @@ public class ArmSubsystem extends SubsystemBase {
     //t = Functions.Clamp(t, (coralAngle < (elevatorHeight/Constants.maxElevatorHeight)
    // *Constants.coralMinAdaptiveAngle)?0.2:-1, (coralAngle > ((Constants.maxElevatorHeight
    // -elevatorHeight)/Constants.maxElevatorHeight)*Constants.coralMaxAdaptiveAngle)?-0.2:1);
-    t = Functions.Clamp(t - (hasCoral?Constants.withCoralGravMult:Constants.coralGravMult)*Math.sin(Math.toRadians(coralAngle)), -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
+    t = Functions.Clamp(t - (hasCoral?Constants.withCoralGravMult:Constants.coralGravMult)*Math.sin(Math.toRadians(coralAngle-20)), -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
