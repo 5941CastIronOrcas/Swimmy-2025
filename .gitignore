@@ -189,8 +189,8 @@ Vimmy2024/.gradle/8.5/executionHistory/executionHistory.lock
 simgui-ds.json
 simgui.json
 networktables.json
-Swimmy2025/.gradle/8.11/checksums
-Swimmy2025/.gradle/8.11/executionHistory
-Swimmy2025/.gradle/8.11/fileHashes
-Swimmy2025/.gradle/buildOutputCleanup
-Swimmy2025/build
+.gradle/8.11/checksums/*
+.gradle/8.11/executionHistory/*
+.gradle/8.11/fileHashes/*
+.gradle/buildOutputCleanup/*
+build/*
