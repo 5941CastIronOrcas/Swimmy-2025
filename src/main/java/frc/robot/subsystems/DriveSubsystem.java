@@ -17,7 +17,7 @@ public class DriveSubsystem extends SubsystemBase {
     return PositionEstimator.robotPosition;
   }
   private void resetPose(Pose2d pose) {
-    PositionEstimator.ResetAngle();
+    //PositionEstimator.ResetAngle();
   }
   private ChassisSpeeds getRobotRelativeSpeeds() {
     return SwerveSubsystem.currentSpeed;

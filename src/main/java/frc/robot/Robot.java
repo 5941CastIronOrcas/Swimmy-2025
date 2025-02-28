@@ -209,16 +209,22 @@ public class Robot extends TimedRobot {
     ArmSubsystem.spinIntake((Constants.controller2.getLeftTriggerAxis()*(ArmSubsystem.hasCoral?0:1))-Constants.controller2.getRightTriggerAxis());
 
     //Climber
-    if (Constants.controller2.getAButton()) ClimberSubsystem.pullInClimber(1.);
-    else if (Constants.controller2.getYButton()) ClimberSubsystem.pullInClimber(-1.);
+    if (Constants.controller2.getAButton()) {
+      ClimberSubsystem.pullInClimber(1.);
+      //ClimberSubsystem.rotateClimberPivot(-0.2);
+    }
+    else if (Constants.controller2.getYButton()) {
+      ClimberSubsystem.pullInClimber(-1.);
+      //ClimberSubsystem.rotateClimberPivot(-0.2);
+    }
     else Constants.climber.set(0);
 
     if (Constants.controller2.getRightBumper()) ClimberSubsystem.moveClaw(.1);
     else if (Constants.controller2.getLeftBumper()) ClimberSubsystem.moveClaw(-.1);
     else Constants.climberClaw.set(0);
 
-    if (Constants.controller2.getBackButton()) ClimberSubsystem.rotateClimberPivot(0.05);
-    else if (Constants.controller2.getStartButton()) ClimberSubsystem.rotateClimberPivot(-0.1);
+    if (Constants.controller2.getBackButton()) ClimberSubsystem.rotateClimberPivot(-0.1);
+    else if (Constants.controller2.getStartButton()) ClimberSubsystem.rotateClimberPivot(0.05);
     else Constants.climberPivot.set(0);
 
     //if (Constants.controller2.getXButton()) {

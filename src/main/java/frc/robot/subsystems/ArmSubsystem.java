@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import javax.smartcardio.CommandAPDU;
+//import javax.smartcardio.CommandAPDU;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -44,6 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static boolean elevatorTop = false;
   public static double coralCompensation = 0;
   public static double intakeIntegral = 0.;
+  public static double elevatorThrottle = 0.;
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
 
   public ArmSubsystem() {
@@ -159,17 +160,26 @@ public Command comMoveArm(int level){
     DriverDisplay.elevatorTarget.setDouble(h);
   }
   public static void moveElevator(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
+    elevatorThrottle += Functions.Clamp(t-elevatorThrottle, -Constants.elevatorAccelLimit, Constants.elevatorAccelLimit);
+    t = Functions.Clamp(elevatorThrottle, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
   }
 
   public static void rotateCoralIntakeTo(double a) {
+    if (hasCoral) {
+      a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
+    coralAngleTarget = a;
+    rotateCoralIntake((Constants.withCoralPMult*Functions.DeltaAngleDeg(coralAngle, a))
+    -(Constants.withCoralDMult*coralEncoder.getVelocity()));
+    }
+    else {
     a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
     coralAngleTarget = a;
     rotateCoralIntake((Constants.coralPMult*Functions.DeltaAngleDeg(coralAngle, a))
     -(Constants.coralDMult*coralEncoder.getVelocity()));
     DriverDisplay.intakeTarget.setDouble(a);
+    }
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     //t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
