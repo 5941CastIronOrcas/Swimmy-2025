@@ -220,6 +220,11 @@ public class Robot extends TimedRobot {
     if (Constants.controller2.getBackButton()) ClimberSubsystem.rotateClimberPivot(0.05);
     else if (Constants.controller2.getStartButton()) ClimberSubsystem.rotateClimberPivot(-0.1);
     else Constants.climberPivot.set(0);
+
+    //if (Constants.controller2.getXButton()) {
+     // ClimberSubsystem.toggleClimberPivot();
+    //}
+    //ClimberSubsystem.rotateClimberPivot(ClimberSubsystem.pivotToggle?-0.1:0.);
     //ClimberSubsystem.rotateClimber(RSY2*0.5);
     /*if(Constants.controller2.getBackButton()) {
       ArmSubsystem.moveElevatorTo(0);
