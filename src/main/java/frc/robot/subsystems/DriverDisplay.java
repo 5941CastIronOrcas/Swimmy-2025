@@ -269,6 +269,7 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.inRange.setBoolean(ArmSubsystem.inRange);
     DriverDisplay.pivotVelocity.setDouble(ArmSubsystem.coralEncoder.getVelocity()*100.);
     DriverDisplay.pivotThrottle.setDouble(Constants.coralIntakePivot.get());
+    DriverDisplay.elevatorThrottle.setDouble(Constants.elevator1.get());
 
 
     //Climber

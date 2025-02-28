@@ -16,6 +16,7 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.utilityObjects.Vector2D;
 
 /**
@@ -115,25 +116,27 @@ public final class Constants {
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorAngleOffsetThreshold = 330;
-  public static final double elevatorPMult = 0.01;
+  public static final double elevatorPMult = 0.1;
   public static final double elevatorDMult = 0.0;
   public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
-  public static final double maxElevatorSpeed = 0.1; //Max speed the elevator PID is allowed to output to the elevator motor
+  public static final double maxElevatorSpeed = 0.4; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
-  public static final double intakeHeight = 20.;
-  public static final double reef1Height = 18.;
-  public static final double reef2Height = 31.875;
-  public static final double reef3Height = 47.625;
-  public static final double reef4Height = 72.;
-  public static final double maxElevatorAngle = 5085.;
-  public static final double maxElevatorHeight = 42.75;
+  public static final double intakeHeightFromGround = 17;
+  public static final double intakeHeight = 14.;//36.5-intakeHeightFromGround;
+  public static final double reef1Height = 18.-intakeHeightFromGround;
+  public static final double reef2Height = 37.875-intakeHeightFromGround;
+  public static final double reef3Height = 53.625-intakeHeightFromGround;
+  public static final double reef4Height = 72.-intakeHeightFromGround; //72.
+  public static final double maxElevatorHeight = 45; 
+  public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
   //Coral Intake Control Constants
   public static final double coralPMult = 0.005;
   public static final double coralDMult = 0.6; 
   public static final double coralIMult = 0.01;
   public static final double coralIClamp = 0.3;
-  public static final double coralGravMult = 0.05;
+  public static final double coralGravMult = 0.07;
+  public static final double withCoralGravMult = 0.2;
   public static final double maxCoralPivotSpeed = 0.3;
   public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
@@ -155,6 +158,8 @@ public final class Constants {
   public static final double gForceTimesRadius = intakeMass*gravity*intakeCenterRadius;
   public static final double sForceTimesRadius = 14.6346 * 2. * springRadius;
   public static final double compensationMinDeltaAngle = 0.1;
+  public static final double coralMaxAdaptiveAngle = 45;
+  public static final double coralMinAdaptiveAngle = 20;
   //Algae Intake Control Constants
   public static final double algaePMult = 1.;
   public static final double algaeDMult = 1.;
@@ -193,7 +198,7 @@ public final class Constants {
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
   public static final double minClimberAngle = 0;
-  public static final double maxClimberAngle = 90;
+  public static final double maxClimberAngle = 70;
   public static final double minClawAngle = -3600.;
   public static final double maxClawAngle = 3600.;
 

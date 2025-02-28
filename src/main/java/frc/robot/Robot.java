@@ -168,7 +168,7 @@ public class Robot extends TimedRobot {
     //SwerveSubsystem.DriveFieldOriented(LSX, LSY, RSX);
 
     //Swerve
-    if(Constants.controller1.getBButton())
+   /*  if(Constants.controller1.getBButton())
     {
       //SwerveSubsystem.CollectCoral(LSX, LSY, speed);
     }
@@ -180,23 +180,33 @@ public class Robot extends TimedRobot {
     {
       //SwerveSubsystem.GoToAmp(speed, speed, LSX, LSY);
     }
-    else
-    {
+    else */
+   // {
       SwerveSubsystem.DriveDriverOrientedAtAngle(LSX,LSY,RSAngle+180,Functions.Pythagorean(RSX, RSY));
-    }
+       // SwerveSubsystem.Drive(LSX, LSY, RSX);
+   // }
 
     //Arm
-    ArmSubsystem.moveElevator(LSY2*0.35);
-    if(Constants.controller2.getXButton())
-    {
-      ArmSubsystem.rotateCoralIntakeTo(90.);
+    if (Constants.controller2.getBButton()) {
+      ArmSubsystem.moveArmTo(Constants.intakeHeight, Constants.coralIntakeAngle);
     }
-    else
-    {
-      ArmSubsystem.rotateCoralIntake(-RSY2*0.1);
+    else if (Constants.controller2.getPOV()==270) {
+      ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle);
     }
-
-    ArmSubsystem.spinIntake(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
+    else if (Constants.controller2.getPOV()==180) {
+      ArmSubsystem.moveArmTo(Constants.reef2Height, Constants.reef2Angle);
+    }
+    else if (Constants.controller2.getPOV()==90) {
+      ArmSubsystem.moveArmTo(Constants.reef3Height, Constants.reef2Angle);
+    }
+    else if (Constants.controller2.getPOV()==0) {
+      ArmSubsystem.moveArmTo(Constants.reef4Height, Constants.reef4Angle);
+    }
+    else {
+      ArmSubsystem.moveElevator(LSY2*0.4);
+      ArmSubsystem.rotateCoralIntake(-RSY2*(ArmSubsystem.hasCoral?0.6:0.4));
+    }
+    ArmSubsystem.spinIntake((Constants.controller2.getLeftTriggerAxis()*(ArmSubsystem.hasCoral?0:1))-Constants.controller2.getRightTriggerAxis());
 
     //Climber
     if (Constants.controller2.getAButton()) ClimberSubsystem.pullInClimber(1.);
@@ -207,8 +217,8 @@ public class Robot extends TimedRobot {
     else if (Constants.controller2.getLeftBumper()) ClimberSubsystem.moveClaw(-.1);
     else Constants.climberClaw.set(0);
 
-    if (Constants.controller2.getPOV()==0) ClimberSubsystem.rotateClimberPivot(0.05);
-    else if (Constants.controller2.getPOV()==180) ClimberSubsystem.rotateClimberPivot(-0.05);
+    if (Constants.controller2.getBackButton()) ClimberSubsystem.rotateClimberPivot(0.05);
+    else if (Constants.controller2.getStartButton()) ClimberSubsystem.rotateClimberPivot(-0.1);
     else Constants.climberPivot.set(0);
     //ClimberSubsystem.rotateClimber(RSY2*0.5);
     /*if(Constants.controller2.getBackButton()) {

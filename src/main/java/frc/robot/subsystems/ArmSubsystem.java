@@ -89,15 +89,15 @@ public class ArmSubsystem extends SubsystemBase {
 
   }
 //commands
-  public Command movearm(){
+ // public Command movearm(){
 
-    this.run(() -> moveElevatorTo(Constants.intakeHeight));
+   /*  this.run(() -> moveElevatorTo(Constants.intakeHeight));
     this.run(() -> rotateCoralIntakeTo(Constants.coralIntakeAngle));
     if(elevatorHeight < Constants.intakeHeight+8 && coralAngle < Constants.coralIntakeAngle +8){ 
       movearm().end(true);
     }
-    return movearm().withName(getName());
-  }
+    return movearm().withName(getName());*/
+ // }
 
 
 
@@ -112,7 +112,6 @@ public class ArmSubsystem extends SubsystemBase {
     t = Functions.Clamp(t, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
-    DriverDisplay.elevatorThrottle.setDouble(t);
   }
 
   public static void rotateCoralIntakeTo(double a) {
@@ -124,8 +123,17 @@ public class ArmSubsystem extends SubsystemBase {
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     //t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
-    t = Functions.Clamp(t - Constants.coralGravMult*Math.sin(Math.toRadians(coralAngle)), -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
+    //t = Functions.Clamp(t, (coralAngle < (elevatorHeight/Constants.maxElevatorHeight)
+   // *Constants.coralMinAdaptiveAngle)?0.2:-1, (coralAngle > ((Constants.maxElevatorHeight
+   // -elevatorHeight)/Constants.maxElevatorHeight)*Constants.coralMaxAdaptiveAngle)?-0.2:1);
+    t = Functions.Clamp(t - (hasCoral?Constants.withCoralGravMult:Constants.coralGravMult)*Math.sin(Math.toRadians(coralAngle)), -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
+  }
+
+  public static void moveArmTo(double h, double a) {
+    moveElevatorTo(h);
+    if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a);
+    else rotateCoralIntakeTo(45);
   }
 
   public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
