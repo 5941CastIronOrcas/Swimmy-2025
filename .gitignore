@@ -190,6 +190,12 @@ simgui-ds.json
 simgui.json
 networktables.json
 /.gradle/8.11/checksums
+/.gradle/8.11/executionHistory
+/.gradle/8.11/fileHashes
 /.gradle/8.11/checksums
 /.gradle/8.11/executionHistory
 /.gradle/8.11/fileHashes
+/.gradle/buildOutputCleanup
+/build/reports/problems
+/build/tmp
+/build
