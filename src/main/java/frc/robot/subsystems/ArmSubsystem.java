@@ -41,7 +41,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static double coralCompensation = 0;
   public static double intakeIntegral = 0.;
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
-  
+
   public ArmSubsystem() {
     //coralEncoder.setPosition(0);
     //Constants.coralIntakeConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
@@ -88,6 +88,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
 
   }
+<<<<<<< HEAD
 //commands
  // public Command movearm(){
 
@@ -100,11 +101,13 @@ public class ArmSubsystem extends SubsystemBase {
  // }
 
 
+=======
+>>>>>>> 1ceef5761d34e8abc01a47838d5251ea4ad8bba1
 
   public static void moveElevatorTo(double h) { //uses a pd controller to go to a given angle.
    h = Functions.Clamp(h, 0, Constants.maxElevatorHeight);
-   moveElevator(Functions.Clamp((Constants.elevatorPMult*(h - elevatorHeight)) 
-    -(Constants.elevatorDMult*elevator1Encoder.getVelocity()), 
+   moveElevator(Functions.Clamp((Constants.elevatorPMult*(h - elevatorHeight))
+    -(Constants.elevatorDMult*elevator1Encoder.getVelocity()),
     -Constants.maxElevatorSpeed, Constants.maxElevatorSpeed));
     DriverDisplay.elevatorTarget.setDouble(h);
   }
@@ -117,7 +120,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static void rotateCoralIntakeTo(double a) {
     a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
     coralAngleTarget = a;
-    rotateCoralIntake((Constants.coralPMult*Functions.DeltaAngleDeg(coralAngle, a)) 
+    rotateCoralIntake((Constants.coralPMult*Functions.DeltaAngleDeg(coralAngle, a))
     -(Constants.coralDMult*coralEncoder.getVelocity()));
     DriverDisplay.intakeTarget.setDouble(a);
   }
@@ -140,7 +143,7 @@ public class ArmSubsystem extends SubsystemBase {
   {
     Constants.coralIntake.set(Functions.Clamp(-input, -0.5,  1));
   }
-  public static void intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.  
+  public static void intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.
   {
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
     spinIntake(input<0.?((hasCoral)?0:input):input);
