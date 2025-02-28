@@ -72,6 +72,7 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     autoChooser.addOption("Auto 1", new PathPlannerAuto("Auto 1"));
+    autoChooser.addOption("Auto 2", new PathPlannerAuto("coral center start"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
