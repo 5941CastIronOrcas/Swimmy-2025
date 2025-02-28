@@ -7,7 +7,6 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.MoveArm;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControllerRumble;
@@ -57,7 +56,11 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-   // NamedCommands.registerCommand("move elevator to intake height", armSubsystem.movearm());
+   NamedCommands.registerCommand("move elevator to intake height", armSubsystem.comMoveArm(0));
+   NamedCommands.registerCommand("move elevator to L1", armSubsystem.comMoveArm(1));
+   NamedCommands.registerCommand("move elevator to L2", armSubsystem.comMoveArm(2));
+   NamedCommands.registerCommand("move elevator to L3", armSubsystem.comMoveArm(3));
+   NamedCommands.registerCommand("move elevator to L4", armSubsystem.comMoveArm(4));
 
 
 

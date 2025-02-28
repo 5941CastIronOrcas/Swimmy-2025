@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -89,15 +90,41 @@ public class ArmSubsystem extends SubsystemBase {
 
   }
 //commands
- // public Command movearm(){
+public Command comMoveArm(int level){
+        double h = 0.0;
+        double a = 0.0;
 
-   /*  this.run(() -> moveElevatorTo(Constants.intakeHeight));
-    this.run(() -> rotateCoralIntakeTo(Constants.coralIntakeAngle));
-    if(elevatorHeight < Constants.intakeHeight+8 && coralAngle < Constants.coralIntakeAngle +8){ 
-      movearm().end(true);
-    }
-    return movearm().withName(getName());*/
- // }
+        switch (level) {
+            case 0:
+                h = Constants.intakeHeight;
+                a = Constants.coralIntakeAngle;
+                break;
+            case 1:
+                h = Constants.reef1Height;
+                a = Constants.reef1Angle;
+                break;
+
+            case 2:
+                h = Constants.reef2Height;
+                a = Constants.reef2Angle;
+                break;
+            case 3:
+                h = Constants.reef3Height;
+                a = Constants.reef2Angle;
+                break;
+            case 4:
+                h = Constants.reef4Height;
+                a = Constants.reef4Angle;
+                break;
+            default:
+                DriverStation.reportError("height not set", false);
+                break;
+        }
+    final double h2 = h;
+    final double a2 = a;
+
+    return runOnce(() -> ArmSubsystem.moveArmTo(h2, a2));
+  }
 
 
 
