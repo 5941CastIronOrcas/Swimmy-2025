@@ -22,6 +22,7 @@ public class ClimberSubsystem extends SubsystemBase {
   public static double winchAngle = 0;
   public static double climberVelocity = 0;
   public static double clawAngle = 0;
+  public static boolean pivotToggle = false;
   //public static double rClimberAngle = 0;
 
   public ClimberSubsystem() { //initializes the climbers
@@ -90,5 +91,9 @@ public class ClimberSubsystem extends SubsystemBase {
    - (Constants.climberPivotDMult*climberVelocity), - 
    Constants.maxClimberPivotSpeed, Constants.maxClimberPivotSpeed));
    DriverDisplay.climberTarget.setDouble(angle);
+  }
+
+  public static void toggleClimberPivot() {
+    pivotToggle = pivotToggle?false:true;
   }
 }
