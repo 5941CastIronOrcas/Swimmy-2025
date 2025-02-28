@@ -36,9 +36,9 @@ public class PositionEstimator extends SubsystemBase {
   public static Vector2D velocity = new Vector2D(0, 0);
 
   public static AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2025Reefscape.loadAprilTagLayoutField();
- 
-  public static Transform3d robotToCam1 = new Transform3d(new Translation3d(0.18318, 0.20378,0.6653), new Rotation3d(0, Units.degreesToRadians(-41),0));
-  public static Transform3d robotToCam2 = new Transform3d(new Translation3d(0.18227, -0.2038, 0.7103), new Rotation3d(0,Units.degreesToRadians(51),0));
+
+  public static Transform3d robotToCam1 = new Transform3d(new Translation3d(0.18318, -0.20378,0.6653), new Rotation3d(0, Units.degreesToRadians(-41),0));
+  public static Transform3d robotToCam2 = new Transform3d(new Translation3d(0.18227, 0.2038, 0.7103), new Rotation3d(0,Units.degreesToRadians(51),0));
   public static PhotonCamera camera1 = new PhotonCamera(Constants.apriltagCamera1Name);
   public static PhotonCamera camera2 = new PhotonCamera(Constants.apriltagCamera2Name);
   public static PhotonPipelineResult result1 = new PhotonPipelineResult();
@@ -91,14 +91,14 @@ public class PositionEstimator extends SubsystemBase {
     catch (Exception e) {
       //System.out.println("Caught Error: " + e);
     }
-    
+
     return targetCheck && ((result1.getTargets().size() >= 1 && distance < 5) || (ambiguity1 < 0.05 && ambiguity1 > 0 && distance < 3));
   }
 
   public static void ResetAngle() {
     Constants.gyro.setYaw(180);
   }
-  
+
   public static Boolean camCheck2() {
     //var result2 = camera2.getLatestResult();
     double distance = 100;
@@ -138,8 +138,8 @@ public class PositionEstimator extends SubsystemBase {
       return new PhotonTrackedTarget(); //(0, 0, 0, 0, 0, null, null, -1, null, null);
     }
 
-    //In Java/C++, You must always check if the result has a target via hasTargets()/HasTargets() 
-    //before getting targets or else you may get a null pointer exception. Further, you must use 
+    //In Java/C++, You must always check if the result has a target via hasTargets()/HasTargets()
+    //before getting targets or else you may get a null pointer exception. Further, you must use
     //the same result in every subsequent call in that loop.
 
   }
@@ -152,8 +152,8 @@ public class PositionEstimator extends SubsystemBase {
       return new PhotonTrackedTarget(); //(0, 0, 0, 0, 0, null, null, -1, null, null);
     }
 
-    //In Java/C++, You must always check if the result has a target via hasTargets()/HasTargets() 
-    //before getting targets or else you may get a null pointer exception. Further, you must use 
+    //In Java/C++, You must always check if the result has a target via hasTargets()/HasTargets()
+    //before getting targets or else you may get a null pointer exception. Further, you must use
     //the same result in every subsequent call in that loop.
 
   }
@@ -163,12 +163,12 @@ public class PositionEstimator extends SubsystemBase {
     if (!camCheck1()) {
       return previousPosition;
     }
-    
+
     /*if (photonPoseEstimator.update().isPresent()) {
       return photonPoseEstimator.update().orElse(null).estimatedPose.toPose2d();
     } */
-    
-     
+
+
     try {
       EstimatedRobotPose poseResult = photonPoseEstimator1.update(result1).get();
       lastTimestamp1 = poseResult.timestampSeconds;
@@ -177,7 +177,7 @@ public class PositionEstimator extends SubsystemBase {
     catch(Exception e) {
       //System.out.println("Caught Error: " + e);
     }
-    
+
     return previousPosition;
   }
   public static Pose2d getEstimatedGlobalPose2() {
@@ -185,12 +185,12 @@ public class PositionEstimator extends SubsystemBase {
     if (!camCheck2()) {
       return previousPosition;
     }
-    
+
     /*if (photonPoseEstimator.update().isPresent()) {
       return photonPoseEstimator.update().orElse(null).estimatedPose.toPose2d();
     } */
-    
-     
+
+
     try {
       EstimatedRobotPose poseResult = photonPoseEstimator2.update(result2).get();
       lastTimestamp2 = poseResult.timestampSeconds;
@@ -199,7 +199,7 @@ public class PositionEstimator extends SubsystemBase {
     catch(Exception e) {
       //System.out.println("Caught Error: " + e);
     }
-    
+
     return previousPosition;
   }
 
@@ -224,7 +224,7 @@ public class PositionEstimator extends SubsystemBase {
   {
     return 90-Math.toDegrees(Math.atan2((Robot.isRedAlliance?Constants.redSpeaker.y:Constants.blueSpeaker.y) - robotPosition.getY(),(Robot.isRedAlliance?Constants.redSpeaker.x:Constants.blueSpeaker.x) - robotPosition.getX()));// + Constants.shootYawOffset;
   }
-  public static int nearestAutoCoral() { 
+  public static int nearestAutoCoral() {
     try {
     int id = 0;
       double minDist = 100000;
@@ -301,7 +301,7 @@ public class PositionEstimator extends SubsystemBase {
     if(Robot.isRedAlliance) {
       robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative - 90))));
     } else if (Robot.isBlueAlliance) {
-            robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative + 90))));      
+            robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative + 90))));
     } else {
       robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative))));
     }
@@ -420,8 +420,8 @@ public class PositionEstimator extends SubsystemBase {
 //         RawVisionY = er.getY();
 //         System.out.println("got y");
 //       }
-      
-// //      RawVisionX = photonPoseEstimator.update().get().estimatedPose.getX(); 
+
+// //      RawVisionX = photonPoseEstimator.update().get().estimatedPose.getX();
 // //      RawVisionY = photonPoseEstimator.update().get().estimatedPose.getY();
 //     } catch (Exception e) {
 //       System.out.println("exception found @ 197");

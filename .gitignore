@@ -185,3 +185,7 @@ ctre_sim/
 *.bin
 *.properties
 Vimmy2024/.gradle/8.5/executionHistory/executionHistory.lock
+.factorypath
+simgui-ds.json
+simgui.json
+networktables.json
