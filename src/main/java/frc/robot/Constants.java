@@ -126,7 +126,7 @@ public final class Constants {
   public static final double intakeHeight = 14.;//36.5-intakeHeightFromGround;
   public static final double reef1Height = 18.-intakeHeightFromGround;
   public static final double reef2Height = 37.875-intakeHeightFromGround;
-  public static final double reef3Height = 53.625-intakeHeightFromGround;
+  public static final double reef3Height = 51.625-intakeHeightFromGround;
   public static final double reef4Height = 72.-intakeHeightFromGround; //72.
   public static final double maxElevatorHeight = 45; 
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
@@ -136,7 +136,7 @@ public final class Constants {
   public static final double coralIMult = 0.01;
   public static final double coralIClamp = 0.3;
   public static final double coralGravMult = 0.07;
-  public static final double withCoralGravMult = 0.2;
+  public static final double withCoralGravMult = 0.3;
   public static final double maxCoralPivotSpeed = 0.3;
   public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral

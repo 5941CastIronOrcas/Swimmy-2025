@@ -57,11 +57,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-<<<<<<< HEAD
    // NamedCommands.registerCommand("move elevator to intake height", armSubsystem.movearm());
-=======
-    NamedCommands.registerCommand("move elevator to intake height", new MoveArm());
->>>>>>> 1ceef5761d34e8abc01a47838d5251ea4ad8bba1
 
 
 

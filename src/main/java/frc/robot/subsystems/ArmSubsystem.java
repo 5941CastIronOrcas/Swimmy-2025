@@ -88,7 +88,6 @@ public class ArmSubsystem extends SubsystemBase {
   public void simulationPeriodic() {
 
   }
-<<<<<<< HEAD
 //commands
  // public Command movearm(){
 
@@ -101,8 +100,6 @@ public class ArmSubsystem extends SubsystemBase {
  // }
 
 
-=======
->>>>>>> 1ceef5761d34e8abc01a47838d5251ea4ad8bba1
 
   public static void moveElevatorTo(double h) { //uses a pd controller to go to a given angle.
    h = Functions.Clamp(h, 0, Constants.maxElevatorHeight);
