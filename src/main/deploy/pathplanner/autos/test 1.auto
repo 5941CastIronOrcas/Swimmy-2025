@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "stationary"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "intake coral"
