@@ -31,6 +31,7 @@ import frc.robot.subsystems.Arduino;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriverDisplay;
+import frc.robot.subsystems.PositionEstimator;
 import frc.robot.subsystems.SwerveSubsystem;
 
 /**
@@ -74,8 +75,8 @@ public class Robot extends TimedRobot {
     
     SwerveSubsystem.oldVelocityX=0;
     SwerveSubsystem.oldVelocityY=0;
-    for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
-    for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.
+    //for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
+    //for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.
      
   }
 
@@ -354,22 +355,30 @@ public class Robot extends TimedRobot {
   public void simulationPeriodic() {}
 
 
+
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
     //for (int i = 0; i < Constants.allCoralsPos.length; i++) PositionEstimator.realCoralList.add(Constants.allCoralsPos[i]);
     Constants.timeSinceStartAtAutoStart = Timer.getFPGATimestamp();
     
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+   // if (m_autonomousCommand != null) {
+    //  m_autonomousCommand.schedule();
+   // }
     //AutoSequences.AutoStart();
+    Constants.gyro.setYaw(0);
 
   }
 
+  @Override
+  public void autonomousExit(){
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+  }
 
   /** This function is called periodically during autonomous. */
   @Override
@@ -389,6 +398,15 @@ public class Robot extends TimedRobot {
         framesCoralNotPresent = 0;
       }
     }*/
+    if(AutoSequences.isAutoTimeBetween(0, 1.5))
+    {
+      SwerveSubsystem.DriveDriverOriented(0, -0.1, 0);
+    }
+    else
+    {
+      SwerveSubsystem.DriveDriverOriented(0,0,0);
+    }
+
   }  
   public static boolean coralIgnoranceGetInpt(String inptStr) {
     return inptStr.toLowerCase().equals("n") || inptStr.toLowerCase().equals("no") || inptStr.toLowerCase().equals("none") || inptStr.toLowerCase().equals("0");

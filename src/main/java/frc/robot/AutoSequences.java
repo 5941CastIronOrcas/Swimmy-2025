@@ -28,7 +28,7 @@ public class AutoSequences {
     PositionEstimator.realCoralList = new ArrayList<>();
     for (int i = 0; i < coralList.length; i++) 
     {
-        PositionEstimator.realCoralList.add(Constants.allCoralsPos[coralList[i]-1]);
+        //PositionEstimator.realCoralList.add(Constants.allCoralsPos[coralList[i]-1]);
       
     }
   }

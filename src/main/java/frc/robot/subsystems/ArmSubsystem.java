@@ -147,7 +147,7 @@ public Command comMoveArm(int level){
                 speed = 0.0;
                 break;
         }
-        return this.run(() -> intake(speed));
+        return this.runOnce(() -> intake(speed));
     }
 
 

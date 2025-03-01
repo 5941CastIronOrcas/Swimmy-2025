@@ -175,8 +175,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public static void Drive(double x, double y, double rotate) { //this is the basis of the swerve code
     rotate*=-1.;
     double currentMaxAccel = Constants.swerveMaxAccel;
-    //uncomment the below line to enable adaptive acceleration limiter
-    currentMaxAccel = Functions.Clamp(Constants.swerveMaxAccelExtended + (Math.cos(Math.toRadians(ArmSubsystem.elevatorHeight))*(Constants.swerveMaxAccel-Constants.swerveMaxAccelExtended)), 0.1, 2.0);
+    //uncomment the below line to enable adaptive acceleration limiterarm
+    currentMaxAccel = Functions.Clamp(Constants.swerveMaxAccelExtended + ((1.-(ArmSubsystem.elevatorHeight/Constants.maxElevatorHeight))*(Constants.swerveMaxAccel-Constants.swerveMaxAccelExtended)), 0.01, 2.0);
     xOut += Functions.Clamp(x-xOut, -currentMaxAccel, currentMaxAccel); //xOut and yOut are x and y, but the acceleration is limited.
     yOut += Functions.Clamp(y-yOut, -currentMaxAccel, currentMaxAccel);
     double flx =  xOut + (Constants.turnMult * rotate); //the x and y coordinates of each wheel. since the rotation affects each wheel differently, rotation is either added or subtracted from x and y.

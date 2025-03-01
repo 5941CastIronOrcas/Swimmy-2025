@@ -67,7 +67,7 @@ public final class Constants {
   public static final double modulePMult = 0.01;
   public static final double maxThrottleChange = 2.0; //the maximum amount the wheel throttle of each module is allowed to change per frame (max 2.0)
   public static final double swerveMaxAccel = 2.0; //the max amount swerve is allowed to accelerate, measured in percent per frame (max 2.0)
-  public static final double swerveMaxAccelExtended = 0.6; //the max amount swerve is allowed to accelerate when the arm is fully extended
+  public static final double swerveMaxAccelExtended = 0.075; //the max amount swerve is allowed to accelerate when the arm is fully extended
   //Swerve Drive Turning Constants
   public static final double turnMult = 1.0; //the max speed Swerve is EVER allowed to turn at
   public static final double swerveAutoTurnPMult = 0.007;
@@ -112,7 +112,7 @@ public final class Constants {
   public static DigitalInput elevatorTop = new DigitalInput(4);
   public static DigitalInput linebreakSensor = new DigitalInput(9);
 
-  //ALL PIDS STILL NEED TO BE CALIBRATED
+  
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorAngleOffsetThreshold = 330;
@@ -224,10 +224,15 @@ public final class Constants {
 
 
 
-  public static final Vector2D[] blueCoralsPos = new Vector2D[] {new Vector2D(2.9464, 4.1057), new Vector2D(2.9464, 5.5535), new Vector2D(2.9464, 7.0013)}; 
-  public static final Vector2D[] redCoralsPos = new Vector2D[] {new Vector2D(13.6449, 4.1057), new Vector2D(13.6449, 5.5535), new Vector2D(13.6449, 7.0013)};
-  public static final Vector2D[] centerCoralsPos = new Vector2D[] {new Vector2D(8.2956, 0.7529), new Vector2D(8.2956, 2.4293), new Vector2D(8.2956, 4.1057), new Vector2D(8.2956, 5.7821), new Vector2D(8.2956, 7.4585)};
-  public static Vector2D[] allCoralsPos = new Vector2D[centerCoralsPos.length + redCoralsPos.length];
+  //public static final Vector2D[] blueReefSPos = new Vector2D[] {new Vector2D(5.924, 3.871), new Vector2D(5.862, 4.193),
+  //                                                              new Vector2D(5.323, 5.152), new Vector2D(5.047, 5.308),
+  //                                                              new Vector2D(3.944, 5.368), new Vector2D(3.680, 5.200),
+  //                                                              new Vector2D(3.105, 4.205), new Vector2D(3.093, 3.833),
+  //                                                              new Vector2D(3.644, 2.922), new Vector2D(3.908, 2.730),
+  //                                                              new Vector2D(5.047, 2.742), new Vector2D(5.287, 2.850)}; 
+  public static final Vector2D[] redReefsPos = new Vector2D[] {};
+  public static final Vector2D[] blueCoralStationsPos = new Vector2D[] {};
+  public static final Vector2D[] redCoralStationsPos = new Vector2D[] {};
   
   
   //ANSI Color Codes:
