@@ -398,7 +398,7 @@ public class Robot extends TimedRobot {
         framesCoralNotPresent = 0;
       }
     }*/
-    if(AutoSequences.isAutoTimeBetween(0, 1.5))
+    if(AutoSequences.isAutoTimeBetween(0, 2))
     {
       SwerveSubsystem.DriveDriverOriented(0, -0.1, 0);
     }
@@ -406,6 +406,24 @@ public class Robot extends TimedRobot {
     {
       SwerveSubsystem.DriveDriverOriented(0,0,0);
     }
+
+    /*if(AutoSequences.isAutoTimeBetween(0, 2)) {
+      SwerveSubsystem.DriveDriverOriented(0, -0.1, 0);
+    }
+    else if (AutoSequences.isAutoTimeBetween(2, 3)) {
+      SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+      ArmSubsystem.moveArmTo(Constants.reef2Height, Constants.reef2Angle);
+    }
+    else if (AutoSequences.isAutoTimeBetween(3, 3.5)) {
+      ArmSubsystem.spinIntake(-1.);
+    }
+    else {
+      SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+      ArmSubsystem.moveElevator(0);
+      ArmSubsystem.rotateCoralIntake(0);
+      ArmSubsystem.spinIntake(0);
+    }*/
+
 
   }  
   public static boolean coralIgnoranceGetInpt(String inptStr) {
