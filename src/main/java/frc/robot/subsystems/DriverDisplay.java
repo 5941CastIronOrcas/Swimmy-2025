@@ -67,11 +67,12 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry motorPower2 = arm.add("Elevator2 Amps", 0).getEntry();
   public static GenericEntry intakePivotPower = arm.add("Intake Pivot Amps", 0).getEntry();
   public static GenericEntry intakePivotVolts = arm.add("Intake Pivot Voltage" , 0).getEntry();
-  public static GenericEntry intakePivotTemp = arm.add("Intake Pivot Temperature" , 0).getEntry();
+  public static GenericEntry intakePivotTemp = arm.add("Intake Temperature" , 0).getEntry();
   public static GenericEntry intakePower = arm.add("Intake Amps", 0).getEntry();
   public static GenericEntry inRange = arm.add("In Range", false).getEntry();
   public static GenericEntry pivotVelocity = arm.add("Intake Pivot Velocity", 0.).getEntry();
   public static GenericEntry pivotThrottle = arm.add("Intake Pivot Throttle", 0.).getEntry();
+  public static GenericEntry intakeIntegral = arm.add("Intake Integral", 0.).getEntry();
 
   //Climber
   public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
@@ -272,8 +273,9 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.pivotVelocity.setDouble(ArmSubsystem.coralEncoder.getVelocity()*100.);
     DriverDisplay.pivotThrottle.setDouble(Constants.coralIntakePivot.get());
     DriverDisplay.elevatorThrottle.setDouble(Constants.elevator1.get());
-    DriverDisplay.intakePivotTemp.setDouble(Constants.coralIntakePivot.getMotorTemperature());
+    DriverDisplay.intakePivotTemp.setDouble(Constants.coralIntake.getMotorTemperature());
     DriverDisplay.intakePivotVolts.setDouble(Constants.coralIntakePivot.getBusVoltage());
+    DriverDisplay.intakeIntegral.setDouble(ArmSubsystem.intakeIntegral);
 
 
     //Climber

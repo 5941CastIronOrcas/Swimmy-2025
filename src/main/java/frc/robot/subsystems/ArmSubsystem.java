@@ -86,7 +86,8 @@ public class ArmSubsystem extends SubsystemBase {
     else hasCoral=false;
     //else noCoralFrames++; //if linebreak can't see a coral, increase noCoralFrames
     //if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
-    intakeIntegral += (coralAngleTarget - coralAngle)*Constants.coralIMult;
+    intakeIntegral += Functions.DeltaAngleDeg(coralAngle, coralAngleTarget)*Constants.coralIMult;
+    intakeIntegral = Functions.Clamp(intakeIntegral, -Constants.coralIClamp, Constants.coralIClamp);
   }
 
   @Override
@@ -128,7 +129,7 @@ public Command comMoveArm(int level){
         h2 = h;
         a2 = a;
 
-        return this.runOnce(() -> moveArmTo(h2, a2));
+        return this.runOnce(() -> moveArmTo(h2, a2, 0));
   }
     public Command comSpinIntake(int i){
         double speed;
@@ -166,18 +167,20 @@ public Command comMoveArm(int level){
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
   }
 
-  public static void rotateCoralIntakeTo(double a) {
+  public static void rotateCoralIntakeTo(double a, double o) {
     if (hasCoral) {
       a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
     coralAngleTarget = a;
     rotateCoralIntake((Constants.withCoralPMult*Functions.DeltaAngleDeg(coralAngle, a))
-    -(Constants.withCoralDMult*coralEncoder.getVelocity()));
+    -(Constants.withCoralDMult*coralEncoder.getVelocity())
+    +intakeIntegral-o);
     }
     else {
     a = Functions.Clamp(a, Constants.minCoralAngle, Constants.maxCoralAngle);
     coralAngleTarget = a;
     rotateCoralIntake((Constants.coralPMult*Functions.DeltaAngleDeg(coralAngle, a))
-    -(Constants.coralDMult*coralEncoder.getVelocity()));
+    -(Constants.coralDMult*coralEncoder.getVelocity())
+    +intakeIntegral-o);
     }
     DriverDisplay.intakeTarget.setDouble(a);
   }
@@ -190,10 +193,10 @@ public Command comMoveArm(int level){
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
-  public static void moveArmTo(double h, double a) {
+  public static void moveArmTo(double h, double a, double o) {
     moveElevatorTo(h);
-    if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a);
-    else rotateCoralIntakeTo(45);
+    if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a,o);
+    else rotateCoralIntakeTo(45,o);
   }
 
   public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.

@@ -127,20 +127,20 @@ public final class Constants {
   public static final double reef1Height = 14.5-intakeHeightFromGround;
   public static final double reef2Height = 34.375-intakeHeightFromGround;
   public static final double reef3Height = 47.125-intakeHeightFromGround;
-  public static final double reef4Height = 45; //72.
+  public static final double reef4Height = 44; //72.
   public static final double maxElevatorHeight = 44.5; 
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
   public static final double elevatorAccelLimit = 0.1;
   //Coral Intake Control Constants
-  public static final double coralPMult = 0.005;
-  public static final double coralDMult = 0.4; 
-  public static final double coralIMult = 0.01;
-  public static final double coralIClamp = 0.3;
-  public static final double coralGravMult = 0;//0.07;
-  public static final double coralGravOffset = 20;
-  public static final double withCoralPMult = 0.008;
-  public static final double withCoralDMult = 0.6; 
-  public static final double withCoralGravMult = -0.15;//0.4;
+  public static final double coralPMult = 0.005;//0.005;
+  public static final double coralDMult = 0.57;//0.4; 
+  public static final double coralIMult = 0.0003;
+  public static final double coralIClamp = 0.06;
+  public static final double coralGravMult = 0.;//-0.9;//0;//0.07;
+  public static final double coralGravOffset = 0;//20;
+  public static final double withCoralPMult = 0.005;
+  public static final double withCoralDMult = 0.57; 
+  public static final double withCoralGravMult = -0.0;//0.4;
   public static final double withCoralGravOffset = 0;
   public static final double maxCoralPivotSpeed = 1.0;
   //public static final double coralAngleVariation = 1.0;
@@ -184,7 +184,7 @@ public final class Constants {
   public static final TalonFX climber = new TalonFX(45);
   //public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
   public static final SparkMax climberClaw = new SparkMax(36, MotorType.kBrushless);
-  public static final Boolean climberInvert = false;
+  public static final Boolean climberInvert = true;
   //public static final Boolean climber2Invert = false;
   public static final Boolean climberPivotInvert = false;
   public static final Boolean climberClawInvert = false;
@@ -202,10 +202,11 @@ public final class Constants {
   //public static final double climberMaxSpeed = 1;
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
-  public static final double minClimberAngle = 0;
-  public static final double maxClimberAngle = 70;
+  public static final double minClimberAngle = 20;
+  public static final double maxClimberAngle = 55;
   public static final double minClawAngle = -3600.;
   public static final double maxClawAngle = 3600.;
+  
 
   //POSITION ESTIMATION AND FIELD CONSTANTS:  
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);
