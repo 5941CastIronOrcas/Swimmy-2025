@@ -71,8 +71,9 @@ public class RobotContainer {
     configureBindings();
 
     autoChooser = AutoBuilder.buildAutoChooser();
-    autoChooser.addOption("Auto 1", new PathPlannerAuto("Auto 1"));
-    autoChooser.addOption("New Auto", new PathPlannerAuto("New Auto"));
+    autoChooser.addOption("0", new PathPlannerAuto("0"));
+    autoChooser.addOption("1", new PathPlannerAuto("1"));
+    autoChooser.addOption("2", new PathPlannerAuto("2"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 

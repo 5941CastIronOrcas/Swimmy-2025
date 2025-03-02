@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     isRedAlliance = DriverStation.getAlliance().toString().equals("Optional[Red]");
     isBlueAlliance = DriverStation.getAlliance().toString().equals("Optional[Blue]");
-    selectedAutoSequence = (int)DriverDisplay.AutoSequence.getInteger(Constants.defaultAutoSequence);
+    selectedAutoSequence = (m_robotContainer.getAutonomousCommand().getName()=="0"?0:(m_robotContainer.getAutonomousCommand().getName()=="1"?1:(m_robotContainer.getAutonomousCommand().getName()=="2"?2:0)));
     oldTime = newTime;
     newTime = Timer.getFPGATimestamp();
     deltaTime = newTime-oldTime;
@@ -362,7 +362,7 @@ public class Robot extends TimedRobot {
     //for (int i = 0; i < Constants.allCoralsPos.length; i++) PositionEstimator.realCoralList.add(Constants.allCoralsPos[i]);
     Constants.timeSinceStartAtAutoStart = Timer.getFPGATimestamp();
     
-    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    
 
     // schedule the autonomous command (example)
    // if (m_autonomousCommand != null) {
@@ -398,31 +398,48 @@ public class Robot extends TimedRobot {
         framesCoralNotPresent = 0;
       }
     }*/
-    if(AutoSequences.isAutoTimeBetween(0, 2))
-    {
-      SwerveSubsystem.DriveDriverOriented(0, -0.1, 0);
-    }
-    else
-    {
-      SwerveSubsystem.DriveDriverOriented(0,0,0);
-    }
+    switch (selectedAutoSequence) {
+      default:
+        SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+      break;
+      case 0:
+      break;
+      case 1:
+        if(AutoSequences.isAutoTimeBetween(0, 2))
+        {
+          SwerveSubsystem.DriveDriverOriented(0, -0.1, 0);
+        }
+        else
+        {
+          SwerveSubsystem.DriveDriverOriented(0,0,0);
+        }
+        break;
+      case 2:
+        if(AutoSequences.isAutoTimeBetween(0, 4)) {
+          SwerveSubsystem.DriveDriverOriented(0, -0.2, 0);
+        }
+        else if (AutoSequences.isAutoTimeBetween(4, 6)) {
+          SwerveSubsystem.DriveDriverOriented(0, -0.2, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle);
+        }
+        else if (AutoSequences.isAutoTimeBetween(6, 8)) {
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle);
+        }
+        else if (AutoSequences.isAutoTimeBetween(8, 8.5)) {
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.spinIntake(-0.8);
+        }
+        else {
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntake(0);
+          ArmSubsystem.spinIntake(0);
+        }
+        break;
 
-    /*if(AutoSequences.isAutoTimeBetween(0, 2)) {
-      SwerveSubsystem.DriveDriverOriented(0, -0.1, 0);
+    
     }
-    else if (AutoSequences.isAutoTimeBetween(2, 3)) {
-      SwerveSubsystem.DriveDriverOriented(0, 0, 0);
-      ArmSubsystem.moveArmTo(Constants.reef2Height, Constants.reef2Angle);
-    }
-    else if (AutoSequences.isAutoTimeBetween(3, 3.5)) {
-      ArmSubsystem.spinIntake(-1.);
-    }
-    else {
-      SwerveSubsystem.DriveDriverOriented(0, 0, 0);
-      ArmSubsystem.moveElevator(0);
-      ArmSubsystem.rotateCoralIntake(0);
-      ArmSubsystem.spinIntake(0);
-    }*/
 
 
   }  

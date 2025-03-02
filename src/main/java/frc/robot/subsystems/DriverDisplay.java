@@ -186,11 +186,11 @@ public class DriverDisplay extends SubsystemBase {
           break;
 
       case 1:
-        selectedAutoName = "Retract Climbers";
+        selectedAutoName = "Move Forward";
         break;
 
       case 2:
-        selectedAutoName = "Retract Climbers, Drive Out";      
+        selectedAutoName = "Move Forward while L3, Spit Coral";      
         break;
 
       case 3:
