@@ -193,23 +193,6 @@ if(camsactive != 0){
      robotPosition  = new Pose2d(robotPosition.getX() + velocity.x*0.02, robotPosition.getY() + velocity.y*0.02, robotPosition.getRotation());
 }
 
-   /* if(camCheck1() && camCheck2())
-    {
-      Pose2d combinedPoses = new Pose2d((globalPose1.getX() + globalPose2.getX())/2.0, (globalPose1.getY() + globalPose2.getY())/2.0, robotPosition.getRotation());
-      robotPosition = combinedPoses;
-    }
-    else if(camCheck1())
-    {
-      robotPosition = new Pose2d(globalPose1.getX(), globalPose1.getY(), robotPosition.getRotation());
-    }
-    else if(camCheck2())
-    {
-      robotPosition = new Pose2d(globalPose2.getX(), globalPose2.getY(), robotPosition.getRotation());
-    }
-    else {
-      // no apriltags detected
-    }*/
-
 
 
 }
