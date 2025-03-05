@@ -21,7 +21,7 @@ import frc.robot.Robot;
 
 
 public class DriverDisplay extends SubsystemBase {
-  
+
   //Auto Selectors and Whatnot
   public static double angleToAssign = 0;
   public static ShuffleboardTab AutoStuff = Shuffleboard.getTab("Autonomous");
@@ -31,7 +31,7 @@ public class DriverDisplay extends SubsystemBase {
 
   public static GenericEntry AutoSuccesfullShots = AutoStuff.add("Succesfull Shots: ", "N/A").getEntry();
 
-  public static GenericEntry gyroOrientation = AutoStuff.add("Gyro Start Angle", 0).getEntry(); 
+  public static GenericEntry gyroOrientation = AutoStuff.add("Gyro Start Angle", 0).getEntry();
   public static GenericEntry gyroOrientationDisplay = AutoStuff.add("Gyro Angle Selected", "N/A").getEntry();
 
   // Auto Sequences selector
@@ -47,7 +47,7 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry showCoralPitch = coralDetector.add("Coral Pitch", 0).getEntry();
   public static GenericEntry showCoralYaw = coralDetector.add("Coral Yaw", 0).getEntry();
   public static GenericEntry coralDistance = coralDetector.add("Coral Distance", 0).getEntry();
- 
+
   //Arm
   public static ShuffleboardTab arm = Shuffleboard.getTab("Arm");
   public static GenericEntry elevatorMotorAngle = arm.add("Elevator Height Motor Angle", 0).getEntry();
@@ -79,7 +79,7 @@ public class DriverDisplay extends SubsystemBase {
   //public static GenericEntry climberR = climber.add("ClimberR Input", 0).getEntry();
   public static GenericEntry climberInput = climber.add("Climber Input", 0).getEntry();
   public static GenericEntry climberAngle = climber.add("Winch Motor Angle", 0).getEntry();
-  //public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry(); 
+  //public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry();
   public static GenericEntry climberPivotAngle = climber.add("Climber Pivot Angle", 0).getEntry();
   public static GenericEntry climberTarget = climber.add("Climber Target Angle", 0).getEntry();
   public static GenericEntry robotRoll = climber.add("RobotRoll", 0).getEntry();
@@ -107,7 +107,7 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry atTargetAngle = swerve.add("At Target Angle", false).getEntry();
   public static GenericEntry accelX = swerve.add("Acceleration X", 0).getEntry();
   public static GenericEntry accelY = swerve.add("Acceleration Y", 0).getEntry();
-  
+
 
 
 
@@ -117,7 +117,7 @@ public class DriverDisplay extends SubsystemBase {
   public static ShuffleboardTab goa = Shuffleboard.getTab("GOA");
   public static GenericEntry avoidanceX = goa.add("AvoidanceX", 0).getEntry();
   public static GenericEntry avoidanceY = goa.add("AvoidanceY", 0).getEntry();
-  
+
 
   //position estimator
   public static ShuffleboardTab position = Shuffleboard.getTab("Position Estimator");
@@ -132,11 +132,11 @@ public class DriverDisplay extends SubsystemBase {
     public static GenericEntry driverYaw = position.add("DriverYaw", 0).getEntry();
     public static GenericEntry fieldYaw = position.add("FieldYaw", 0).getEntry();
     private final Field2d m_field = new Field2d();
-    
+
 
 
   public DriverDisplay() {
-  SmartDashboard.putData("Field", m_field); 
+  SmartDashboard.putData("Field", m_field);
 
   }
 
@@ -144,7 +144,7 @@ public class DriverDisplay extends SubsystemBase {
   public void periodic() {
     //if(ArmSubsystem.hasCoral) ControllerRumble.RumbleBothControllersBothSides(0.5);
     //else ControllerRumble.RumbleBothControllersBothSides(0);
-    
+
     AutoSuccesfullShots.setInteger((int)AutoSequences.succesfulShots);
     switch ((int)DriverDisplay.gyroOrientation.getInteger(0)) {
       case 0:
@@ -191,15 +191,15 @@ public class DriverDisplay extends SubsystemBase {
         break;
 
       case 2:
-        selectedAutoName = "Move Forward while L3, Spit Coral";      
+        selectedAutoName = "Move Forward while L3, Spit Coral";
         break;
 
       case 3:
-        selectedAutoName = "Retract Climbers, Shoot Basic";      
+        selectedAutoName = "Retract Climbers, Shoot Basic";
         break;
 
       case 4:
-        selectedAutoName = "Retract Climbers, Shoot Aimbot";      
+        selectedAutoName = "Retract Climbers, Shoot Aimbot";
         break;
 
       case 5:
@@ -209,19 +209,19 @@ public class DriverDisplay extends SubsystemBase {
       case 6:
         selectedAutoName = "Drive Out, Retract Climbers, Shoot Aimbot";
         break;
-      
+
       case 7:
         selectedAutoName = "Retract Climbers, Shoot Basic, Collect Nearest, Shoot";
         break;
-      
+
       case 8:
         selectedAutoName = "Retract Climbers, Shoot Aimbot, Collect Nearest, Shoot";
         break;
-      
+
       case 9:
         selectedAutoName = "Retract Climbers, Shoot Basic, Collect and Shoot as Many as Possible";
         break;
-      
+
       case 10:
         selectedAutoName = "Retract Climbers, Shoot Aimbot, Collect and Shoot as Many as Possible";
         break;
@@ -233,7 +233,7 @@ public class DriverDisplay extends SubsystemBase {
 
 
 
-        
+
     // coral choosing
     String coralIgnoranceInpt = DriverDisplay.coralsIgnorance.getString("12345678");
 
@@ -243,12 +243,12 @@ public class DriverDisplay extends SubsystemBase {
     //for (int i = 0; i < 8; i++) coralIgnoranceInpt = coralIgnoranceInpt.substring(0, i) + (coralIgnoranceInpt.charAt(i) == '0' ? '0' : '1') + coralIgnoranceInpt.substring(i, coralIgnoranceInpt.length() - 1);
       //for (int i = 0; i < coralIgnoranceInpt.length(); i++) AutoSequences.coralsIncluded[i] = coralIgnoranceInpt.charAt(i) == '1' ? true : false;
     AutoSequences.coralList = new int[coralIgnoranceInpt.length()];
-    
+
     for (int i = 0; i < coralIgnoranceInpt.length(); i++) {
       AutoSequences.coralList[i] = Character.getNumericValue(coralIgnoranceInpt.charAt(i));
     }
     String outputString = "";
-    for (int i = 0; i < AutoSequences.coralList.length; i++) outputString += AutoSequences.coralList[i] + ", "; 
+    for (int i = 0; i < AutoSequences.coralList.length; i++) outputString += AutoSequences.coralList[i] + ", ";
     DriverDisplay.coralIgnoranceCheck.setString("Enabled Corals" + outputString);
 
     DriverDisplay.AutoSequenceDisplay.setString(selectedAutoName);
@@ -286,7 +286,7 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.climberPivotAngle.setDouble(ClimberSubsystem.climberPivotAngle);
     DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
     DriverDisplay.robotPitch.setDouble(Constants.gyro.getPitch().getValueAsDouble());
-    
+
 
 
     //swerve
@@ -306,10 +306,10 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.atTargetAngle.setBoolean(SwerveSubsystem.atTargetAngle);
     DriverDisplay.accelX.setDouble(SwerveSubsystem.accelX);
     DriverDisplay.accelY.setDouble(SwerveSubsystem.accelY);
-    
 
-   
-    
+
+
+
 
     //Coral Detector
     DriverDisplay.showCoralYaw.setDouble(GamePieceDetector.coralYaw);
@@ -318,13 +318,13 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.coralDistance.setDouble(GamePieceDetector.coralDist);
 
 
-    
+
     //position estimator
-    DriverDisplay.isPresent1.setBoolean(PositionEstimator.camCheck1());
-    DriverDisplay.isPresent2.setBoolean(PositionEstimator.camCheck2());
-    DriverDisplay.ambiguity1.setDouble(PositionEstimator.ambiguity1);
-    DriverDisplay.ambiguity2.setDouble(PositionEstimator.ambiguity2);
-    DriverDisplay.latency.setDouble(PositionEstimator.latency1);
+//    DriverDisplay.isPresent1.setBoolean(PositionEstimator.camCheck1());
+//    DriverDisplay.isPresent2.setBoolean(PositionEstimator.camCheck2());
+//    DriverDisplay.ambiguity1.setDouble(PositionEstimator.ambiguity1);
+//    DriverDisplay.ambiguity2.setDouble(PositionEstimator.ambiguity2);
+//    DriverDisplay.latency.setDouble(PositionEstimator.latency1);
     DriverDisplay.speed.setDouble(Functions.Pythagorean(PositionEstimator.velocity.x, PositionEstimator.velocity.y));
     DriverDisplay.robotX.setDouble(PositionEstimator.robotPosition.getX());
     DriverDisplay.robotY.setDouble(PositionEstimator.robotPosition.getY());
@@ -332,11 +332,11 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.fieldYaw.setDouble( Functions.DeltaAngleDeg(0, PositionEstimator.robotPosition.getRotation().getDegrees()));
     Pose2d positionPose2d = new Pose2d(PositionEstimator.robotPosition.getX()+Constants.FieldDisplayOffsetX, PositionEstimator.robotPosition.getY()+Constants.FieldDisplayOffsetY, new Rotation2d(-PositionEstimator.robotPosition.getRotation().getRadians() - 0.5*Math.PI));
     m_field.setRobotPose(positionPose2d);
-    
 
-   
-    
-  
+
+
+
+
 
   }
 }
