@@ -79,7 +79,8 @@ public class Robot extends TimedRobot {
     SwerveSubsystem.oldVelocityY=0;
     //for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
     //for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.
-     
+    PositionEstimator.calculateObjectiveLocations(); 
+
   }
 
   /**
@@ -135,6 +136,7 @@ public class Robot extends TimedRobot {
       robotLimp = false;
       Functions.setRobotLimp(robotLimp);
     }
+    PositionEstimator.calculateObjectiveLocations();
   }
 
   /** This function is called periodically during operator control. */
@@ -370,6 +372,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //for (int i = 0; i < Constants.allCoralsPos.length; i++) PositionEstimator.realCoralList.add(Constants.allCoralsPos[i]);
     Constants.timeSinceStartAtAutoStart = Timer.getFPGATimestamp();
+    PositionEstimator.calculateObjectiveLocations();
     
     
 

@@ -49,6 +49,9 @@ public class PositionEstimator extends SubsystemBase {
   public static double lastTimestamp2 = 0;
   public static double trueLatency = 0;
 
+  public static Pose2d[] reefPositionPose2ds;
+  public static Pose2d[] coralStationPose2ds;
+
 
   public static void ResetAngle() {
     Constants.gyro.setYaw(180);
@@ -157,6 +160,11 @@ public class PositionEstimator extends SubsystemBase {
       positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
     }
     return positions;
+  }
+  public static void calculateObjectiveLocations()
+  {
+    reefPositionPose2ds = getReefPositions();
+    coralStationPose2ds = getCoralStationPositions();
   }
 
   public static Pose2d getNearest(Pose2d[] positions) {
