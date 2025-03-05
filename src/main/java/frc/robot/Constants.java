@@ -253,6 +253,8 @@ public final class Constants {
                                                                           aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
   public static final double reefSideOffset = 0.5;
   public static final double reefDist = 1.;
+  public static final double coralStationSideOffset = 0.5;
+  public static final double coralStationDist = 1.;
   
   
   //ANSI Color Codes:

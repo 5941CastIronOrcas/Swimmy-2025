@@ -143,6 +143,35 @@ public class PositionEstimator extends SubsystemBase {
     return positions;
   }
 
+  public static Pose2d[] getCoralStationPositions() {
+    Pose2d[] apriltags;
+    if (Robot.isRedAlliance) apriltags = Constants.redCoralStationsApriltags;
+    else apriltags = Constants.blueCoralStationsApriltags;
+    Pose2d[] positions = new Pose2d[apriltags.length*2];
+    for (int i = 0; i <=apriltags.length; i++) {
+      Pose2d pos = apriltags[i];
+      Rotation2d angle = pos.getRotation();
+      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.coralStationDist, -Constants.coralStationSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
+      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.coralStationDist, Constants.coralStationSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
+      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), angle);
+      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
+    }
+    return positions;
+  }
+
+  public static Pose2d getNearest(Pose2d[] positions) {
+    double dist = 10000;
+    Pose2d closest = new Pose2d();
+    for (int i = 0; i <= positions.length; i++) {
+      double d = Functions.Pythagorean(positions[i].getX(), positions[i].getY());
+      if (d < dist) {
+        dist = d;
+        closest = positions[i];
+      }
+    }
+    if (dist == 1000) closest = robotPosition;
+    return closest;
+  }
 
 ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
 
@@ -193,7 +222,7 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
     double combx = 0;
     double comby = 0;
 
-    for(int i = 0; i < cameras.size(); i++){
+    for(int i = 0; i <= cameras.size(); i++){
             if(cameras.get(i).camCheck()){
                 camsactive++;
 
