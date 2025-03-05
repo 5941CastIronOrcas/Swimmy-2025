@@ -196,7 +196,7 @@ public Command comMoveArm(int level){
   public static void moveArmTo(double h, double a, double o) {
     moveElevatorTo(h);
     if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a,o);
-    else rotateCoralIntakeTo(45,o);
+    else rotateCoralIntakeTo(Functions.Clamp(coralAngle, Constants.coralMinAdaptiveAngle, Constants.coralMaxAdaptiveAngle),o); //rotateCoralIntakeTo(45.,o);
   }
 
   public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.

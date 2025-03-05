@@ -119,20 +119,7 @@ public class SwerveSubsystem extends SubsystemBase {
     DriveDriverOriented(LSX, LSY, t);
   }
 
-  public static void FaceSpeaker(double x, double y, double turnLimit) { //rotates the robot to face the speaker.
-    //double aSpeed = (newAngle - oldAngle) * 50;
-    //double a = PositionEstimator.angleToSpeaker() + (aSpeed * (PositionEstimator.distToSpeaker() / Constants.launchSpeed));
-    //DriveDriverOrientedAtAngle(x, y, Functions.FieldToDriverAngle(a), turnLimit);
-
-    double aSpeed = 0;
-    if(Functions.Pythagorean(PositionEstimator.velocity.x, PositionEstimator.velocity.y) > 0.1)
-    {
-      aSpeed = (newAngle - oldAngle) * 50;
-    }
-    double a = PositionEstimator.angleToSpeaker() + (aSpeed * 0.5);
-    DriveDriverOrientedAtAngle(x, y, Functions.FieldToDriverAngle(a), turnLimit);
-  }
-
+  
   public static void SquareDriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset, boolean xFirst) { //same as DriveTo, but moves on one axis before moving on the other.
     if (xFirst) {
       DriveTo(x, Math.abs(y-PositionEstimator.robotPosition.getY())<Constants.swerveSquareDriveToDeadZone?y:PositionEstimator.robotPosition.getY(), angle, speedLimit, turnLimit, XOffset, YOffset);
@@ -142,13 +129,8 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
 
-  public static void GoToAmp(double speedLimit, double turnLimit, double XOffset, double YOffset) //drives to the amp.
-  {
-    Vector2D target = Robot.isRedAlliance?Constants.redAmpDepositPosition:Constants.blueAmpDepositPosition;
-    DriveTo(target.x, PositionEstimator.robotPosition.getY(), 0, speedLimit, turnLimit, XOffset, YOffset);
-  }
 
-  public static void CollectCoral(double XOffset, double YOffset, double speedLimit) { //if the coral is visible, it will drive toward it, and intake the coral.
+  /*public static void CollectCoral(double XOffset, double YOffset, double speedLimit) { //if the coral is visible, it will drive toward it, and intake the coral.
     /*if (CoralDetector.coralVisible && !ArmSubsystem.hasCoral) {
       double a = PositionEstimator.robotYawDriverRelative + CoralDetector.coralYaw;
       double x = -Math.cos(Math.toRadians(-a+90)) * CoralDetector.coralDist + XOffset;
@@ -156,7 +138,7 @@ public class SwerveSubsystem extends SubsystemBase {
       DriveDriverOrientedAtAngle(Functions.Clamp(x * Constants.swerveCollectCoralPMult, -speedLimit, speedLimit), 
         Functions.Clamp(y * Constants.swerveCollectCoralPMult, -speedLimit, speedLimit), 
         a, speedLimit);
-    }*/
+    }
     speedLimit = Functions.Clamp(speedLimit, 0, 1);
     double a = PositionEstimator.robotYawDriverRelative + GamePieceDetector.coralYaw;
     double x = 0;
@@ -169,7 +151,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
     DriveDriverOrientedAtAngle(Functions.Clamp(XOffset+x, -speedLimit, speedLimit), Functions.Clamp(YOffset+y, -speedLimit, speedLimit), a, speedLimit);
 
-  }
+  }*/
 
  
   public static void Drive(double x, double y, double rotate) { //this is the basis of the swerve code
