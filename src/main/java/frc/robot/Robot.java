@@ -15,6 +15,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
@@ -53,6 +54,7 @@ public class Robot extends TimedRobot {
   public static int selectedAutoSequence = Constants.defaultAutoSequence;
   public static double timeSinceRPSstart = 0;
   public static int RPS = -1; //variable that chooses which thing in RPS
+  public static Pose2d[] reef = new Pose2d[]{};
   //public static boolean limpButtonOld = Constants.limpRobotButton.get();
 
   private RobotContainer m_robotContainer;
