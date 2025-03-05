@@ -198,7 +198,7 @@ public Command comMoveArm(int level){
     if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a,o);
     else rotateCoralIntakeTo(Functions.Clamp(a, Constants.coralMinAdaptiveAngle, Constants.coralMaxAdaptiveAngle),o); //rotateCoralIntakeTo(45.,o);
     
-    //rotateCoralIntakeTo(Functions.Clamp(coralAngle, Constants.coralMinAdaptiveAngle, elevatorHeight<10?Constants.coralMaxAdaptiveAngle:a), o);
+    //rotateCoralIntakeTo(Functions.Clamp(coralAngle, Constants.coralMinAdaptiveAngle, elevatorHeight<10?Constants.coralMaxAdaptiveAngle:80), o);
 
   }
 
