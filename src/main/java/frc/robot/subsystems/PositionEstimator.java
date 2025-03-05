@@ -177,7 +177,7 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
     double combx = 0;
     double comby = 0;
 
-    for(int i = 0; i <= cameras.size(); i++){
+    for(int i = 0; i < cameras.size(); i++){
             if(cameras.get(i).camCheck()){
                 camsactive++;
 
