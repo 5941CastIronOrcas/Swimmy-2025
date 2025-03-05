@@ -173,18 +173,25 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
     deltaBuffer[0] = velocity;
 
     previousPosition = robotPosition;
-    Pose2d globalPose = robotPosition;
     double camsactive = 0;
+    double combx = 0;
+    double comby = 0;
 
     for(int i = 0; i <= cameras.size(); i++){
             if(cameras.get(i).camCheck()){
                 camsactive++;
 
-                //globalPose += cameras.get(i).getEstimatedGlobalPose(previousPosition).getX();
-                //globalPose.y = cameras.get(i).getEstimatedGlobalPose(previousPosition).getY(), robotPosition.getRotation());
+                combx += cameras.get(i).getEstimatedGlobalPose(previousPosition).getX();
+                comby += cameras.get(i).getEstimatedGlobalPose(previousPosition).getY();
             }
 
         }
+if(camsactive != 0){
+   robotPosition = new Pose2d(combx/camsactive, comby/camsactive, robotPosition.getRotation());
+}else{
+
+     robotPosition  = new Pose2d(robotPosition.getX() + velocity.x*0.02, robotPosition.getY() + velocity.y*0.02, robotPosition.getRotation());
+}
 
    /* if(camCheck1() && camCheck2())
     {
@@ -201,7 +208,6 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
     }
     else {
       // no apriltags detected
-      robotPosition  = new Pose2d(robotPosition.getX() + velocity.x*0.02, robotPosition.getY() + velocity.y*0.02, robotPosition.getRotation());
     }*/
 
 
