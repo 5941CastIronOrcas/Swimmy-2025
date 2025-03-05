@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -17,6 +19,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.PositionEstimator;
 import frc.robot.utilityObjects.Vector2D;
 
 /**
@@ -227,12 +230,12 @@ public final class Constants {
 
 
 
-  //public static final Vector2D[] blueReefSPos = new Vector2D[] {new Vector2D(5.924, 3.871), new Vector2D(5.862, 4.193),
-  //                                                              new Vector2D(5.323, 5.152), new Vector2D(5.047, 5.308),
-  //                                                              new Vector2D(3.944, 5.368), new Vector2D(3.680, 5.200),
-  //                                                              new Vector2D(3.105, 4.205), new Vector2D(3.093, 3.833),
-  //                                                              new Vector2D(3.644, 2.922), new Vector2D(3.908, 2.730),
-  //                                                              new Vector2D(5.047, 2.742), new Vector2D(5.287, 2.850)}; 
+  public static final Pose2d[] blueReefApriltags = new Pose2d[] {PositionEstimator.aprilTagFieldLayout.getTagPose(21).get().toPose2d(),
+                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(20).get().toPose2d(),
+                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(19).get().toPose2d(),
+                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(18).get().toPose2d(),
+                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(17).get().toPose2d(),
+                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(22).get().toPose2d()}; 
   public static final Vector2D[] redReefsPos = new Vector2D[] {};
   public static final Vector2D[] blueCoralStationsPos = new Vector2D[] {};
   public static final Vector2D[] redCoralStationsPos = new Vector2D[] {};
