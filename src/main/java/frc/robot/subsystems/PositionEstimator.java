@@ -127,6 +127,22 @@ public class PositionEstimator extends SubsystemBase {
     realCoralList.remove(nearestAutoCoral());
   }
 
+  public static Pose2d[] getReefPositions() {
+    Pose2d[] apriltags;
+    if (Robot.isRedAlliance) apriltags = Constants.redReefApriltags;
+    else apriltags = Constants.blueReefApriltags;
+    Pose2d[] positions = new Pose2d[apriltags.length*2];
+    for (int i = 0; i <=apriltags.length; i++) {
+      Pose2d pos = apriltags[i];
+      Rotation2d angle = pos.getRotation();
+      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
+      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
+      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), angle);
+      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
+    }
+    return positions;
+  }
+
 
 ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
 

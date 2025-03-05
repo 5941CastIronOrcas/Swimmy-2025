@@ -1,6 +1,8 @@
 package frc.robot;
 import java.lang.Math;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.utilityObjects.Vector2D;
 
 
@@ -73,6 +75,10 @@ public class Functions {
         double s = Math.sin(a)*Math.cos(a)*(x*Cot(a)+y);
         return (Math.tan(a)*s<0?(Math.sin(a)>0?-1:1):(Math.sin(a)<0?-1:1))
         * Math.sqrt((s*s)+((Math.tan(a)*(s))*(Math.tan(a)*(s))));
+    }
+
+    public static Pose2d RotatePose(Pose2d p, double a) {
+        return new Pose2d(p.getX()*Math.cos(a) - p.getY()*Math.sin(a), p.getX()*Math.sin(a)+p.getY()*Math.cos(a), new Rotation2d(p.getRotation().getRadians()+a));
     }
     public static double Cot(double a)
     {

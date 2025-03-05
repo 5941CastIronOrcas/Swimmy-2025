@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
@@ -12,6 +13,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.*;
+
+import java.security.PublicKey;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -224,21 +227,32 @@ public final class Constants {
   public static final double swerveMaxSpeed = 4.4; //the max speed we're capable of moving at in m/s (used for discarding impossible data)
   public static final String apriltagCamera1Name = "camLeft"; //LEFT (shooter forward)
   public static final String apriltagCamera2Name = "camRight"; //RIGHT (shooter forward)
+  public static final AprilTagFieldLayout aprilTagFieldLayout =  AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
  // public static final String coralDetectionCameraName = "Arducam_OV9782_USB_Camera";
   public static final double FieldDisplayOffsetX = 1.1225;
   public static final double FieldDisplayOffsetY = 0.326;
 
 
 
-  public static final Pose2d[] blueReefApriltags = new Pose2d[] {PositionEstimator.aprilTagFieldLayout.getTagPose(21).get().toPose2d(),
-                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(20).get().toPose2d(),
-                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(19).get().toPose2d(),
-                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(18).get().toPose2d(),
-                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(17).get().toPose2d(),
-                                                                PositionEstimator.aprilTagFieldLayout.getTagPose(22).get().toPose2d()}; 
-  public static final Vector2D[] redReefsPos = new Vector2D[] {};
-  public static final Vector2D[] blueCoralStationsPos = new Vector2D[] {};
-  public static final Vector2D[] redCoralStationsPos = new Vector2D[] {};
+  public static final Pose2d[] blueReefApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(21).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(20).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(19).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(18).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(17).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(22).get().toPose2d()};
+
+  public static final Pose2d[] redReefApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(10).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(11).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(6).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(7).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(8).get().toPose2d(),
+                                                                aprilTagFieldLayout.getTagPose(9).get().toPose2d()}; 
+  public static final Pose2d[] blueCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(12).get().toPose2d(),
+                                                                          aprilTagFieldLayout.getTagPose(13).get().toPose2d()};
+  public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
+                                                                          aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
+  public static final double reefSideOffset = 0.5;
+  public static final double reefDist = 1.;
   
   
   //ANSI Color Codes:
