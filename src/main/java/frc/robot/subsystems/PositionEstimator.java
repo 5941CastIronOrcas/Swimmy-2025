@@ -135,7 +135,7 @@ public class PositionEstimator extends SubsystemBase {
     if (Robot.isRedAlliance) apriltags = Constants.redReefApriltags;
     else apriltags = Constants.blueReefApriltags;
     Pose2d[] positions = new Pose2d[apriltags.length*2];
-    for (int i = 0; i <=apriltags.length; i++) {
+    for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
       Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
@@ -151,7 +151,7 @@ public class PositionEstimator extends SubsystemBase {
     if (Robot.isRedAlliance) apriltags = Constants.redCoralStationsApriltags;
     else apriltags = Constants.blueCoralStationsApriltags;
     Pose2d[] positions = new Pose2d[apriltags.length*2];
-    for (int i = 0; i <=apriltags.length; i++) {
+    for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
       Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.coralStationDist, -Constants.coralStationSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());

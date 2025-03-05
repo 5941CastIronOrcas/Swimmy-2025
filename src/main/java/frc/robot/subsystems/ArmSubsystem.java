@@ -196,7 +196,10 @@ public Command comMoveArm(int level){
   public static void moveArmTo(double h, double a, double o) {
     moveElevatorTo(h);
     if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a,o);
-    else rotateCoralIntakeTo(Functions.Clamp(coralAngle, Constants.coralMinAdaptiveAngle, Constants.coralMaxAdaptiveAngle),o); //rotateCoralIntakeTo(45.,o);
+    else rotateCoralIntakeTo(Functions.Clamp(a, Constants.coralMinAdaptiveAngle, Constants.coralMaxAdaptiveAngle),o); //rotateCoralIntakeTo(45.,o);
+    
+    //rotateCoralIntakeTo(Functions.Clamp(coralAngle, Constants.coralMinAdaptiveAngle, elevatorHeight<10?Constants.coralMaxAdaptiveAngle:a), o);
+
   }
 
   public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
@@ -222,7 +225,7 @@ public Command comMoveArm(int level){
     return height/Constants.angleToHeightRatio;
   }
 
-  public static double getCompensation() {
+  /*public static double getCompensation() {
     if (Math.abs(coralAngle-oldCoralAngle)>Constants.compensationMinDeltaAngle) return coralCompensation;
     double centerRadius = Constants.intakeCenterRadius;
     double centerAngle = Math.toRadians(coralAngle+Constants.intakeCenterAngle);
@@ -235,6 +238,6 @@ public Command comMoveArm(int level){
     double netTorque = (Constants.gForceTimesRadius*Math.sin(centerAngle))-(Constants.sForceTimesRadius*Math.sin(angleToSpring));
     coralCompensation = netTorque/2.6;
     return coralCompensation;
-  }
+  }*/
 
 }
