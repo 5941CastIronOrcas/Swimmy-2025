@@ -101,7 +101,7 @@ public void refresh(){
             }
         }
 
-        return targetCheck;// && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
+        return targetCheck && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
     }
 
     public double[] getIds(){
