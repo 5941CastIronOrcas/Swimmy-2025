@@ -15,7 +15,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.AutoSequences;
-import frc.robot.subsystems.CameraConf;
+import frc.robot.CameraConf;
 import frc.robot.Constants;
 import frc.robot.Functions;
 import frc.robot.Robot;
@@ -37,8 +37,8 @@ public class PositionEstimator extends SubsystemBase {
   public static Vector2D velocity = new Vector2D(0, 0);
 
   public static ArrayList<CameraConf> cams = new ArrayList<CameraConf>();
-    public CameraConf cam1 = new CameraConf();
-    public CameraConf cam2 = new CameraConf();
+    public CameraConf cam1 = new CameraConf(Constants.apriltagCamera1Name, 0.18318, -0.20378, 0.6653, 0, -41, 0);
+    public CameraConf cam2 = new CameraConf(Constants.apriltagCamera2Name,  0.18227, 0.2038, 0.7103, 0, 51 ,0);
   public static Vector2D[] deltaBuffer = new Vector2D[50];
   public static double sumX = 0;
   public static double sumY = 0;
@@ -181,14 +181,15 @@ public class PositionEstimator extends SubsystemBase {
     return closest;
   }
 
-ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
+ArrayList<frc.robot.CameraConf> cameras = new ArrayList<CameraConf>();
+
+public void PositionEstimator(){
+    cameras.add(0, cam1);
+    cameras.add(1, cam2);
+    }
 
   @Override
   public void periodic() {
-    cam1.Conf(Constants.apriltagCamera1Name, 0.18318, -0.20378, 0.6653, 0, -41, 0);
-    cam2.Conf(Constants.apriltagCamera2Name,  0.18227, 0.2038, 0.7103, 0, 51 ,0);
-    cameras.add(0, cam1);
-    cameras.add(1, cam2);
 
 
     SmartDashboard.putNumber("corals remaining", realCoralList.size());
@@ -230,7 +231,8 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
     double combx = 0;
     double comby = 0;
 
-    /*for(int i = 0; i <= cameras.size(); i++){
+    for(int i = 0; i <= cameras.size(); i++){
+            cameras.get(i).refresh();
             if(cameras.get(i).camCheck()){
                 camsactive++;
 
@@ -238,7 +240,7 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
                 comby += cameras.get(i).getEstimatedGlobalPose(previousPosition).getY();
             }
 
-        }*/
+        }
 if(camsactive != 0){
    robotPosition = new Pose2d(combx/camsactive, comby/camsactive, robotPosition.getRotation());
 }else{

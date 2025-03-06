@@ -1,5 +1,4 @@
-package frc.robot.subsystems;
-
+package frc.robot;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,9 +21,9 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class CameraConf extends SubsystemBase {
+
+public class CameraConf {
     public PhotonCamera cam;
     public PhotonPipelineResult result;
     public AprilTagFieldLayout field;
@@ -43,7 +42,7 @@ public class CameraConf extends SubsystemBase {
     public double yaw;
     public double pitch;
 
-    public void Conf(String camName, double camx, double camy, double camz, double camroll, double campitch,
+    public CameraConf(String camName, double camx, double camy, double camz, double camroll, double campitch,
             double camyaw) {
         cam = new PhotonCamera(camName);
         robotToCam = new Transform3d(new Translation3d(camx, camy, camz), new Rotation3d(
@@ -68,18 +67,21 @@ public class CameraConf extends SubsystemBase {
 
     }
 
-    public Boolean camCheck() {
+public void refresh(){
         result = cam.getLatestResult();
+    }
+
+
+    public Boolean camCheck() {
+        List<PhotonTrackedTarget> targets;
         boolean targetCheck = result.hasTargets();
-        List<PhotonTrackedTarget> targets = result.getTargets();
-        targetSize = targets.size();
         targetIds = new double[targetSize];
         distances = new double[targetSize];
         double distance = 100;
 
         if (targetCheck) {
+            targets = result.getTargets();
             for (int i = 0; i < targetSize; i++) {
-
                 ambiguity += targets.get(i).getPoseAmbiguity();
                 distances[i] = PhotonUtils.calculateDistanceToTargetMeters(z,
                         field.getTagPose(targets.get(i).getFiducialId()).get().getZ(), pitch,
@@ -95,9 +97,6 @@ public class CameraConf extends SubsystemBase {
                 }
             }
         }
-        SmartDashboard.putNumber(cam.getName() + " distance", distance);
-        SmartDashboard.putNumberArray("Target ID's", targetIds);
-        //SmartDashboard.putBoolean(cam.getName() + "isPresent", camCheck());
 
         return targetCheck && distance < 5
                 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
@@ -109,6 +108,7 @@ public class CameraConf extends SubsystemBase {
 
             return previousPosition;
         }
+
         photonPoseEstimator.setReferencePose(previousPosition);
 
         if (photonPoseEstimator.update(result).isPresent()) {
