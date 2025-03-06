@@ -107,6 +107,7 @@ public class DriverDisplay extends SubsystemBase {
   public static GenericEntry atTargetAngle = swerve.add("At Target Angle", false).getEntry();
   public static GenericEntry accelX = swerve.add("Acceleration X", 0).getEntry();
   public static GenericEntry accelY = swerve.add("Acceleration Y", 0).getEntry();
+  public static GenericEntry nearestPos = swerve.add("Nearest Objective Position", "0, 0, 0").getEntry();
 
 
 
@@ -269,7 +270,6 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.motorPower2.setDouble(Constants.elevator2.getOutputCurrent());
     DriverDisplay.intakePivotPower.setDouble(Constants.coralIntakePivot.getOutputCurrent());
     DriverDisplay.intakePower.setDouble(Constants.coralIntake.getOutputCurrent());
-    DriverDisplay.inRange.setBoolean(ArmSubsystem.inRange);
     DriverDisplay.pivotVelocity.setDouble(ArmSubsystem.coralEncoder.getVelocity()*100.);
     DriverDisplay.pivotThrottle.setDouble(Constants.coralIntakePivot.get());
     DriverDisplay.elevatorThrottle.setDouble(Constants.elevator1.get());
@@ -283,7 +283,7 @@ public class DriverDisplay extends SubsystemBase {
     //DriverDisplay.climberR.setDouble(Constants.climber2.get());
     DriverDisplay.climberAngle.setDouble(ClimberSubsystem.winchAngle);
     //DriverDisplay.rClimberAngle.setDouble(ClimberSubsystem.rClimberAngle);
-    DriverDisplay.climberPivotAngle.setDouble(ClimberSubsystem.climberPivotAngle);
+    DriverDisplay.climberPivotAngle.setDouble(ClimberSubsystem.climberAngle);
     DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
     DriverDisplay.robotPitch.setDouble(Constants.gyro.getPitch().getValueAsDouble());
 
@@ -306,6 +306,9 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.atTargetAngle.setBoolean(SwerveSubsystem.atTargetAngle);
     DriverDisplay.accelX.setDouble(SwerveSubsystem.accelX);
     DriverDisplay.accelY.setDouble(SwerveSubsystem.accelY);
+    DriverDisplay.nearestPos.setString(Functions.Round(SwerveSubsystem.nearestPos.getX(), -3) + ", "
+                                      + Functions.Round(SwerveSubsystem.nearestPos.getY(), -3) + ", "
+                                      + Functions.Round(SwerveSubsystem.nearestPos.getRotation().getDegrees(), -3));
 
 
 

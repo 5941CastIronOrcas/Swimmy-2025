@@ -108,12 +108,10 @@ public final class Constants {
   public static final Boolean coralIntakePivotInvert = true;
   public static final Boolean coralIntakeInvert = false;
   //Algae Intake Motor Declarations
-  public static final SparkMax algaeIntakePivot = new SparkMax(37, MotorType.kBrushless);
-  public static final SparkMax algaeIntake = new SparkMax(38, MotorType.kBrushless);
+  public static final SparkMax algaeIntake = new SparkMax(32, MotorType.kBrushless);
   public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
   
   //Arm Sensor Declarations
-  public static SparkMax coralEncoderSpark = new SparkMax(32, MotorType.kBrushless);
   public static DigitalInput elevatorBottom = new DigitalInput(3);
   public static DigitalInput elevatorTop = new DigitalInput(4);
   public static DigitalInput linebreakSensor = new DigitalInput(9);
@@ -186,10 +184,10 @@ public final class Constants {
   
   //CLIMBER STUFF
   //Climber Motor Declarations
-  public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
+  //public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
   public static final TalonFX climber = new TalonFX(45);
   //public static final SparkMax climber2 = new SparkMax(36, MotorType.kBrushless);
-  public static final SparkMax climberClaw = new SparkMax(36, MotorType.kBrushless);
+  //public static final SparkMax climberClaw = new SparkMax(36, MotorType.kBrushless);
   public static final Boolean climberInvert = true;
   //public static final Boolean climber2Invert = false;
   public static final Boolean climberPivotInvert = false;

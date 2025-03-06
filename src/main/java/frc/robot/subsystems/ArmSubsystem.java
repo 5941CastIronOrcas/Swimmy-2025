@@ -33,10 +33,9 @@ public class ArmSubsystem extends SubsystemBase {
   public static double oldCoralAngle = 0; //the angle at which the robot should put it's arm in order to shoot into the speaker one frame ago
   public static double coralAngleTarget = 0;
   public static double dist = 0; //the distance between the center of the robot and the speaker
-  public static boolean inRange = false; //if the robot is within the minimum shooting range
   public static double g = Constants.gravity; //gravitational acceleration m/s/s
   public static boolean hasCoral = false; //whether or not the robot is currently holding a coral
-  public static boolean shooterFast = false; //whether or not the shooter is spinning at or above the minimum shoot speed
+  public static boolean hasAlgae = false;
   public static boolean correctHeight = false; //whether or not the arm is close enough to the correct angle to shoot to get the coral in the speaker
   public static boolean correctAngle = false;
   public static boolean lineBreak = false; //the distance measured by the ultrasonic hooked into the arduino
@@ -148,7 +147,7 @@ public Command comMoveArm(int level){
                 speed = 0.0;
                 break;
         }
-        return this.runOnce(() -> intake(speed));
+        return this.runOnce(() -> intakeCoral(speed));
     }
 
 
@@ -202,18 +201,32 @@ public Command comMoveArm(int level){
 
   }
 
-  public static void spinIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
+  public static void spinCoralIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
     Constants.coralIntake.set(Functions.Clamp(-input, -0.5,  1));
   }
-  public static void intake(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.
+  public static void intakeCoral(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.
   {
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
-    spinIntake(input<0.?((hasCoral)?0:input):input);
+    spinCoralIntake(input<0.?((hasCoral)?0.05:input):input);
   }
-  public static void intakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
+  public static void moveToIntakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
     moveElevatorTo(Constants.intakeHeight);
-    intake(0.75);
+    intakeCoral(0.75);
+  }
+
+  public static void spinAlgaeIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
+  {
+    Constants.algaeIntake.set(Functions.Clamp(-input, -0.5,  1));
+  }
+  public static void intakeAlgae(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.
+  {
+    Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
+    spinAlgaeIntake(input<0.?((hasAlgae)?0.05:input):input);
+  }
+  public static void moveToIntakeAlgae() { //moves the arm to the intake position, and tries to pick up a Coral
+    moveElevatorTo(Constants.reef1Height);
+    intakeAlgae(0.75);
   }
 
 

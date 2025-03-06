@@ -97,7 +97,7 @@ public class CameraConf extends SubsystemBase {
         }
         SmartDashboard.putNumber(cam.getName() + " distance", distance);
         SmartDashboard.putNumberArray("Target ID's", targetIds);
-        SmartDashboard.putBoolean(cam.getName() + "isPresent", camCheck());
+        //SmartDashboard.putBoolean(cam.getName() + "isPresent", camCheck());
 
         return targetCheck && distance < 5
                 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);

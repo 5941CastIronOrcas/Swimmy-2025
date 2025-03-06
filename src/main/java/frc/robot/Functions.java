@@ -122,6 +122,21 @@ public class Functions {
         }
         return out;
     }
+    public static Pose2d[] CombinePose2dArrays(Pose2d[] a, Pose2d[] b) {
+        Pose2d[] out = new Pose2d[a.length+b.length];
+        for (int i=0; i<a.length; i++) {
+            out[i] = a[i];
+        }
+        for (int i=0; i<b.length; i++) {
+            out[i+a.length] = b[i];
+        }
+        return out;
+    }
+
+    public static double Round(double in, int pow) {
+        double mult = Math.pow(10, -pow);
+        return Math.round(in*mult)/mult;
+    }
 
     public static void setRobotLimp(boolean yes)
     {
@@ -134,7 +149,6 @@ public class Functions {
         Constants.coralIntake.stopMotor();
         Constants.coralIntakePivot.stopMotor();
         Constants.algaeIntake.stopMotor();
-        Constants.algaeIntakePivot.stopMotor();
         //Constants.climber2.stopMotor();
         Constants.climber.stopMotor();
         Constants.elevator1.stopMotor();

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -40,6 +41,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public static SwerveModule brModule = new SwerveModule(Constants.braMotor,Constants.brtMotor,Constants.brEncoder,true,Constants.frtInvert,45);
   public static boolean atTargetPosition = false;
   public static boolean atTargetAngle = false;
+  public static Pose2d nearestPos = new Pose2d();
   public static ChassisSpeeds currentSpeed = new ChassisSpeeds(0.,0.,0.);//current x, y, and rotational velocity of robot (for PathPlanner)
   public SwerveSubsystem() {}
 
@@ -70,6 +72,15 @@ public class SwerveSubsystem extends SubsystemBase {
           (targetY-newVelocityY)*Constants.pathPlannerPMult, 
           (targetAngle-angularVelocity)*Constants.pathPlannerAngularPMult);
 
+  }
+
+  public static void DriveToNearestReef(double speedLimit, double turnLimit, double XOffset, double YOffset) {
+    Pose2d pos = PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds);
+    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
+  }
+  public static void DriveToNearestCoralStation(double speedLimit, double turnLimit, double XOffset, double YOffset) {
+    Pose2d pos = PositionEstimator.getNearest(PositionEstimator.coralStationPose2ds);
+    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
   }
 
   public static void DriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset) //uses a PD controller and the Drive function to drive to a given point on the field.

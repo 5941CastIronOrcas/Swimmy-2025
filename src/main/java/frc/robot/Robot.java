@@ -218,7 +218,10 @@ public class Robot extends TimedRobot {
       ArmSubsystem.moveElevator(LSY2*0.4);
       ArmSubsystem.rotateCoralIntake(-RSY2*(ArmSubsystem.hasCoral?0.6:0.4));
     }
-    ArmSubsystem.spinIntake((Constants.controller2.getLeftTriggerAxis()*(ArmSubsystem.hasCoral?0.05:1))-Constants.controller2.getRightTriggerAxis());
+    ArmSubsystem.intakeAlgae(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
+    if (Constants.controller2.getLeftBumperButton()) ArmSubsystem.intakeCoral(1.);
+    else if (Constants.controller2.getRightBumperButton()) ArmSubsystem.intakeCoral(-1.);
+    else ArmSubsystem.intakeCoral(0.);
 
     //Climber
     if (Constants.controller2.getAButton()) {
@@ -231,13 +234,13 @@ public class Robot extends TimedRobot {
     }
     else Constants.climber.set(0);
 
-    if (Constants.controller2.getRightBumper()) ClimberSubsystem.moveClaw(.1);
+    /*if (Constants.controller2.getRightBumper()) ClimberSubsystem.moveClaw(.1);
     else if (Constants.controller2.getLeftBumper()) ClimberSubsystem.moveClaw(-.1);
     else Constants.climberClaw.set(0);
 
     if (Constants.controller2.getBackButton()) ClimberSubsystem.rotateClimberPivot(-0.1);
     else if (Constants.controller2.getStartButton()) ClimberSubsystem.rotateClimberPivot(0.05);
-    else Constants.climberPivot.set(0);
+    else Constants.climberPivot.set(0);*/
 
     //if (Constants.controller2.getXButton()) {
      // ClimberSubsystem.toggleClimberPivot();
@@ -440,13 +443,13 @@ public class Robot extends TimedRobot {
         }
         else if (AutoSequences.isAutoTimeBetween(10, 10.5)) {
           SwerveSubsystem.DriveDriverOriented(0, 0, 0);
-          ArmSubsystem.spinIntake(-0.8);
+          ArmSubsystem.spinCoralIntake(-0.8);
         }
         else {
           SwerveSubsystem.DriveDriverOriented(0, 0, 0);
           ArmSubsystem.moveElevator(0);
           ArmSubsystem.rotateCoralIntake(0);
-          ArmSubsystem.spinIntake(0);
+          ArmSubsystem.spinCoralIntake(0);
         }
         break;
       case 3:
@@ -461,10 +464,10 @@ public class Robot extends TimedRobot {
         }
         else if (AutoSequences.isAutoTimeBetween(9, 11)){
           SwerveSubsystem.DriveDriverOriented(0., 0., 0.);
-          ArmSubsystem.spinIntake(-0.8);
+          ArmSubsystem.spinCoralIntake(-0.8);
         }
         else {
-          ArmSubsystem.spinIntake(0.0);
+          ArmSubsystem.spinCoralIntake(0.0);
         }
         break;
 

@@ -170,7 +170,7 @@ public class PositionEstimator extends SubsystemBase {
   public static Pose2d getNearest(Pose2d[] positions) {
     double dist = 10000;
     Pose2d closest = new Pose2d();
-    for (int i = 0; i <= positions.length; i++) {
+    for (int i = 0; i < positions.length; i++) {
       double d = Functions.Pythagorean(positions[i].getX(), positions[i].getY());
       if (d < dist) {
         dist = d;
@@ -230,7 +230,7 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
     double combx = 0;
     double comby = 0;
 
-    for(int i = 0; i <= cameras.size(); i++){
+    /*for(int i = 0; i <= cameras.size(); i++){
             if(cameras.get(i).camCheck()){
                 camsactive++;
 
@@ -238,7 +238,7 @@ ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
                 comby += cameras.get(i).getEstimatedGlobalPose(previousPosition).getY();
             }
 
-        }
+        }*/
 if(camsactive != 0){
    robotPosition = new Pose2d(combx/camsactive, comby/camsactive, robotPosition.getRotation());
 }else{
