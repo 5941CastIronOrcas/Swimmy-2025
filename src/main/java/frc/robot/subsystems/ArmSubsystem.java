@@ -22,7 +22,7 @@ import frc.robot.utilityObjects.Vector2D;
 
 
 public class ArmSubsystem extends SubsystemBase {
-  public static SparkAbsoluteEncoder coralEncoder = Constants.coralIntake.getAbsoluteEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
+  public static SparkAbsoluteEncoder coralEncoder = Constants.algaeIntake.getAbsoluteEncoder();//Constants.coralEncoderSpark.getAlternateEncoder();//getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 8192); //the encoder that reads the arm's position
   public static RelativeEncoder elevator1Encoder = Constants.elevator1.getEncoder();
   public static RelativeEncoder elevator2Encoder = Constants.elevator2.getEncoder();
   public static double oldElevatorAngle = 0;
@@ -36,7 +36,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static double g = Constants.gravity; //gravitational acceleration m/s/s
   public static boolean hasCoral = false; //whether or not the robot is currently holding a coral
   public static boolean hasAlgae = false;
-  public static boolean correctHeight = false; //whether or not the arm is close enough to the correct angle to shoot to get the coral in the speaker
+  public static boolean correctHeight = false; // whether or not the arm is close enough to the correct angle to shoot to get the coral in the speaker
   public static boolean correctAngle = false;
   public static boolean lineBreak = false; //the distance measured by the ultrasonic hooked into the arduino
   public static boolean elevatorBottom = false;
