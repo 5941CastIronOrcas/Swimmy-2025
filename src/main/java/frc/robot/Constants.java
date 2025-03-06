@@ -223,8 +223,6 @@ public final class Constants {
   public static final double coralCameraForwardOffset = 0.54; // forward distance from robot center to coral detector camera in meters
   public static final double coralCameraAngle = -20; //for coral detector
   public static final double swerveMaxSpeed = 4.4; //the max speed we're capable of moving at in m/s (used for discarding impossible data)
-  public static final String apriltagCamera1Name = "camLeft"; //LEFT (shooter forward)
-  public static final String apriltagCamera2Name = "camRight"; //RIGHT (shooter forward)
   public static final AprilTagFieldLayout aprilTagFieldLayout =  AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
  // public static final String coralDetectionCameraName = "Arducam_OV9782_USB_Camera";
   public static final double FieldDisplayOffsetX = 1.1225;

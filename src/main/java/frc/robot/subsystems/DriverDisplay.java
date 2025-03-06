@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.lang.reflect.GenericArrayType;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.GenericEntry;
@@ -125,6 +127,10 @@ public class DriverDisplay extends SubsystemBase {
     public static GenericEntry isPresent1 = position.add("Is Present 1", false).getEntry();
     public static GenericEntry isPresent2 = position.add("Is Present 2", false).getEntry();
     public static GenericEntry ambiguity1 = position.add("Ambiguity 1", 0).getEntry();
+  
+    public static GenericEntry targetIds1 = position.add("Target Ids 1", 0).getEntry();
+    public static GenericEntry targetIds2 = position.add("Target Ids 2", 0).getEntry();
+
     public static GenericEntry ambiguity2 = position.add("Ambiguity 2", 0).getEntry();
     public static GenericEntry speed = position.add("speed", 0).getEntry();
     public static GenericEntry latency = position.add("Latency", 0).getEntry();
@@ -323,10 +329,13 @@ public class DriverDisplay extends SubsystemBase {
 
 
     //position estimator
-//    DriverDisplay.isPresent1.setBoolean(PositionEstimator.camCheck1());
-//    DriverDisplay.isPresent2.setBoolean(PositionEstimator.camCheck2());
-//    DriverDisplay.ambiguity1.setDouble(PositionEstimator.ambiguity1);
-//    DriverDisplay.ambiguity2.setDouble(PositionEstimator.ambiguity2);
+    DriverDisplay.isPresent1.setBoolean(PositionEstimator.cams.get(0).camCheck());
+    DriverDisplay.isPresent2.setBoolean(PositionEstimator.cams.get(1).camCheck());
+    DriverDisplay.ambiguity1.setDouble(PositionEstimator.cams.get(0).ambiguity);
+    DriverDisplay.ambiguity2.setDouble(PositionEstimator.cams.get(1).ambiguity);
+    DriverDisplay.targetIds1.setDoubleArray(PositionEstimator.cams.get(0).targetIds);
+    DriverDisplay.targetIds2.setDoubleArray(PositionEstimator.cams.get(1).targetIds);
+
 //    DriverDisplay.latency.setDouble(PositionEstimator.latency1);
     DriverDisplay.speed.setDouble(Functions.Pythagorean(PositionEstimator.velocity.x, PositionEstimator.velocity.y));
     DriverDisplay.robotX.setDouble(PositionEstimator.robotPosition.getX());

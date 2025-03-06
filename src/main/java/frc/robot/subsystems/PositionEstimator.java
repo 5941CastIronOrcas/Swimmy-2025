@@ -37,8 +37,8 @@ public class PositionEstimator extends SubsystemBase {
   public static Vector2D velocity = new Vector2D(0, 0);
 
   public static ArrayList<CameraConf> cams = new ArrayList<CameraConf>();
-    public CameraConf cam1 = new CameraConf(Constants.apriltagCamera1Name, 0.18318, -0.20378, 0.6653, 0, -41, 0);
-    public CameraConf cam2 = new CameraConf(Constants.apriltagCamera2Name,  0.18227, 0.2038, 0.7103, 0, 51 ,0);
+  public CameraConf cam1 = new CameraConf("camLeft", 0.18318, -0.20378, 0.6653, 0, -41, 0);
+  public CameraConf cam2 = new CameraConf("camRight",  0.18227, 0.2038, 0.7103, 0, 51 ,0);
   public static Vector2D[] deltaBuffer = new Vector2D[50];
   public static double sumX = 0;
   public static double sumY = 0;
@@ -231,7 +231,7 @@ public void PositionEstimator(){
     double combx = 0;
     double comby = 0;
 
-    for(int i = 0; i <= cameras.size(); i++){
+    for(int i = 0; i < cameras.size(); i++){
             cameras.get(i).refresh();
             if(cameras.get(i).camCheck()){
                 camsactive++;

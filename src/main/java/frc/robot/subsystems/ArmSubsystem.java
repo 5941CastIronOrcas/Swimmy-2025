@@ -65,7 +65,7 @@ public class ArmSubsystem extends SubsystemBase {
       elevator2Encoder.setPosition(Constants.maxElevatorAngle);
     }
     oldCoralAngle = coralAngle;
-    coralAngle = coralEncoder.getPosition()*360;//-(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
+    coralAngle = (coralEncoder.getPosition()*360)-239;//-(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
     oldElevatorAngle = newElevatorAngle;
     if (oldElevatorAngle-newElevatorAngle>Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset += 360;
     if (oldElevatorAngle-newElevatorAngle<-Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset -= 360;
