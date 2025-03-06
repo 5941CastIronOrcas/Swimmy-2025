@@ -83,13 +83,19 @@ public void refresh(){
             targetSize = targets.size();
             targetIds = new double[targetSize];
             distances = new double[targetSize];
+            PhotonTrackedTarget currentTarget;
             if(targetSize <= 0) return false;
             for (int i = 0; i < targetSize; i++) {
-                ambiguity += targets.get(i).getPoseAmbiguity();
+                if(targets.get(i) != null){
+                    currentTarget = targets.get(i);
+                }else{
+                    continue;
+                }
+                ambiguity += currentTarget.getPoseAmbiguity();
                 distances[i] = PhotonUtils.calculateDistanceToTargetMeters(z,
-                        field.getTagPose(targets.get(i).getFiducialId()).get().getZ(), pitch,
-                        targets.get(i).getPitch());
-                targetIds[i] = (double) targets.get(i).getFiducialId();
+                        field.getTagPose(currentTarget.getFiducialId()).get().getZ(), pitch,
+                        currentTarget.getPitch());
+                targetIds[i] = (double) currentTarget.getFiducialId();
             }
             ambiguity /= (double) targetSize;
             double minDist = 1000;
@@ -100,7 +106,6 @@ public void refresh(){
                 }
             }
         }
-
         return targetCheck && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
     }
 
@@ -120,13 +125,13 @@ public void refresh(){
 
         photonPoseEstimator.setReferencePose(previousPosition);
         try{
-       
+
             EstimatedRobotPose e = photonPoseEstimator.update(result).get();
             return e.estimatedPose.toPose2d();
     }catch(Exception e){
         //System.out.println(" crahsing dumbass");
     }
-        
+
 
        // System.out.println("WE MADE IT");
         return previousPosition;
