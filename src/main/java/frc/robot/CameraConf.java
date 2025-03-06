@@ -41,7 +41,7 @@ public class CameraConf {
     public double roll = 0;
     public double yaw = 0;
     public double pitch = 0;
-
+    public double distance = 0;
     public CameraConf(String camName, double camx, double camy, double camz, double camroll, double campitch,
             double camyaw) {
         cam = new PhotonCamera(camName);
@@ -76,7 +76,6 @@ public void refresh(){
         List<PhotonTrackedTarget> targets;
         boolean targetCheck = result.hasTargets();
 
-        double distance = 100;
 
         if (targetCheck) {
             targets = result.getTargets();
@@ -114,6 +113,9 @@ public void refresh(){
             return targetIds;
         }
         return new double[1];
+    }
+    public double getDistance(){
+        return distance;
     }
 
     public Pose2d getEstimatedGlobalPose(Pose2d previousPosition) {
