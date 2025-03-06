@@ -78,7 +78,8 @@ public class Functions {
     }
 
     public static Pose2d RotatePose(Pose2d p, double a) {
-        return new Pose2d(p.getX()*Math.cos(a) - p.getY()*Math.sin(a), p.getX()*Math.sin(a)+p.getY()*Math.cos(a), new Rotation2d(p.getRotation().getRadians()+a));
+        return new Pose2d(p.getX()*Math.cos(a) - p.getY()*Math.sin(a), p.getX()*Math.sin(a)+p.getY()*
+        Math.cos(a), new Rotation2d(p.getRotation().getRadians()+a));
     }
     public static double Cot(double a)
     {

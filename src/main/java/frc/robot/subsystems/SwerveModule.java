@@ -30,7 +30,9 @@ public class SwerveModule {
     }
     public double GetVelocity() //gets the velocity that the wheel is moving at in m/s
     {
-        return tMult * Functions.DeadZone(((throttleMotor.getEncoder().getVelocity() + (encoder.getVelocity().getValueAsDouble()*(27.0 / 17.0)*(1.0/3.0)*60))/60.0) * Constants.swerveDriveRatio * Constants.swerveWheelCircumference, 0.00001);
+        return tMult * Functions.DeadZone(((throttleMotor.getEncoder().getVelocity() + 
+        (encoder.getVelocity().getValueAsDouble()*(27.0 / 17.0)*(1.0/3.0)*60))/60.0) * Constants.swerveDriveRatio * 
+        Constants.swerveWheelCircumference, 0.00001);
     }
     public double GetAngle() //gets the angle of the wheel
     {

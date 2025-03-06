@@ -161,7 +161,8 @@ public Command comMoveArm(int level){
   }
   public static void moveElevator(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     elevatorThrottle += Functions.Clamp(t-elevatorThrottle, -Constants.elevatorAccelLimit, Constants.elevatorAccelLimit);
-    t = Functions.Clamp(elevatorThrottle, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-(0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
+    t = Functions.Clamp(elevatorThrottle, -Functions.Clamp(0.2*(elevatorHeight), 0, 1), Functions.Clamp(-
+    (0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
   }
@@ -188,7 +189,9 @@ public Command comMoveArm(int level){
     //t = Functions.Clamp(t, (coralAngle < (elevatorHeight/Constants.maxElevatorHeight)
    // *Constants.coralMinAdaptiveAngle)?0.2:-1, (coralAngle > ((Constants.maxElevatorHeight
    // -elevatorHeight)/Constants.maxElevatorHeight)*Constants.coralMaxAdaptiveAngle)?-0.2:1);
-    t = Functions.Clamp(t - (hasCoral?Constants.withCoralGravMult:Constants.coralGravMult)*Math.sin(Math.toRadians(coralAngle-(hasCoral?Constants.coralGravOffset:Constants.withCoralGravOffset))), -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
+    t = Functions.Clamp(t - (hasCoral?Constants.withCoralGravMult:Constants.coralGravMult)*
+    Math.sin(Math.toRadians(coralAngle-(hasCoral?Constants.coralGravOffset:Constants.withCoralGravOffset))), 
+    -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 

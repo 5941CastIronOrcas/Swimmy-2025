@@ -101,7 +101,9 @@ public class Robot extends TimedRobot {
     isRedAlliance = DriverStation.getAlliance().toString().equals("Optional[Red]");
     isBlueAlliance = DriverStation.getAlliance().toString().equals("Optional[Blue]");
     //selectedAutoSequence = (m_robotContainer.getAutonomousCommand().getName()=="0"?0:(m_robotContainer.getAutonomousCommand().getName()=="1"?1:(m_robotContainer.getAutonomousCommand().getName()=="2"?2:(m_robotContainer.getAutonomousCommand().getName()=="3"?3:0))));
-    selectedAutoSequence = (m_robotContainer.getAutonomousCommand().getName().equals("0")?0:(m_robotContainer.getAutonomousCommand().getName().equals("1")?1:(m_robotContainer.getAutonomousCommand().getName().equals("2")?2:(m_robotContainer.getAutonomousCommand().getName().equals("3")?3:0))));
+    selectedAutoSequence = (m_robotContainer.getAutonomousCommand().getName().equals("0")?0:
+    (m_robotContainer.getAutonomousCommand().getName().equals("1")?1:(m_robotContainer.getAutonomousCommand().getName().equals("2")?2:
+    (m_robotContainer.getAutonomousCommand().getName().equals("3")?3:0))));
     oldTime = newTime;
     newTime = Timer.getFPGATimestamp();
     deltaTime = newTime-oldTime;
@@ -163,7 +165,8 @@ public class Robot extends TimedRobot {
      */
     if(Constants.controller1.getLeftBumper()) //snaps to specific directions to climb and score amp
     {
-      RSAngle = Math.abs(Functions.DeltaAngleDeg(0, RSAngle)) < 105.0 ? 90 * Math.round(RSAngle / 90.0) : 120.0 * Math.round(RSAngle / 120.0);
+      RSAngle = Math.abs(Functions.DeltaAngleDeg(0, RSAngle)) < 105.0 ? 90 * Math.round(RSAngle / 90.0) : 120.0 * 
+      Math.round(RSAngle / 120.0);
     }
 
     if (Constants.controller1.getRightBumperPressed()) { //resets the robot's yaw

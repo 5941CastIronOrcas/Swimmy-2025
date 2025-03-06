@@ -278,7 +278,8 @@ public class AutoSequences {
 
 
   public static boolean isAutoTimeBetween(double timeMin, double timeMax) {
-    return timeMin < Timer.getFPGATimestamp() - Constants.timeSinceStartAtAutoStart && timeMax > Timer.getFPGATimestamp() - Constants.timeSinceStartAtAutoStart ;
+    return timeMin < Timer.getFPGATimestamp() - Constants.timeSinceStartAtAutoStart && timeMax > Timer.getFPGATimestamp() - 
+    Constants.timeSinceStartAtAutoStart ;
   }
   
 }
