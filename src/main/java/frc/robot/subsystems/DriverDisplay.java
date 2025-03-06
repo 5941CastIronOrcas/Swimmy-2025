@@ -329,14 +329,12 @@ public class DriverDisplay extends SubsystemBase {
 
 
     //position estimator
-    DriverDisplay.isPresent1.setBoolean(PositionEstimator.cams.get(0).camCheck());
-    DriverDisplay.isPresent2.setBoolean(PositionEstimator.cams.get(1).camCheck());
-    DriverDisplay.ambiguity1.setDouble(PositionEstimator.cams.get(0).ambiguity);
-    DriverDisplay.ambiguity2.setDouble(PositionEstimator.cams.get(1).ambiguity);
-    DriverDisplay.targetIds1.setDoubleArray(PositionEstimator.cams.get(0).targetIds);
-    DriverDisplay.targetIds2.setDoubleArray(PositionEstimator.cams.get(1).targetIds);
-
-//    DriverDisplay.latency.setDouble(PositionEstimator.latency1);
+    DriverDisplay.isPresent1.setBoolean(PositionEstimator.cameras.get(0).camCheck());
+    DriverDisplay.isPresent2.setBoolean(PositionEstimator.cameras.get(1).camCheck());
+    DriverDisplay.ambiguity1.setDouble(PositionEstimator.cameras.get(0).ambiguity);
+    DriverDisplay.ambiguity2.setDouble(PositionEstimator.cameras.get(1).ambiguity);
+    DriverDisplay.targetIds1.setDoubleArray(PositionEstimator.cameras.get(0).getIds());
+    DriverDisplay.targetIds2.setDoubleArray(PositionEstimator.cameras.get(1).getIds());
     DriverDisplay.speed.setDouble(Functions.Pythagorean(PositionEstimator.velocity.x, PositionEstimator.velocity.y));
     DriverDisplay.robotX.setDouble(PositionEstimator.robotPosition.getX());
     DriverDisplay.robotY.setDouble(PositionEstimator.robotPosition.getY());

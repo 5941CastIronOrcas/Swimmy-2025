@@ -36,9 +36,9 @@ public class PositionEstimator extends SubsystemBase {
   public static Pose2d previousPosition = new Pose2d();
   public static Vector2D velocity = new Vector2D(0, 0);
 
-  public static ArrayList<CameraConf> cams = new ArrayList<CameraConf>();
-  public CameraConf cam1 = new CameraConf("camLeft", 0.18318, -0.20378, 0.6653, 0, -41, 0);
-  public CameraConf cam2 = new CameraConf("camRight",  0.18227, 0.2038, 0.7103, 0, 51 ,0);
+  public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
+  public static CameraConf cam1 = new CameraConf("camLeft", 0.18318, -0.20378, 0.6653, 0, -41, 0);
+  public static CameraConf cam2 = new CameraConf("camRight",  0.18227, 0.2038, 0.7103, 0, 51 ,0);
   public static Vector2D[] deltaBuffer = new Vector2D[50];
   public static double sumX = 0;
   public static double sumY = 0;
@@ -181,11 +181,11 @@ public class PositionEstimator extends SubsystemBase {
     return closest;
   }
 
-ArrayList<frc.robot.CameraConf> cameras = new ArrayList<CameraConf>();
 
-public void PositionEstimator(){
-    cameras.add(0, cam1);
-    cameras.add(1, cam2);
+
+public PositionEstimator(){
+  cameras.add(0, cam1);
+  cameras.add(1, cam2);
     }
 
   @Override
@@ -232,12 +232,16 @@ public void PositionEstimator(){
     double comby = 0;
 
     for(int i = 0; i < cameras.size(); i++){
-            cameras.get(i).refresh();
-            if(cameras.get(i).camCheck()){
+              CameraConf currentcam = cameras.get(i);      
+              currentcam.refresh();
+            if(currentcam.camCheck()){
+                Pose2d estimpose = currentcam.getEstimatedGlobalPose(previousPosition);
                 camsactive++;
 
-                combx += cameras.get(i).getEstimatedGlobalPose(previousPosition).getX();
-                comby += cameras.get(i).getEstimatedGlobalPose(previousPosition).getY();
+                combx += estimpose.getX();
+                comby += estimpose.getY();
+                //System.out.println(combx);
+                //System.out.println(comby);
             }
 
         }

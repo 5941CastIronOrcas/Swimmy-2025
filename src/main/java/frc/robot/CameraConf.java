@@ -35,12 +35,12 @@ public class CameraConf {
     public double targetIds[];
     public double distances[];
     public double ambiguity = 0;
-    public double x;
-    public double y;
-    public double z;
-    public double roll;
-    public double yaw;
-    public double pitch;
+    public double x = 0;
+    public double y = 0;
+    public double z = 0;
+    public double roll = 0;
+    public double yaw = 0;
+    public double pitch = 0;
 
     public CameraConf(String camName, double camx, double camy, double camz, double camroll, double campitch,
             double camyaw) {
@@ -75,12 +75,15 @@ public void refresh(){
     public Boolean camCheck() {
         List<PhotonTrackedTarget> targets;
         boolean targetCheck = result.hasTargets();
-        targetIds = new double[targetSize];
-        distances = new double[targetSize];
+
         double distance = 100;
 
         if (targetCheck) {
             targets = result.getTargets();
+            targetSize = targets.size();
+            targetIds = new double[targetSize];
+            distances = new double[targetSize];
+            if(targetSize <= 0) return false;
             for (int i = 0; i < targetSize; i++) {
                 ambiguity += targets.get(i).getPoseAmbiguity();
                 distances[i] = PhotonUtils.calculateDistanceToTargetMeters(z,
@@ -98,8 +101,14 @@ public void refresh(){
             }
         }
 
-        return targetCheck && distance < 5
-                || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
+        return targetCheck;// && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
+    }
+
+    public double[] getIds(){
+        if(camCheck()){
+            return targetIds;
+        }
+        return new double[1];
     }
 
     public Pose2d getEstimatedGlobalPose(Pose2d previousPosition) {
@@ -110,12 +119,16 @@ public void refresh(){
         }
 
         photonPoseEstimator.setReferencePose(previousPosition);
-
-        if (photonPoseEstimator.update(result).isPresent()) {
+        try{
+       
             EstimatedRobotPose e = photonPoseEstimator.update(result).get();
             return e.estimatedPose.toPose2d();
-        }
+    }catch(Exception e){
+        //System.out.println(" crahsing dumbass");
+    }
+        
 
+       // System.out.println("WE MADE IT");
         return previousPosition;
     }
 }
