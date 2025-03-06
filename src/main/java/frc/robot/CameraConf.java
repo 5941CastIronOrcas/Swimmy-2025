@@ -41,7 +41,7 @@ public class CameraConf {
     public double roll = 0;
     public double yaw = 0;
     public double pitch = 0;
-
+    public double distance = 0;
     public CameraConf(String camName, double camx, double camy, double camz, double camroll, double campitch,
             double camyaw) {
         cam = new PhotonCamera(camName);
@@ -76,20 +76,25 @@ public void refresh(){
         List<PhotonTrackedTarget> targets;
         boolean targetCheck = result.hasTargets();
 
-        double distance = 100;
 
         if (targetCheck) {
             targets = result.getTargets();
             targetSize = targets.size();
             targetIds = new double[targetSize];
             distances = new double[targetSize];
+            PhotonTrackedTarget currentTarget;
             if(targetSize <= 0) return false;
             for (int i = 0; i < targetSize; i++) {
-                ambiguity += targets.get(i).getPoseAmbiguity();
+                if(targets.get(i) != null){
+                    currentTarget = targets.get(i);
+                }else{
+                    continue;
+                }
+                ambiguity += currentTarget.getPoseAmbiguity();
                 distances[i] = PhotonUtils.calculateDistanceToTargetMeters(z,
-                        field.getTagPose(targets.get(i).getFiducialId()).get().getZ(), pitch,
-                        targets.get(i).getPitch());
-                targetIds[i] = (double) targets.get(i).getFiducialId();
+                        field.getTagPose(currentTarget.getFiducialId()).get().getZ(), pitch,
+                        currentTarget.getPitch());
+                targetIds[i] = (double) currentTarget.getFiducialId();
             }
             ambiguity /= (double) targetSize;
             double minDist = 1000;
@@ -100,7 +105,6 @@ public void refresh(){
                 }
             }
         }
-
         return targetCheck && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
     }
 
@@ -109,6 +113,9 @@ public void refresh(){
             return targetIds;
         }
         return new double[1];
+    }
+    public double getDistance(){
+        return distance;
     }
 
     public Pose2d getEstimatedGlobalPose(Pose2d previousPosition) {
@@ -120,13 +127,13 @@ public void refresh(){
 
         photonPoseEstimator.setReferencePose(previousPosition);
         try{
-       
+
             EstimatedRobotPose e = photonPoseEstimator.update(result).get();
             return e.estimatedPose.toPose2d();
     }catch(Exception e){
         //System.out.println(" crahsing dumbass");
     }
-        
+
 
        // System.out.println("WE MADE IT");
         return previousPosition;

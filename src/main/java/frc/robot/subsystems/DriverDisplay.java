@@ -127,10 +127,11 @@ public class DriverDisplay extends SubsystemBase {
     public static GenericEntry isPresent1 = position.add("Is Present 1", false).getEntry();
     public static GenericEntry isPresent2 = position.add("Is Present 2", false).getEntry();
     public static GenericEntry ambiguity1 = position.add("Ambiguity 1", 0).getEntry();
-  
+
     public static GenericEntry targetIds1 = position.add("Target Ids 1", 0).getEntry();
     public static GenericEntry targetIds2 = position.add("Target Ids 2", 0).getEntry();
-
+    public static GenericEntry distance1 = position.add("Distance 1", 0).getEntry();
+    public static GenericEntry distance2 = position.add("Distance 2", 0).getEntry();
     public static GenericEntry ambiguity2 = position.add("Ambiguity 2", 0).getEntry();
     public static GenericEntry speed = position.add("speed", 0).getEntry();
     public static GenericEntry latency = position.add("Latency", 0).getEntry();
@@ -335,6 +336,8 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.ambiguity2.setDouble(PositionEstimator.cameras.get(1).ambiguity);
     DriverDisplay.targetIds1.setDoubleArray(PositionEstimator.cameras.get(0).getIds());
     DriverDisplay.targetIds2.setDoubleArray(PositionEstimator.cameras.get(1).getIds());
+    DriverDisplay.distance1.setDouble(PositionEstimator.cameras.get(0).getDistance());
+    DriverDisplay.distance2.setDouble(PositionEstimator.cameras.get(1).getDistance());
     DriverDisplay.speed.setDouble(Functions.Pythagorean(PositionEstimator.velocity.x, PositionEstimator.velocity.y));
     DriverDisplay.robotX.setDouble(PositionEstimator.robotPosition.getX());
     DriverDisplay.robotY.setDouble(PositionEstimator.robotPosition.getY());
