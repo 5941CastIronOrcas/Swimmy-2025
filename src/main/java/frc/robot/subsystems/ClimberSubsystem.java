@@ -87,15 +87,15 @@ public class ClimberSubsystem extends SubsystemBase {
     }
   }*/
 
-  public static void climberToAngle(double angle) {
-    angle = Functions.Clamp(angle, Constants.minClimberAngle, Constants.maxClimberAngle);
-   pullInClimber(Functions.Clamp((Constants.climberPivotPMult*(angle - climberAngle))
-   - (Constants.climberPivotDMult*climberVelocity), - 
-   Constants.maxClimberPivotSpeed, Constants.maxClimberPivotSpeed));
-   DriverDisplay.climberTarget.setDouble(angle);
-  }
+  // public static void climberToAngle(double angle) {
+  //   angle = Functions.Clamp(angle, Constants.minClimberAngle, Constants.maxClimberAngle);
+  //  pullInClimber(Functions.Clamp((Constants.climberPivotPMult*(angle - climberAngle))
+  //  - (Constants.climberPivotDMult*climberVelocity), - 
+  //  Constants.maxClimberPivotSpeed, Constants.maxClimberPivotSpeed));
+  //  DriverDisplay.climberTarget.setDouble(angle);
+  // }
 
-  public static void toggleClimberPivot() {
+  /*public static void toggleClimberPivot() {
     pivotToggle = pivotToggle?false:true;
-  }
+  }*/
 }

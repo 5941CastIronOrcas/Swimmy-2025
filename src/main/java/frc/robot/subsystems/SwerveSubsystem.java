@@ -51,12 +51,16 @@ public class SwerveSubsystem extends SubsystemBase {
     newAngle = PositionEstimator.angleToSpeaker();
     oldVelocityX = newVelocityX;
     oldVelocityY = newVelocityY;
-    newVelocityX = oldVelocityX + (Constants.gyro.getAccelerationX().getValueAsDouble() * Robot.DeltaTime());
-    newVelocityY = oldVelocityY + (Constants.gyro.getAccelerationY().getValueAsDouble() * Robot.DeltaTime());
+    newVelocityX = oldVelocityX + (Constants.gyro.getAccelerationX().getValueAsDouble() 
+    * Robot.DeltaTime());
+    newVelocityY = oldVelocityY + (Constants.gyro.getAccelerationY().getValueAsDouble() 
+    * Robot.DeltaTime());
     angularVelocity = Constants.gyro.getAngularVelocityZDevice().getValueAsDouble();
     currentSpeed.vxMetersPerSecond = newVelocityX;
     currentSpeed.vyMetersPerSecond = newVelocityY;
     currentSpeed.omegaRadiansPerSecond = angularVelocity;
+    nearestPos = PositionEstimator.getNearest(Functions.CombinePose2dArrays
+    (PositionEstimator.coralStationPose2ds, PositionEstimator.reefPositionPose2ds));
   }
 
   @Override
@@ -76,11 +80,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public static void DriveToNearestReef(double speedLimit, double turnLimit, double XOffset, double YOffset) {
     Pose2d pos = PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds);
-    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
+    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), 
+    speedLimit, turnLimit, XOffset, YOffset);
   }
   public static void DriveToNearestCoralStation(double speedLimit, double turnLimit, double XOffset, double YOffset) {
     Pose2d pos = PositionEstimator.getNearest(PositionEstimator.coralStationPose2ds);
-    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
+    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), 
+    speedLimit, turnLimit, XOffset, YOffset);
   }
 
   public static void DriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset) //uses a PD controller and the Drive function to drive to a given point on the field.
@@ -93,13 +99,17 @@ public class SwerveSubsystem extends SubsystemBase {
     double yComponent = Functions.DeadZone(output * Math.cos(angleToTarget), Constants.swerveDriveToDeadZone);
     DriveFieldOrientedAtAngle(xComponent+(Robot.isRedAlliance?-YOffset:YOffset), yComponent+(Robot.isRedAlliance?XOffset:-XOffset), angle, turnLimit);*/
     double angleToTarget = Math.atan2(x-PositionEstimator.robotPosition.getX(), y-PositionEstimator.robotPosition.getY());
-    double pComponent = Constants.swerveDriveToPMult*Functions.DeadZone(Functions.Pythagorean(x-PositionEstimator.robotPosition.getX(), y-PositionEstimator.robotPosition.getY()), Constants.swerveDriveToDeadZone);
+    double pComponent = Constants.swerveDriveToPMult*Functions.DeadZone
+    (Functions.Pythagorean(x-PositionEstimator.robotPosition.getX(), 
+    y-PositionEstimator.robotPosition.getY()), Constants.swerveDriveToDeadZone);
     atTargetPosition = pComponent < 0.001;
-    double dComponent = Constants.swerveDriveToDMult*Functions.Pythagorean(PositionEstimator.velocity.x, PositionEstimator.velocity.y);
+    double dComponent = Constants.swerveDriveToDMult*Functions.Pythagorean
+    (PositionEstimator.velocity.x, PositionEstimator.velocity.y);
     double output = Functions.Clamp(pComponent - dComponent, 0, speedLimit);
     double xComponent = output * Math.sin(angleToTarget);
     double yComponent = output * Math.cos(angleToTarget);
-    DriveFieldOrientedAtAngle(xComponent+(Robot.isRedAlliance?-YOffset:YOffset), yComponent+(Robot.isRedAlliance?XOffset:-XOffset), angle, turnLimit);
+    DriveFieldOrientedAtAngle(xComponent+(Robot.isRedAlliance?-YOffset:YOffset), 
+    yComponent+(Robot.isRedAlliance?XOffset:-XOffset), angle, turnLimit);
   }
   
   public static void DriveFieldOriented(double x, double y, double turn) //same as DriveDriverOriented, but drives relative to the field instead of the driver.
@@ -109,12 +119,16 @@ public class SwerveSubsystem extends SubsystemBase {
   
   public static void DriveFieldOrientedAtAngle(double x, double y, double angle, double turnLimit) //same as DriveDriverOrientedAtAngle, but drives relative to the field instead of the driver.
   {
-    DriveDriverOrientedAtAngle(Robot.isRedAlliance?y:-y, Robot.isRedAlliance?-x:x, Functions.FieldToDriverAngle(angle), turnLimit);
+    DriveDriverOrientedAtAngle(Robot.isRedAlliance?y:-y, Robot.isRedAlliance?-x:x, 
+    Functions.FieldToDriverAngle(angle), turnLimit);
   }
 
   public static void DriveDriverOriented(double LSX, double LSY, double RSX) //similar to Drive, but when the driver pushes up on the left stick, the robot moves forward from their point of view instead of the robot's.
   {
-    Drive(LSX*Math.cos(Math.toRadians(-PositionEstimator.robotYawDriverRelative))+LSY*Math.sin(Math.toRadians(-PositionEstimator.robotYawDriverRelative)), LSY*Math.cos(Math.toRadians(-PositionEstimator.robotYawDriverRelative))+LSX*Math.sin(Math.toRadians(PositionEstimator.robotYawDriverRelative)), RSX);
+    Drive(LSX*Math.cos(Math.toRadians(-PositionEstimator.robotYawDriverRelative))+
+    LSY*Math.sin(Math.toRadians(-PositionEstimator.robotYawDriverRelative)), 
+    LSY*Math.cos(Math.toRadians(-PositionEstimator.robotYawDriverRelative))+
+    LSX*Math.sin(Math.toRadians(PositionEstimator.robotYawDriverRelative)), RSX);
   }
 
   public static void DriveDriverOrientedAtAngle(double LSX, double LSY, double angle, double turnLimit) //uses a PD controller to rotate the robot to a specific angle, instead of rotating the robot at a certain speed. otherwise, the same as DriveDriverOriented.
@@ -133,10 +147,14 @@ public class SwerveSubsystem extends SubsystemBase {
   
   public static void SquareDriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset, boolean xFirst) { //same as DriveTo, but moves on one axis before moving on the other.
     if (xFirst) {
-      DriveTo(x, Math.abs(y-PositionEstimator.robotPosition.getY())<Constants.swerveSquareDriveToDeadZone?y:PositionEstimator.robotPosition.getY(), angle, speedLimit, turnLimit, XOffset, YOffset);
+      DriveTo(x, Math.abs(y-PositionEstimator.robotPosition.getY())<
+      Constants.swerveSquareDriveToDeadZone?y:PositionEstimator.robotPosition.getY(), 
+      angle, speedLimit, turnLimit, XOffset, YOffset);
     }
     else {
-      DriveTo(Math.abs(x-PositionEstimator.robotPosition.getX())<Constants.swerveSquareDriveToDeadZone?x:PositionEstimator.robotPosition.getX(), y, angle, speedLimit, turnLimit, XOffset, YOffset);
+      DriveTo(Math.abs(x-PositionEstimator.robotPosition.getX())<
+      Constants.swerveSquareDriveToDeadZone?x:PositionEstimator.robotPosition.getX(), 
+      y, angle, speedLimit, turnLimit, XOffset, YOffset);
     }
   }
 
