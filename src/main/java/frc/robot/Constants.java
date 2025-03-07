@@ -247,10 +247,10 @@ public final class Constants {
                                                                           aprilTagFieldLayout.getTagPose(13).get().toPose2d()};
   public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
                                                                           aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
-  public static final double reefSideOffset = 0.5;
-  public static final double reefDist = 1.;
-  public static final double coralStationSideOffset = 0.5;
-  public static final double coralStationDist = 1.;
+  public static final double reefSideOffset = 0.1651;
+  public static final double reefDist = 0.7;
+  public static final double coralStationSideOffset = 0.61;
+  public static final double coralStationDist = 0.7;
   
   
   //ANSI Color Codes:

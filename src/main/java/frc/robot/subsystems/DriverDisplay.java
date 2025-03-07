@@ -8,6 +8,7 @@ import java.lang.reflect.GenericArrayType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -346,15 +347,37 @@ public class DriverDisplay extends SubsystemBase {
     Pose2d positionPose2d = new Pose2d(PositionEstimator.robotPosition.getX()+Constants.FieldDisplayOffsetX, 
     PositionEstimator.robotPosition.getY()+Constants.FieldDisplayOffsetY, 
     new Rotation2d(-PositionEstimator.robotPosition.getRotation().getRadians() - 0.5*Math.PI));
-    m_field.setRobotPose(positionPose2d);
-    // for (int i = 0; i < Constants.aprilTagFieldLayout.getTags().size() ; i++) {
+    
+    // m_field.getObject("Robot1").setPose(new Pose2d(positionPose2d.getX()+1., positionPose2d.getY(), positionPose2d.getRotation()));
+    // m_field.getObject("Robot2").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()+1., positionPose2d.getRotation()));
+    // m_field.getObject("Robot3").setPose(new Pose2d(positionPose2d.getX()-1., positionPose2d.getY(), positionPose2d.getRotation()));
+    // m_field.getObject("Robot4").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()-1., positionPose2d.getRotation()));
+    // for (int i = 0; i < 5; i++) {
+    //   for (int j = 0; j < 6; j++) {
+    //     m_field.getObject("Robot"+i+j).setPose(new Pose2d(positionPose2d.getX()+(i*Math.cos(positionPose2d.getRotation().getRadians())+()), positionPose2d.getY(), positionPose2d.getRotation()));
+    //   }
+    // }
+
+    //m_field.setRobotPose(positionPose2d);
+    //PositionEstimator.calculateObjectiveLocations();
+    // for (int i = 0; i < PositionEstimator.reefPositionPose2ds.length; i++) {
     //   try {
-    //   m_field.getObject("Apriltag" + i).setPose(Constants.aprilTagFieldLayout.getTagPose(i).get().toPose2d());
+    //   m_field.getObject("Reef"+i).setPose(PositionEstimator.reefPositionPose2ds[i]);
     //   }
     //   catch (Exception e) {
 
     //   }
     // }
+    // for (int i = 0; i < PositionEstimator.coralStationPose2ds.length; i++) {
+    //   try {
+    //   m_field.getObject("CS"+i).setPose(PositionEstimator.coralStationPose2ds[i]);
+    //   }
+    //   catch (Exception e) {
+
+    //   }
+    // }
+    m_field.getObject("nearest reef").setPose(PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds));
+    m_field.getObject("nearest station").setPose(PositionEstimator.getNearest(PositionEstimator.coralStationPose2ds));
 
 
 

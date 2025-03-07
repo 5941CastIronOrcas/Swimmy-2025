@@ -186,9 +186,16 @@ public class Robot extends TimedRobot {
     else */if (Constants.controller1.getAButton()) {
       SwerveSubsystem.DriveTo(0., 0., 0., speed, speed, 0., 0.);
     }
+    else if (Constants.controller1.getBButton()) {
+      SwerveSubsystem.DriveToNearestReef(speed, speed, LSX, LSY);
+    }
+    else if (Constants.controller1.getXButton()) {
+      SwerveSubsystem.DriveToNearestCoralStation(speed, speed, LSX, LSY);
+    }
     else {
       SwerveSubsystem.DriveDriverOrientedAtAngle(LSX,LSY,RSAngle+180,Functions.Pythagorean(RSX, RSY));// SwerveSubsystem.Drive(LSX, LSY, RSX);
     }
+
 
     //Arm
     if (Constants.controller2.getBButton()) {

@@ -178,7 +178,7 @@ public class PositionEstimator extends SubsystemBase {
     double dist = 10000;
     Pose2d closest = new Pose2d();
     for (int i = 0; i < positions.length; i++) {
-      double d = Functions.Pythagorean(positions[i].getX(), positions[i].getY());
+      double d = Functions.Pythagorean(positions[i].getX()-robotPosition.getX(), positions[i].getY()-robotPosition.getY());
       if (d < dist) {
         dist = d;
         closest = positions[i];
