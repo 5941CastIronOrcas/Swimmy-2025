@@ -37,8 +37,10 @@ public class PositionEstimator extends SubsystemBase {
   public static Vector2D velocity = new Vector2D(0, 0);
 
   public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
-  public static CameraConf cam1 = new CameraConf("camLeft", 0.18318, -0.20378, 0.6653, 0, -41, 0);
-  public static CameraConf cam2 = new CameraConf("camRight",  0.18227, 0.2038, 0.7103, 0, 51 ,0);
+  public static CameraConf cam1 = new CameraConf("camLeft", 0.18318, 0.20378, 0.6653, 0, 41, 0);
+  public static CameraConf cam2 = new CameraConf("camRight",  0.18227, -0.2038, 0.7103, 0, -51 ,0);
+  //public static CameraConf cam3 = new CameraConf("camLeftBack", 0, 0, 0, 0, -51 , 156.5);
+  //public static CameraConf cam4 = new CameraConf("camRightBack", 0, 0, 0, 0 ,-51, )
   public static Vector2D[] deltaBuffer = new Vector2D[50];
   public static double sumX = 0;
   public static double sumY = 0;
@@ -66,7 +68,7 @@ public class PositionEstimator extends SubsystemBase {
   }
   public static double angleToSpeaker()
   {
-    return 90-Math.toDegrees(Math.atan2((Robot.isRedAlliance?Constants.redSpeaker.y:Constants.blueSpeaker.y) - 
+    return 90-Math.toDegrees(Math.atan2((Robot.isRedAlliance?Constants.redSpeaker.y:Constants.blueSpeaker.y) -
     robotPosition.getY(),(Robot.isRedAlliance?Constants.redSpeaker.x:Constants.blueSpeaker.x) - robotPosition.getX()));// + Constants.shootYawOffset;
   }
   public static int nearestAutoCoral() {
@@ -141,9 +143,9 @@ public class PositionEstimator extends SubsystemBase {
     for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
-      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset, new Rotation2d(0)), 
+      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset, new Rotation2d(0)),
       pos.getRotation().getRadians());
-      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset, new Rotation2d(0)), 
+      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset, new Rotation2d(0)),
       pos.getRotation().getRadians());
       positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), angle);
       positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
@@ -159,9 +161,9 @@ public class PositionEstimator extends SubsystemBase {
     for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
-      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.coralStationDist, -Constants.coralStationSideOffset, 
+      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.coralStationDist, -Constants.coralStationSideOffset,
       new Rotation2d(0)), pos.getRotation().getRadians());
-      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.coralStationDist, Constants.coralStationSideOffset, 
+      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.coralStationDist, Constants.coralStationSideOffset,
       new Rotation2d(0)), pos.getRotation().getRadians());
       positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), angle);
       positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
@@ -209,13 +211,13 @@ public PositionEstimator(){
     gyroYawOld = Constants.gyro.getYaw().getValueAsDouble();
 
     if(Robot.isRedAlliance) {
-      robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), 
+      robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(),
       new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative - 90))));
     } else if (Robot.isBlueAlliance) {
-            robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), 
+            robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(),
             new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative + 90))));
     } else {
-      robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(), 
+      robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(),
       new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative))));
     }
      velocity.x = ((
@@ -242,7 +244,7 @@ public PositionEstimator(){
     double comby = 0;
 
     for(int i = 0; i < cameras.size(); i++){
-              CameraConf currentcam = cameras.get(i);      
+              CameraConf currentcam = cameras.get(i);
               currentcam.refresh();
             if(currentcam.camCheck()){
                 Pose2d estimpose = currentcam.getEstimatedGlobalPose(previousPosition);
@@ -259,7 +261,7 @@ if(camsactive != 0){
    robotPosition = new Pose2d(combx/camsactive, comby/camsactive, robotPosition.getRotation());
 }else{
 
-     robotPosition  = new Pose2d(robotPosition.getX() + velocity.x*0.02, 
+     robotPosition  = new Pose2d(robotPosition.getX() + velocity.x*0.02,
      robotPosition.getY() + velocity.y*0.02, robotPosition.getRotation());
 }
 
