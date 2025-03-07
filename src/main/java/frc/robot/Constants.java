@@ -105,7 +105,7 @@ public final class Constants {
   public static final SparkMax coralIntakePivot = new SparkMax(30, MotorType.kBrushless);
   public static final SparkMax coralIntake = new SparkMax(31, MotorType.kBrushless);
   public static final SparkMaxConfig coralIntakeConfig = new SparkMaxConfig();
-  public static final Boolean coralIntakePivotInvert = true;
+  public static final Boolean coralIntakePivotInvert = false;
   public static final Boolean coralIntakeInvert = false;
   //Algae Intake Motor Declarations
   public static final SparkMax algaeIntake = new SparkMax(32, MotorType.kBrushless);
@@ -136,15 +136,15 @@ public final class Constants {
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
   public static final double elevatorAccelLimit = 0.1;
   //Coral Intake Control Constants
-  public static final double coralPMult = 0.005;//0.005;
-  public static final double coralDMult = 0.57;//0.4; 
-  public static final double coralIMult = 0.0003;
-  public static final double coralIClamp = 0.06;
-  public static final double coralGravMult = 0.;//-0.9;//0;//0.07;
-  public static final double coralGravOffset = 0;//20;
+  public static final double coralPMult = 0.005;
+  public static final double coralDMult = 0.;
+  public static final double coralIMult = 0.;
+  public static final double coralIClamp = 0.;
+  public static final double coralGravMult = 0.;
+  public static final double coralGravOffset = 0;
   public static final double withCoralPMult = 0.005;
-  public static final double withCoralDMult = 0.57; 
-  public static final double withCoralGravMult = -0.0;//0.4;
+  public static final double withCoralDMult = 0.; 
+  public static final double withCoralGravMult = 0.;
   public static final double withCoralGravOffset = 0;
   public static final double maxCoralPivotSpeed = 1.0;
   //public static final double coralAngleVariation = 1.0;
@@ -170,9 +170,9 @@ public final class Constants {
   public static final double coralMaxAdaptiveAngle = 45;
   public static final double coralMinAdaptiveAngle = 20;
   //Algae Intake Control Constants
-  public static final double algaePMult = 1.;
-  public static final double algaeDMult = 1.;
-  public static final double algaeGravMult = 1.;
+  public static final double algaePMult = 0.005;
+  public static final double algaeDMult = 0.;
+  public static final double algaeGravMult = 0.;
   public static final double maxAlgaePivotSpeed = 1.;
   public static final double algaeAngleVariation = 1.;
   public static final double algaeIntakeAngle = 0.;
@@ -225,8 +225,8 @@ public final class Constants {
   public static final double swerveMaxSpeed = 4.4; //the max speed we're capable of moving at in m/s (used for discarding impossible data)
   public static final AprilTagFieldLayout aprilTagFieldLayout =  AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
  // public static final String coralDetectionCameraName = "Arducam_OV9782_USB_Camera";
-  public static final double FieldDisplayOffsetX = 1.1225;
-  public static final double FieldDisplayOffsetY = 0.326;
+  public static final double FieldDisplayOffsetX = 0; //1.1225;
+  public static final double FieldDisplayOffsetY = 0; //0.326;
 
 
 

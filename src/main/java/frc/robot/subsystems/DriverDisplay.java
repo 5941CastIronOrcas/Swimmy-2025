@@ -128,8 +128,8 @@ public class DriverDisplay extends SubsystemBase {
     public static GenericEntry isPresent2 = position.add("Is Present 2", false).getEntry();
     public static GenericEntry ambiguity1 = position.add("Ambiguity 1", 0).getEntry();
 
-    public static GenericEntry targetIds1 = position.add("Target Ids 1", 0).getEntry();
-    public static GenericEntry targetIds2 = position.add("Target Ids 2", 0).getEntry();
+    public static GenericEntry targetIds1 = position.add("Target Ids 1", new double[]{-2}).getEntry();
+    public static GenericEntry targetIds2 = position.add("Target Ids 2", new double[]{-2}).getEntry();
     public static GenericEntry distance1 = position.add("Distance 1", 0).getEntry();
     public static GenericEntry distance2 = position.add("Distance 2", 0).getEntry();
     public static GenericEntry ambiguity2 = position.add("Ambiguity 2", 0).getEntry();
@@ -344,9 +344,17 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.driverYaw.setDouble(PositionEstimator.robotYawDriverRelative);
     DriverDisplay.fieldYaw.setDouble( Functions.DeltaAngleDeg(0, PositionEstimator.robotPosition.getRotation().getDegrees()));
     Pose2d positionPose2d = new Pose2d(PositionEstimator.robotPosition.getX()+Constants.FieldDisplayOffsetX, 
-    PositionEstimator.robotPosition.getY()+Constants.FieldDisplayOffsetY, new Rotation2d
-    (-PositionEstimator.robotPosition.getRotation().getRadians() - 0.5*Math.PI));
+    PositionEstimator.robotPosition.getY()+Constants.FieldDisplayOffsetY, 
+    new Rotation2d(-PositionEstimator.robotPosition.getRotation().getRadians() - 0.5*Math.PI));
     m_field.setRobotPose(positionPose2d);
+    // for (int i = 0; i < Constants.aprilTagFieldLayout.getTags().size() ; i++) {
+    //   try {
+    //   m_field.getObject("Apriltag" + i).setPose(Constants.aprilTagFieldLayout.getTagPose(i).get().toPose2d());
+    //   }
+    //   catch (Exception e) {
+
+    //   }
+    // }
 
 
 

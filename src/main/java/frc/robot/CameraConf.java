@@ -108,11 +108,22 @@ public void refresh(){
         return targetCheck && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
     }
 
+    /*public String getIds(){
+        String out = "-1";
+        if(camCheck()){
+            out = "";
+            for(int i = 0; i < targetSize; i++){
+                out = out  + targetIds[i] + ", ";
+            }
+        }
+        System.out.println(out);
+        return out;
+    }*/
     public double[] getIds(){
         if(camCheck()){
             return targetIds;
         }
-        return new double[1];
+        return new double[]{-1};
     }
     public double getDistance(){
         return distance;

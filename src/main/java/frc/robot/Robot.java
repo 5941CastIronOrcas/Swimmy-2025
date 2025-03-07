@@ -16,6 +16,7 @@ import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
@@ -172,30 +173,18 @@ public class Robot extends TimedRobot {
     if (Constants.controller1.getRightBumperPressed()) { //resets the robot's yaw
       Constants.gyro.setYaw(180);
     }
-    //SwerveSubsystem.Drive(LSX, LSY, RSX);
-    //SwerveSubsystem.DriveDriverOriented(LSX, LSY, RSX);
-    //SwerveSubsystem.DriveFieldOriented(LSX, LSY, RSX);
 
-    //Swerve
-   /*  if(Constants.controller1.getBButton())
-    {
-      //SwerveSubsystem.CollectCoral(LSX, LSY, speed);
+    if (Constants.controller1.getYButton()) {
+      PositionEstimator.robotPosition = new Pose2d(0.,0.,PositionEstimator.robotPosition.getRotation());
     }
-    else if(Constants.controller1.getXButton())
-    {
-      //SwerveSubsystem.FaceSpeaker(LSX, LSY, speed);
+    
+
+
+    /*if (Constants.controller1.getBButton()) {
+      SwerveSubsystem.DriveDriverOriented(LSX, LSY, RSX);
     }
-    else if(Constants.controller1.getYButton())
-    {
-      //SwerveSubsystem.GoToAmp(speed, speed, LSX, LSY);
-    }
-    else */
-   // {
-    if (Constants.controller1.getBButton()) {
-      SwerveSubsystem.DriveDriverOriented(LSX, LSY, speed);
-    }
-    else if (Constants.controller1.getXButton()) {
-      SwerveSubsystem.DriveDriverOriented(LSX, LSY, -speed);
+    else */if (Constants.controller1.getAButton()) {
+      SwerveSubsystem.DriveTo(0., 0., 0., speed, speed, 0., 0.);
     }
     else {
       SwerveSubsystem.DriveDriverOrientedAtAngle(LSX,LSY,RSAngle+180,Functions.Pythagorean(RSX, RSY));// SwerveSubsystem.Drive(LSX, LSY, RSX);
