@@ -184,7 +184,7 @@ public class Robot extends TimedRobot {
       SwerveSubsystem.DriveDriverOriented(LSX, LSY, RSX);
     }
     else */if (Constants.controller1.getAButton()) {
-      SwerveSubsystem.DriveTo(0., 0., 0., speed, speed, 0., 0.);
+      SwerveSubsystem.DriveTo(0., 0., 0., speed, speed, LSX, LSY);
     }
     else if (Constants.controller1.getBButton()) {
       SwerveSubsystem.DriveToNearestReef(speed, speed, LSX, LSY);

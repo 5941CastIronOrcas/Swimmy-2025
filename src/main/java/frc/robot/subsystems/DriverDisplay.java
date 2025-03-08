@@ -20,6 +20,7 @@ import frc.robot.AutoSequences;
 import frc.robot.Constants;
 import frc.robot.Functions;
 import frc.robot.Robot;
+import frc.robot.utilityObjects.Vector2D;
 
 
 
@@ -348,7 +349,17 @@ public class DriverDisplay extends SubsystemBase {
     PositionEstimator.robotPosition.getY()+Constants.FieldDisplayOffsetY, 
     new Rotation2d(-PositionEstimator.robotPosition.getRotation().getRadians() + 0.5*Math.PI));
     m_field.setRobotPose(positionPose2d);
-    
+    // m_field.setRobotPose(new Pose2d(-1000, -1000, new Rotation2d(0)));
+    Vector2D[] robotGraphic = new Vector2D[]{new Vector2D(0,0),new Vector2D(-0.3302,0.3302),new Vector2D(0.3302,0.3302),new Vector2D(0.3302,-0.3302),new Vector2D(-0.3302,-0.3302)};//new Vector2D[]{new Vector2D(0,0),new Vector2D(-0.3302,0.3302),new Vector2D(0.3302,0.3302),new Vector2D(0.3302,-0.3302),new Vector2D(-0.3302,-0.3302),new Vector2D(-0.3302,0),new Vector2D(0,0.3302),new Vector2D(0.3302,0),new Vector2D(0,-0.3302),new Vector2D(0.1651,0.3302),new Vector2D(-0.1651,0.3302),new Vector2D(-0.1651,-0.3302),new Vector2D(0.1651,-0.3302),new Vector2D(-0.3302,0.1651),new Vector2D(-0.3302,-0.1651),new Vector2D(0.3302,-0.1651),new Vector2D(0.3302,0.1651),new Vector2D(0.4064,0.4064),new Vector2D(-0.4064,-0.4064),new Vector2D(-0.4064,0.4064),new Vector2D(0.4064,-0.4064),new Vector2D(-0.21643961393810288,0.9762960071199334),new Vector2D(-0.10886687485196457,0.9940563382223196),new Vector2D(0,1),new Vector2D(0.10886687485196457,0.9940563382223196),new Vector2D(0.21643961393810288,0.9762960071199334),new Vector2D(0.03607326898968381,0.16271600118665555),new Vector2D(0.07214653797936763,0.3254320023733111),new Vector2D(0.10821980696905144,0.4881480035599667),new Vector2D(0.14429307595873525,0.6508640047466222),new Vector2D(0.18036634494841908,0.8135800059332778),new Vector2D(0,0),new Vector2D(-0.03607326898968381,0.16271600118665555),new Vector2D(-0.07214653797936763,0.3254320023733111),new Vector2D(-0.10821980696905144,0.4881480035599667),new Vector2D(-0.14429307595873525,0.6508640047466222),new Vector2D(-0.18036634494841908,0.8135800059332778),new Vector2D(0,0)};
+    for(int i = 0; i < robotGraphic.length; i++)
+    {
+      Vector2D out = new Vector2D(robotGraphic[i].x, robotGraphic[i].y);
+      out = Functions.Rotate(out, PositionEstimator.robotPosition.getRotation().getDegrees());
+      out.x += positionPose2d.getX();
+      out.y += positionPose2d.getY();
+      m_field.getObject("robot graphic dot " + i).setPose(new Pose2d(out.x, out.y, new Rotation2d(0)));
+    }
+
     // m_field.getObject("Robot1").setPose(new Pose2d(positionPose2d.getX()+1., positionPose2d.getY(), positionPose2d.getRotation()));
     // m_field.getObject("Robot2").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()+1., positionPose2d.getRotation()));
     // m_field.getObject("Robot3").setPose(new Pose2d(positionPose2d.getX()-1., positionPose2d.getY(), positionPose2d.getRotation()));

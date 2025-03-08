@@ -211,7 +211,7 @@ public Command comMoveArm(int level){
   public static void intakeCoral(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.
   {
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
-    spinCoralIntake(input<0.?((hasCoral)?0.05:input):input);
+    spinCoralIntake(-input<0.?((hasCoral)?0.05:input):input);
   }
   public static void moveToIntakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
     moveElevatorTo(Constants.intakeHeight);

@@ -109,7 +109,7 @@ public class SwerveSubsystem extends SubsystemBase {
     double xComponent = output * Math.sin(angleToTarget);
     double yComponent = output * Math.cos(angleToTarget);
     DriveFieldOrientedAtAngle(xComponent+(Robot.isRedAlliance?-YOffset:YOffset), 
-    yComponent+(Robot.isRedAlliance?XOffset:-XOffset), angle, turnLimit);
+    yComponent+(Robot.isRedAlliance?XOffset:-XOffset), angle+180, turnLimit);
   }
   
   public static void DriveFieldOriented(double x, double y, double turn) //same as DriveDriverOriented, but drives relative to the field instead of the driver.
