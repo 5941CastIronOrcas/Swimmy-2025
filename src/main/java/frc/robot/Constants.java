@@ -120,7 +120,7 @@ public final class Constants {
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorAngleOffsetThreshold = 330;
-  public static final double elevatorPMult = 0.1;
+  public static final double elevatorPMult = 0.075;
   public static final double elevatorDMult = 0.0;
   public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
   public static final double maxElevatorSpeed = 1.; //Max speed the elevator PID is allowed to output to the elevator motor
@@ -132,17 +132,17 @@ public final class Constants {
   public static final double reef2Height = 34.375-intakeHeightFromGround;
   public static final double reef3Height = 47.125-intakeHeightFromGround;
   public static final double reef4Height = 44; //72.
-  public static final double maxElevatorHeight = 44.5; 
+  public static final double maxElevatorHeight = 45; 
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
-  public static final double elevatorAccelLimit = 0.1;
+  public static final double elevatorAccelLimit = 0.05;
   //Coral Intake Control Constants
-  public static final double coralPMult = 0.005;
+  public static final double coralPMult = 0.015;
   public static final double coralDMult = 0.;
   public static final double coralIMult = 0.;
   public static final double coralIClamp = 0.;
   public static final double coralGravMult = 0.;
   public static final double coralGravOffset = 0;
-  public static final double withCoralPMult = 0.005;
+  public static final double withCoralPMult = 0.015;
   public static final double withCoralDMult = 0.; 
   public static final double withCoralGravMult = 0.;
   public static final double withCoralGravOffset = 0;
@@ -168,7 +168,7 @@ public final class Constants {
   public static final double sForceTimesRadius = 14.6346 * 2. * springRadius;
   public static final double compensationMinDeltaAngle = 0.1;
   public static final double coralMaxAdaptiveAngle = 45;
-  public static final double coralMinAdaptiveAngle = 20;
+  public static final double coralMinAdaptiveAngle = 25;
   //Algae Intake Control Constants
   public static final double algaePMult = 0.005;
   public static final double algaeDMult = 0.;

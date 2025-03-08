@@ -126,10 +126,10 @@ public class PositionEstimator extends SubsystemBase {
 
     return Math.toDegrees(Math.atan2(realCoralList.get(n).x - robotPosition.getX(), realCoralList.get(n).y - robotPosition.getY()));
   }
-  public static boolean atSpeakerAngle() {
+  /*public static boolean atSpeakerAngle() {
     return Math.abs(Functions.DeltaAngleDeg(angleToSpeaker(), robotPosition.getRotation().getDegrees()))
     <Constants.speakerAngleVariation;
-  }
+  }*/
 
   public static void removeClosestCoral() {
     realCoralList.remove(nearestAutoCoral());
@@ -147,8 +147,8 @@ public class PositionEstimator extends SubsystemBase {
       pos.getRotation().getRadians());
       Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset, new Rotation2d(0)),
       pos.getRotation().getRadians());
-      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), angle);
-      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
+      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
+      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
     }
     return positions;
   }
@@ -165,8 +165,8 @@ public class PositionEstimator extends SubsystemBase {
       new Rotation2d(0)), pos.getRotation().getRadians());
       Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.coralStationDist, Constants.coralStationSideOffset,
       new Rotation2d(0)), pos.getRotation().getRadians());
-      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), angle);
-      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), angle);
+      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
+      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
     }
     return positions;
   }
@@ -212,30 +212,30 @@ public PositionEstimator(){
 
     if(Robot.isRedAlliance) {
       robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(),
-      new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative - 90))));
+      new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, (robotYawDriverRelative + 90)))));
     } else if (Robot.isBlueAlliance) {
             robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(),
-            new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative + 90))));
+            new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, (robotYawDriverRelative - 90)))));
     } else {
       robotPosition = new Pose2d(robotPosition.getX(), robotPosition.getY(),
       new Rotation2d(Math.toRadians(Functions.DeltaAngleDeg(0, robotYawDriverRelative))));
     }
      velocity.x = ((
-         (Math.sin(Math.toRadians(SwerveSubsystem.frModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.frModule.GetVelocity())
-       + (Math.sin(Math.toRadians(SwerveSubsystem.flModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.flModule.GetVelocity())
-       + (Math.sin(Math.toRadians(SwerveSubsystem.brModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.brModule.GetVelocity())
-       + (Math.sin(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
+       - (Math.sin(Math.toRadians(SwerveSubsystem.frModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.frModule.GetVelocity())
+       - (Math.sin(Math.toRadians(SwerveSubsystem.flModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.flModule.GetVelocity())
+       - (Math.sin(Math.toRadians(SwerveSubsystem.brModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.brModule.GetVelocity())
+       - (Math.sin(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
         / 4.0);
     velocity.y = ((
-         (Math.cos(Math.toRadians(SwerveSubsystem.frModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.frModule.GetVelocity())
-       + (Math.cos(Math.toRadians(SwerveSubsystem.flModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.flModule.GetVelocity())
-       + (Math.cos(Math.toRadians(SwerveSubsystem.brModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.brModule.GetVelocity())
-       + (Math.cos(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
+       - (Math.cos(Math.toRadians(SwerveSubsystem.frModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.frModule.GetVelocity())
+       - (Math.cos(Math.toRadians(SwerveSubsystem.flModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.flModule.GetVelocity())
+       - (Math.cos(Math.toRadians(SwerveSubsystem.brModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.brModule.GetVelocity())
+       - (Math.cos(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
         / 4.0);
 
-    for (int i = 49; i > 0; i--) {
+    /*for (int i = 49; i > 0; i--) {
       deltaBuffer[i] = deltaBuffer[i - 1];
-    }
+    }*/
     deltaBuffer[0] = velocity;
 
     previousPosition = robotPosition;

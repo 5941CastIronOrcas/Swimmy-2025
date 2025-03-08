@@ -346,7 +346,8 @@ public class DriverDisplay extends SubsystemBase {
     DriverDisplay.fieldYaw.setDouble( Functions.DeltaAngleDeg(0, PositionEstimator.robotPosition.getRotation().getDegrees()));
     Pose2d positionPose2d = new Pose2d(PositionEstimator.robotPosition.getX()+Constants.FieldDisplayOffsetX, 
     PositionEstimator.robotPosition.getY()+Constants.FieldDisplayOffsetY, 
-    new Rotation2d(-PositionEstimator.robotPosition.getRotation().getRadians() - 0.5*Math.PI));
+    new Rotation2d(-PositionEstimator.robotPosition.getRotation().getRadians() + 0.5*Math.PI));
+    m_field.setRobotPose(positionPose2d);
     
     // m_field.getObject("Robot1").setPose(new Pose2d(positionPose2d.getX()+1., positionPose2d.getY(), positionPose2d.getRotation()));
     // m_field.getObject("Robot2").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()+1., positionPose2d.getRotation()));
