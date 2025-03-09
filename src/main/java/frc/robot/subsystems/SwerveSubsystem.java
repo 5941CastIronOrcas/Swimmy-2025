@@ -80,8 +80,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public static void DriveToNearestReef(double speedLimit, double turnLimit, double XOffset, double YOffset) {
     Pose2d pos = PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds);
-    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), 
-    speedLimit, turnLimit, XOffset, YOffset);
+    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
+    //SquareDriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset, false);
   }
   public static void DriveToNearestCoralStation(double speedLimit, double turnLimit, double XOffset, double YOffset) {
     Pose2d pos = PositionEstimator.getNearest(PositionEstimator.coralStationPose2ds);
@@ -156,6 +156,13 @@ public class SwerveSubsystem extends SubsystemBase {
       Constants.swerveSquareDriveToDeadZone?x:PositionEstimator.robotPosition.getX(), 
       y, angle, speedLimit, turnLimit, XOffset, YOffset);
     }
+  }
+  public static void AngledSquareDriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset)
+  {
+    //im too brainded to write this :/
+    double xOut = x;
+    double yOut = y;
+    DriveTo(xOut, yOut, angle, speedLimit, turnLimit, XOffset, YOffset);
   }
 
 

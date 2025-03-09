@@ -68,12 +68,12 @@ public final class Constants {
   public static final CANcoder blEncoder = new CANcoder(42);
   public static final CANcoder brEncoder = new CANcoder(43);
   //Swerve Module Constants
-  public static final double swerveDriveRatio = 1.00 / 6.75; //L2=1/6.75  L3=1/6.12
+  public static final double swerveDriveRatio = 1.00 / 8.14; //L1=1/8.14  L2=1/6.75  L3=1/6.12
   public static final double swerveWheelCircumference = 0.096774 * Math.PI; // in m
   public static final double modulePMult = 0.01;
   public static final double maxThrottleChange = 2.0; //the maximum amount the wheel throttle of each module is allowed to change per frame (max 2.0)
   public static final double swerveMaxAccel = 2.0; //the max amount swerve is allowed to accelerate, measured in percent per frame (max 2.0)
-  public static final double swerveMaxAccelExtended = 0.03; //the max amount swerve is allowed to accelerate when the arm is fully extended
+  public static final double swerveMaxAccelExtended = 0.02; //the max amount swerve is allowed to accelerate when the arm is fully extended
   //Swerve Drive Turning Constants
   public static final double turnMult = 1.0; //the max speed Swerve is EVER allowed to turn at
   public static final double swerveAutoTurnPMult = 0.007;
@@ -127,10 +127,10 @@ public final class Constants {
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
   public static final double intakeHeightFromGround = 17;
-  public static final double intakeHeight = 10.5;//36.5-intakeHeightFromGround;
+  public static final double intakeHeight = 13.5;//36.5-intakeHeightFromGround;
   public static final double reef1Height = 14.5-intakeHeightFromGround;
-  public static final double reef2Height = 36.375-intakeHeightFromGround;
-  public static final double reef3Height = 47.625-intakeHeightFromGround;
+  public static final double reef2Height = 38.375-intakeHeightFromGround;
+  public static final double reef3Height = 49.625-intakeHeightFromGround;
   public static final double reef4Height = 44; //72.
   public static final double maxElevatorHeight = 50;
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
@@ -248,9 +248,9 @@ public final class Constants {
   public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
                                                                           aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
   public static final double reefSideOffset = 0.1651;
-  public static final double reefDist = 0.7;
-  public static final double coralStationSideOffset = 0.61;
-  public static final double coralStationDist = 0.7;
+  public static final double reefDist = 0.4;
+  public static final double coralStationSideOffset = 0.54;
+  public static final double coralStationDist = 0.38;
   
   
   //ANSI Color Codes:

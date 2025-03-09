@@ -91,9 +91,7 @@ public void refresh(){
                     continue;
                 }
                 ambiguity += currentTarget.getPoseAmbiguity();
-                distances[i] = PhotonUtils.calculateDistanceToTargetMeters(z,
-                        field.getTagPose(currentTarget.getFiducialId()).get().getZ(), pitch,
-                        currentTarget.getPitch());
+                distances[i] = currentTarget.getBestCameraToTarget().getTranslation().getDistance(new Translation3d(0,0,0));
                 targetIds[i] = (double) currentTarget.getFiducialId();
             }
             ambiguity /= (double) targetSize;
@@ -105,7 +103,7 @@ public void refresh(){
                 }
             }
         }
-        return targetCheck && distance < 5 || (ambiguity < 0.05 && ambiguity > 0 && distance < 3);
+        return targetCheck && (distance < 3 || (ambiguity < 0.05 && ambiguity > 0 && distance < 5));
     }
 
     /*public String getIds(){

@@ -69,7 +69,7 @@ public class ArmSubsystem extends SubsystemBase {
     oldElevatorAngle = newElevatorAngle;
     if (oldElevatorAngle-newElevatorAngle>Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset += 360;
     if (oldElevatorAngle-newElevatorAngle<-Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset -= 360;
-    newElevatorAngle = Math.toDegrees(elevator1Encoder.getPosition()) + elevatorAngleOffset;
+    newElevatorAngle = Math.toDegrees(-elevator2Encoder.getPosition()) + elevatorAngleOffset;
     elevatorHeight = angleToHeight(newElevatorAngle);
     dist = PositionEstimator.distToSpeaker();
     //coralCompensation = getCompensation();
