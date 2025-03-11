@@ -118,6 +118,7 @@ public class DriverDisplay extends SubsystemBase {
 
 
 
+
   //GOA
   public static ShuffleboardTab goa = Shuffleboard.getTab("GOA");
   public static GenericEntry avoidanceX = goa.add("AvoidanceX", 0).getEntry();
@@ -359,6 +360,7 @@ public class DriverDisplay extends SubsystemBase {
       out.y += positionPose2d.getY();
       m_field.getObject("robot graphic dot " + i).setPose(new Pose2d(out.x, out.y, new Rotation2d(0)));
     }
+    m_field.getObject("DriveTo Target").setPose(new Pose2d(SwerveSubsystem.targetPos.x, SwerveSubsystem.targetPos.y, new Rotation2d(0)));
 
     // m_field.getObject("Robot1").setPose(new Pose2d(positionPose2d.getX()+1., positionPose2d.getY(), positionPose2d.getRotation()));
     // m_field.getObject("Robot2").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()+1., positionPose2d.getRotation()));

@@ -42,6 +42,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public static boolean atTargetPosition = false;
   public static boolean atTargetAngle = false;
   public static Pose2d nearestPos = new Pose2d();
+  public static Vector2D targetPos = new Vector2D(0, 0);
   public static ChassisSpeeds currentSpeed = new ChassisSpeeds(0.,0.,0.);//current x, y, and rotational velocity of robot (for PathPlanner)
   public SwerveSubsystem() {}
 
@@ -80,7 +81,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public static void DriveToNearestReef(double speedLimit, double turnLimit, double XOffset, double YOffset) {
     Pose2d pos = PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds);
-    DriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
+    AngledDriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
     //SquareDriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset, false);
   }
   public static void DriveToNearestCoralStation(double speedLimit, double turnLimit, double XOffset, double YOffset) {
@@ -91,6 +92,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public static void DriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset) //uses a PD controller and the Drive function to drive to a given point on the field.
   {
+    targetPos = new Vector2D(x, y);
     /*double angleToTarget = 90-Math.atan2(y-PositionEstimator.robotPosition.getY(), x-PositionEstimator.robotPosition.getX());
     double pComponent = Constants.swerveDriveToPMult*Functions.Pythagorean(x-PositionEstimator.robotPosition.getX(), y-PositionEstimator.robotPosition.getY());
     double dComponent = Constants.swerveDriveToDMult*Functions.Pythagorean(PositionEstimator.deltaX, PositionEstimator.deltaY);
@@ -157,12 +159,22 @@ public class SwerveSubsystem extends SubsystemBase {
       y, angle, speedLimit, turnLimit, XOffset, YOffset);
     }
   }
-  public static void AngledSquareDriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset)
+  public static void AngledDriveTo(double x, double y, double angle, double speedLimit, double turnLimit, double XOffset, double YOffset)
   {
     //im too brainded to write this :/
-    double xOut = x;
-    double yOut = y;
-    DriveTo(xOut, yOut, angle, speedLimit, turnLimit, XOffset, YOffset);
+    double a = 90-angle;
+    Vector2D pos = new Vector2D(x-PositionEstimator.robotPosition.getX(),y-PositionEstimator.robotPosition.getY());
+    double dist1 = Functions.AltAxisCoord(pos.x, pos.y, Math.toRadians(a+270));
+    double mult = Functions.Clamp(Math.abs(dist1)/Constants.swerveAngledDriveToDeadZone,0,1);
+    double dist2 = Functions.AltAxisCoord(pos.x, pos.y, Math.toRadians(a));
+    double finalDist2 = Functions.Pythagorean(pos.x,pos.y)>Constants.swerveAngledDriveToRadius?1.:(dist2*mult);
+    Vector2D targetOffset = new Vector2D(finalDist2*Math.cos(Math.toRadians(a)), finalDist2*Math.sin(Math.toRadians(a)));
+    Vector2D target = new Vector2D(x-targetOffset.x, y-targetOffset.y);
+    DriveTo(target.x, target.y, angle, speedLimit, turnLimit, XOffset, YOffset);
+    System.out.println("Dist 1: " + Functions.Round(dist1, -2));
+    System.out.println("Dist 2: " + Functions.Round(dist2, -2) + "\n");
+    //System.out.println("Mult: " + Functions.Round(mult, -2));
+    //System.out.println("Target Offset: (" + Functions.Round(targetOffset.x, -2) + ", " + Functions.Round(targetOffset.y, -2) + ")");
   }
 
 
@@ -191,6 +203,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
  
   public static void Drive(double x, double y, double rotate) { //this is the basis of the swerve code
+    
     rotate*=-1.;
     double currentMaxAccel = Constants.swerveMaxAccel;
     //uncomment the below line to enable adaptive acceleration limiterarm

@@ -90,6 +90,8 @@ public final class Constants {
   public static final double swerveDriveToDMult = 0.14;
   public static final double swerveDriveToDeadZone = 0.03; //if the robot is within this many meters of the target position, it stops moving.
   public static final double swerveSquareDriveToDeadZone = 0.03;
+  public static final double swerveAngledDriveToDeadZone = 0.3;
+  public static final double swerveAngledDriveToRadius = 2.;
   //Swerve Collect Ring Constants
   public static final double swerveCollectCoralPMult = 0.5;
   
@@ -122,7 +124,7 @@ public final class Constants {
   public static final double elevatorAngleOffsetThreshold = 330;
   public static final double elevatorPMult = 0.075;
   public static final double elevatorDMult = 0.0;
-  public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
+  public static final double elevatorGravMult = 0.;//0.02; //how much the elevator PID compensates for gravity
   public static final double maxElevatorSpeed = 1.; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;

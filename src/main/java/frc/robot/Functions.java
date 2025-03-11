@@ -72,9 +72,14 @@ public class Functions {
     
     public static double AltAxisCoord(double x, double y, double a) //i dont know how to explain what this does, but it uses radians.
     {
-        double s = Math.sin(a)*Math.cos(a)*(x*Cot(a)+y);
-        return (Math.tan(a)*s<0?(Math.sin(a)>0?-1:1):(Math.sin(a)<0?-1:1))
-        * Math.sqrt((s*s)+((Math.tan(a)*(s))*(Math.tan(a)*(s))));
+        if (Math.sin(2*a)==0) {
+            return x*Math.cos(a) + y*Math.sin(a);
+        }
+        else {
+            double s = Math.sin(a)*Math.cos(a)*(x*Cot(a)+y);
+            return (Math.tan(a)*s<0?(Math.sin(a)>0?-1:1):(Math.sin(a)<0?-1:1))
+            * Math.sqrt((s*s)+((Math.tan(a)*(s))*(Math.tan(a)*(s))));
+        }
     }
 
     public static Pose2d RotatePose(Pose2d p, double a) {
