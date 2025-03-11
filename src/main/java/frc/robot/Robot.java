@@ -177,9 +177,10 @@ public class Robot extends TimedRobot {
       double closestAngle = 0.;
       double angleDist = 100000;
       for (int i=0; i<Constants.snapAngles.length; i++) {
-        if (Functions.DeltaAngleDeg(RSAngle, Constants.snapAngles[i]) < angleDist) {
+        double a = Math.abs(Functions.DeltaAngleDeg(RSAngle, Constants.snapAngles[i]));
+        if (a < angleDist) {
           closestAngle = Constants.snapAngles[i];
-          angleDist = Functions.DeltaAngleDeg(RSAngle, Constants.snapAngles[i]);
+          angleDist = a;
         }
       }
       RSAngle = closestAngle;
