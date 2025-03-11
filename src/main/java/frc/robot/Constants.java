@@ -14,7 +14,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.*;
 
-import java.security.PublicKey;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -22,7 +21,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.PositionEstimator;
 import frc.robot.utilityObjects.Vector2D;
 
 /**
@@ -47,7 +45,7 @@ public final class Constants {
   public static final double gravity = 9.81; //gravitational acceleration in m/s^2
   //SWERVE STUFF:
   //Gyro
-  public static final Pigeon2 gyro = new Pigeon2(44); 
+  public static final Pigeon2 gyro = new Pigeon2(44);
   //Swerve Motor Declarations
   public static final SparkMax flaMotor = new SparkMax(20, MotorType.kBrushless); //front left angle motor
   public static final SparkMax fltMotor = new SparkMax(21, MotorType.kBrushless); //front left throttle motor
@@ -94,8 +92,8 @@ public final class Constants {
   public static final double swerveAngledDriveToRadius = 2.;
   //Swerve Collect Ring Constants
   public static final double swerveCollectCoralPMult = 0.5;
-  
-  
+
+
   //GAME PIECE MANIPULATION STUFF:
 
   //Elevator Motor Declarations
@@ -112,13 +110,13 @@ public final class Constants {
   //Algae Intake Motor Declarations
   public static final SparkMax algaeIntake = new SparkMax(32, MotorType.kBrushless);
   public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
-  
+
   //Arm Sensor Declarations
   public static DigitalInput elevatorBottom = new DigitalInput(3);
   public static DigitalInput elevatorTop = new DigitalInput(4);
   public static DigitalInput linebreakSensor = new DigitalInput(9);
 
-  
+
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorAngleOffsetThreshold = 330;
@@ -145,7 +143,7 @@ public final class Constants {
   public static final double coralGravMult = 0.;
   public static final double coralGravOffset = 0;
   public static final double withCoralPMult = 0.015;
-  public static final double withCoralDMult = 0.; 
+  public static final double withCoralDMult = 0.;
   public static final double withCoralGravMult = 0.;
   public static final double withCoralGravOffset = 0;
   public static final double maxCoralPivotSpeed = 1.0;
@@ -182,8 +180,8 @@ public final class Constants {
   public static final double algaeIntakeSpeed = 1.;
   public static final double minAlgaeAngle = 0.;
   public static final double maxAlgaeAngle = 30.;
-  
-  
+
+
   //CLIMBER STUFF
   //Climber Motor Declarations
   //public static final SparkMax climberPivot = new SparkMax(34, MotorType.kBrushless);
@@ -212,9 +210,9 @@ public final class Constants {
   public static final double maxClimberAngle = 55;
   public static final double minClawAngle = -3600.;
   public static final double maxClawAngle = 3600.;
-  
 
-  //POSITION ESTIMATION AND FIELD CONSTANTS:  
+
+  //POSITION ESTIMATION AND FIELD CONSTANTS:
   public static final Vector2D redSpeaker = new Vector2D(16.579342, 5.547868);
   public static final Vector2D blueSpeaker = new Vector2D(-0.0381, 5.547868 );
   public static final Vector2D redAmpDepositPosition = new Vector2D(14.700758, 8.24); //7.74
@@ -244,7 +242,7 @@ public final class Constants {
                                                                 aprilTagFieldLayout.getTagPose(6).get().toPose2d(),
                                                                 aprilTagFieldLayout.getTagPose(7).get().toPose2d(),
                                                                 aprilTagFieldLayout.getTagPose(8).get().toPose2d(),
-                                                                aprilTagFieldLayout.getTagPose(9).get().toPose2d()}; 
+                                                                aprilTagFieldLayout.getTagPose(9).get().toPose2d()};
   public static final Pose2d[] blueCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(12).get().toPose2d(),
                                                                           aprilTagFieldLayout.getTagPose(13).get().toPose2d()};
   public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
@@ -253,8 +251,8 @@ public final class Constants {
   public static final double reefDist = 0.4;
   public static final double coralStationSideOffset = 0.54;
   public static final double coralStationDist = 0.38;
-  
-  
+
+
   //ANSI Color Codes:
   public static final String ansiRESET = "\u001B[0m";
   public static final String ansiBLK = "\u001B[30m";
@@ -265,10 +263,10 @@ public final class Constants {
   public static final String ansiPRP = "\u001B[35m";
   public static final String ansiCYN = "\u001B[36m";
   public static final String ansiWHT = "\u001B[37m";
-  
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-  
+
   }
 }
