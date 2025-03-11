@@ -75,6 +75,16 @@ public class ControllerRumble extends SubsystemBase {
     controller2RumbleR = intensity;
   }
 
+  public static void RumbleController1BothSides(double intensity) {
+    controller1RumbleL = intensity;
+    controller1RumbleR = intensity;
+  }
+
+  public static void RumbleController2BothSides(double intensity) {
+    controller2RumbleL = intensity;
+    controller2RumbleR = intensity;
+  }
+
   public static void smoothRumbleTransitionBothControllersBothSides(double step, double target) {
     smoothTransition1L(step, target);
     smoothTransition1R(step, target);

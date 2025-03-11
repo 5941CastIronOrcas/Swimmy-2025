@@ -39,6 +39,8 @@ public class PositionEstimator extends SubsystemBase {
   public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
   public static CameraConf cam1 = new CameraConf("camLeft", 0.18318, 0.20378, 0.6653, 0, 41, 0);
   public static CameraConf cam2 = new CameraConf("camRight",  0.18227, -0.2038, 0.7103, 0, -51 ,0);
+  public static CameraConf cam3 = new CameraConf("camBLeft", 0.18318, 0.20378, 0.6653, 0, 41, 0);
+  public static CameraConf cam4 = new CameraConf("camBRight", 0.18318, 0.20378, 0.6653, 0, 41, 0);
   //public static CameraConf cam3 = new CameraConf("camLeftBack", 0, 0, 0, 0, -51 , 156.5);
   //public static CameraConf cam4 = new CameraConf("camRightBack", 0, 0, 0, 0 ,-51, )
   public static Vector2D[] deltaBuffer = new Vector2D[50];
@@ -195,6 +197,8 @@ public class PositionEstimator extends SubsystemBase {
 public PositionEstimator(){
   cameras.add(0, cam1);
   cameras.add(1, cam2);
+  cameras.add(2, cam3);
+  cameras.add(3, cam4);
     }
 
   @Override
@@ -233,12 +237,14 @@ public PositionEstimator(){
        - (Math.cos(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
         / 4.0);
 
-    /*for (int i = 49; i > 0; i--) {
+    /*for (int i = deltaBuffer.length-1; i > 0; i--) {
       deltaBuffer[i] = deltaBuffer[i - 1];
     }*/
     deltaBuffer[0] = velocity;
 
     previousPosition = robotPosition;
+
+
     double camsactive = 0;
     double combx = 0;
     double comby = 0;

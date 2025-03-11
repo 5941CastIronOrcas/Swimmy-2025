@@ -181,9 +181,53 @@ public class Functions {
     public static void killAllArm() {
         Constants.coralIntake.stopMotor();
         Constants.coralIntakePivot.stopMotor();
+        Constants.algaeIntake.stopMotor();
         //Constants.climber2.stopMotor();
         Constants.climber.stopMotor();
         Constants.elevator1.stopMotor();
         Constants.elevator2.stopMotor();
+    }
+
+    public static boolean isHot() {
+        boolean out = false;
+        if (Constants.flaMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.flaMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.fltMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.fraMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.frtMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.blaMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.bltMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.braMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.brtMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.elevator1.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.elevator2.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.coralIntakePivot.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.coralIntake.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.algaeIntake.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.climber.getDeviceTemp().getValueAsDouble()>Constants.warningTemp) out=true;
+        return out;
+    }
+    public static boolean isSwerveHot() {
+        boolean out = false;
+        if (Constants.flaMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.flaMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.fltMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.fraMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.frtMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.blaMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.bltMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.braMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.brtMotor.getMotorTemperature()>Constants.warningTemp) out=true;
+        return out;
+    }
+    public static boolean isArmHot() {
+        boolean out = false;
+        if (Constants.elevator1.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.elevator2.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.coralIntakePivot.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.coralIntake.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.algaeIntake.getMotorTemperature()>Constants.warningTemp) out=true;
+        else if (Constants.climber.getDeviceTemp().getValueAsDouble()>Constants.warningTemp) out=true;
+        return out;
     }
 }

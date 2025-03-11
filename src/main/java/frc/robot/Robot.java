@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Arduino;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ControllerRumble;
 import frc.robot.subsystems.DriverDisplay;
 import frc.robot.subsystems.PositionEstimator;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -47,6 +48,7 @@ public class Robot extends TimedRobot {
   private static double oldTime = 0.;
   private static double newTime = 0.;
   private static double deltaTime = 0.;
+  public static int tick = 0;
   //public static PathPlannerAuto auto;
   public static Boolean isRedAlliance = true;
   public static Boolean isBlueAlliance = false;
@@ -108,6 +110,12 @@ public class Robot extends TimedRobot {
     oldTime = newTime;
     newTime = Timer.getFPGATimestamp();
     deltaTime = newTime-oldTime;
+    tick++;
+    if (tick % 250 == 0)
+    {
+      ControllerRumble.RumbleController1BothSides(Functions.isSwerveHot()?1.:0.);
+      ControllerRumble.RumbleController2BothSides(Functions.isArmHot()?1.:0.);
+    }
   }
 
   public static double DeltaTime() {
@@ -166,8 +174,15 @@ public class Robot extends TimedRobot {
      */
     if(Constants.controller1.getLeftBumper()) //snaps to specific directions to climb and score amp
     {
-      RSAngle = Math.abs(Functions.DeltaAngleDeg(0, RSAngle)) < 105.0 ? 90 * Math.round(RSAngle / 90.0) : 120.0 * 
-      Math.round(RSAngle / 120.0);
+      double closestAngle = 0.;
+      double angleDist = 100000;
+      for (int i=0; i<Constants.snapAngles.length; i++) {
+        if (Functions.DeltaAngleDeg(RSAngle, Constants.snapAngles[i]) < angleDist) {
+          closestAngle = Constants.snapAngles[i];
+          angleDist = Functions.DeltaAngleDeg(RSAngle, Constants.snapAngles[i]);
+        }
+      }
+      RSAngle = closestAngle;
     }
 
     if (Constants.controller1.getRightBumperPressed()) { //resets the robot's yaw
