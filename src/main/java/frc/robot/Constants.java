@@ -72,7 +72,8 @@ public final class Constants {
   public static final double modulePMult = 0.01;
   public static final double maxThrottleChange = 2.0; //the maximum amount the wheel throttle of each module is allowed to change per frame (max 2.0)
   public static final double swerveMaxAccel = 2.0; //the max amount swerve is allowed to accelerate, measured in percent per frame (max 2.0)
-  public static final double swerveMaxAccelExtended = 0.02; //the max amount swerve is allowed to accelerate when the arm is fully extended
+  public static final double swerveMaxAccelExtendedX = 0.001; //the max amount swerve is allowed to accelerate when the arm is fully extended
+  public static final double swerveMaxAccelExtendedY = 0.01;
   //Swerve Drive Turning Constants
   public static final double turnMult = 1.0; //the max speed Swerve is EVER allowed to turn at
   public static final double swerveAutoTurnPMult = 0.007;
@@ -129,24 +130,25 @@ public final class Constants {
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
   public static final double intakeHeightFromGround = 17;
-  public static final double intakeHeight = 13.5;//36.5-intakeHeightFromGround;
+  public static final double intakeHeight = 10.;//36.5-intakeHeightFromGround;
   public static final double reef1Height = 14.5-intakeHeightFromGround;
-  public static final double reef2Height = 38.375-intakeHeightFromGround;
-  public static final double reef3Height = 49.625-intakeHeightFromGround;
-  public static final double reef4Height = 44; //72.
-  public static final double maxElevatorHeight = 50;
+  public static final double reef2Height = 16;
+  public static final double reef3Height = 27.5;
+  public static final double reef4Height = 47; //72.
+  public static final double maxElevatorHeight = 47;
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
   public static final double elevatorAccelLimit = 0.05;
   //Coral Intake Control Constants
+  public static final double intakeAccelLimit = 0.05;
   public static final double coralPMult = 0.015;
   public static final double coralDMult = 0.;
   public static final double coralIMult = 0.;
   public static final double coralIClamp = 0.;
-  public static final double coralGravMult = 0.;
+  public static final double coralGravMult = 0.015;
   public static final double coralGravOffset = 0;
   public static final double withCoralPMult = 0.015;
   public static final double withCoralDMult = 0.;
-  public static final double withCoralGravMult = 0.;
+  public static final double withCoralGravMult = 0.03;
   public static final double withCoralGravOffset = 0;
   public static final double maxCoralPivotSpeed = 1.0;
   //public static final double coralAngleVariation = 1.0;
@@ -156,8 +158,8 @@ public final class Constants {
   public static final double reef4Angle = 60.;
   public static final double coralIntakeSpeed = 1.;
   public static final double reef1Speed = 0.2;
-  public static final double minCoralAngle = 0.;
-  public static final double maxCoralAngle = 130.;
+  public static final double minCoralAngle = -5;
+  public static final double maxCoralAngle = 95;
   public static final double intakeMass = 1.81;
   public static final double intakeCenterRadius = 0.157445929589;
   public static final double intakeCenterAngle = 20.3440038775;

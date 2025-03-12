@@ -44,6 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
   public static double coralCompensation = 0;
   public static double intakeIntegral = 0.;
   public static double elevatorThrottle = 0.;
+  public static double intakeThrottle = 0;
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
 
   public ArmSubsystem() {
@@ -128,7 +129,7 @@ public Command comMoveArm(int level){
         h2 = h;
         a2 = a;
 
-        return this.runOnce(() -> moveArmTo(h2, a2, 0));
+        return this.runOnce(() -> moveArmTo(h2, a2, 0, 0));
   }
     public Command comSpinIntake(int i){
         double speed;
@@ -152,10 +153,10 @@ public Command comMoveArm(int level){
 
 
 
-  public static void moveElevatorTo(double h) { //uses a pd controller to go to a given angle.
+  public static void moveElevatorTo(double h, double o) { //uses a pd controller to go to a given angle.
    h = Functions.Clamp(h, 0, Constants.maxElevatorHeight);
    moveElevator(Functions.Clamp((Constants.elevatorPMult*(h - elevatorHeight))
-    -(Constants.elevatorDMult*elevator1Encoder.getVelocity()),
+    -(Constants.elevatorDMult*elevator1Encoder.getVelocity()) + o,
     -Constants.maxElevatorSpeed, Constants.maxElevatorSpeed));
     DriverDisplay.elevatorTarget.setDouble(h);
   }
@@ -185,7 +186,8 @@ public Command comMoveArm(int level){
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
-    t = Functions.Clamp(t, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
+    intakeThrottle += Functions.Clamp(t-intakeThrottle, -Constants.intakeAccelLimit, Constants.intakeAccelLimit);
+    t = Functions.Clamp(intakeThrottle, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
     //t = Functions.Clamp(t, (coralAngle < (elevatorHeight/Constants.maxElevatorHeight)
    // *Constants.coralMinAdaptiveAngle)?0.2:-1, (coralAngle > ((Constants.maxElevatorHeight
    // -elevatorHeight)/Constants.maxElevatorHeight)*Constants.coralMaxAdaptiveAngle)?-0.2:1);
@@ -195,12 +197,12 @@ public Command comMoveArm(int level){
     Constants.coralIntakePivot.set((Constants.coralIntakePivotInvert)?-t:t);
   }
 
-  public static void moveArmTo(double h, double a, double o) {
-    moveElevatorTo(h);
+  public static void moveArmTo(double h, double a, double o1, double o2) {
+    moveElevatorTo(h, o2);
     //if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a,o);
     //else rotateCoralIntakeTo(Functions.Clamp(a, Constants.coralMinAdaptiveAngle, Constants.coralMaxAdaptiveAngle),o); //rotateCoralIntakeTo(45.,o);
     
-    rotateCoralIntakeTo(Functions.Clamp(a, Math.abs(h-elevatorHeight)<7.?Constants.minCoralAngle:Constants.coralMinAdaptiveAngle, elevatorHeight<10?Constants.coralMaxAdaptiveAngle:80), o);
+    rotateCoralIntakeTo(Functions.Clamp(a, Math.abs(h-elevatorHeight)<7.?Constants.minCoralAngle:Constants.coralMinAdaptiveAngle, elevatorHeight<10?Constants.coralMaxAdaptiveAngle:80), o1);
 
   }
 
@@ -213,10 +215,10 @@ public Command comMoveArm(int level){
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
     spinCoralIntake(-input<0.?((hasCoral)?0.05:input):input);
   }
-  public static void moveToIntakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
-    moveElevatorTo(Constants.intakeHeight);
-    intakeCoral(0.75);
-  }
+  // public static void moveToIntakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
+  //   moveElevatorTo(Constants.intakeHeight);
+  //   intakeCoral(0.75);
+  // }
 
   public static void spinAlgaeIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
@@ -227,10 +229,10 @@ public Command comMoveArm(int level){
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
     spinAlgaeIntake(input<0.?((hasAlgae)?0.05:input):input);
   }
-  public static void moveToIntakeAlgae() { //moves the arm to the intake position, and tries to pick up a Coral
-    moveElevatorTo(Constants.reef1Height);
-    intakeAlgae(0.75);
-  }
+  // public static void moveToIntakeAlgae() { //moves the arm to the intake position, and tries to pick up a Coral
+  //   moveElevatorTo(Constants.reef1Height);
+  //   intakeAlgae(0.75);
+  // }
 
 
   public static double angleToHeight (double angle) {

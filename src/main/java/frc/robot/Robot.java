@@ -207,6 +207,8 @@ public class Robot extends TimedRobot {
     }
     else if (Constants.controller1.getXButton()) {
       SwerveSubsystem.DriveToNearestCoralStation(speed, speed, LSX, LSY);
+      ArmSubsystem.moveArmTo(Constants.intakeHeight, Constants.coralIntakeAngle, RSY2, LSY2);
+      ArmSubsystem.intakeCoral(1.);
     }
     else {
       SwerveSubsystem.DriveDriverOrientedAtAngle(LSX,LSY,RSAngle+180,Functions.Pythagorean(RSX, RSY));// SwerveSubsystem.Drive(LSX, LSY, RSX);
@@ -214,29 +216,33 @@ public class Robot extends TimedRobot {
 
 
     //Arm
-    if (Constants.controller2.getBButton()) {
-      ArmSubsystem.moveArmTo(Constants.intakeHeight, Constants.coralIntakeAngle, RSY2);
+    if(!Constants.controller1.getXButton())
+    {
+      if (Constants.controller2.getBButton()) {
+        ArmSubsystem.moveArmTo(Constants.intakeHeight, Constants.coralIntakeAngle, RSY2, LSY2);
+      }
+      else if (Constants.controller2.getPOV()==270) {
+        ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle,RSY2, LSY2);
+      }
+      else if (Constants.controller2.getPOV()==180) {
+        ArmSubsystem.moveArmTo(Constants.reef2Height, Constants.reef2Angle, RSY2, LSY2);
+      }
+      else if (Constants.controller2.getPOV()==90) {
+        ArmSubsystem.moveArmTo(Constants.reef3Height, Constants.reef2Angle, RSY2, LSY2);
+      }
+      else if (Constants.controller2.getPOV()==0) {
+        ArmSubsystem.moveArmTo(Constants.reef4Height, Constants.reef4Angle, RSY2, LSY2);
+      }
+      else {
+        ArmSubsystem.moveElevator(LSY2*0.4);
+        ArmSubsystem.rotateCoralIntake(-RSY2*(ArmSubsystem.hasCoral?0.6:0.4));
+      }
+      ArmSubsystem.intakeAlgae(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
+      if (Constants.controller2.getLeftBumperButton()) ArmSubsystem.intakeCoral(1.);
+      else if (Constants.controller2.getRightBumperButton()) ArmSubsystem.intakeCoral(-1.);
+      else ArmSubsystem.intakeCoral(0.);
     }
-    else if (Constants.controller2.getPOV()==270) {
-      ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle,RSY2);
-    }
-    else if (Constants.controller2.getPOV()==180) {
-      ArmSubsystem.moveArmTo(Constants.reef2Height, Constants.reef2Angle, RSY2);
-    }
-    else if (Constants.controller2.getPOV()==90) {
-      ArmSubsystem.moveArmTo(Constants.reef3Height, Constants.reef2Angle, RSY2);
-    }
-    else if (Constants.controller2.getPOV()==0) {
-      ArmSubsystem.moveArmTo(Constants.reef4Height, Constants.reef4Angle, RSY2);
-    }
-    else {
-      ArmSubsystem.moveElevator(LSY2*0.4);
-      ArmSubsystem.rotateCoralIntake(-RSY2*(ArmSubsystem.hasCoral?0.6:0.4));
-    }
-    ArmSubsystem.intakeAlgae(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
-    if (Constants.controller2.getLeftBumperButton()) ArmSubsystem.intakeCoral(1.);
-    else if (Constants.controller2.getRightBumperButton()) ArmSubsystem.intakeCoral(-1.);
-    else ArmSubsystem.intakeCoral(0.);
+    
 
     //Climber
     if (Constants.controller2.getAButton()) {
@@ -450,11 +456,11 @@ public class Robot extends TimedRobot {
         }
         else if (AutoSequences.isAutoTimeBetween(6, 8)) {
           SwerveSubsystem.DriveDriverOriented(0, -0.2, 0);
-          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
         }
         else if (AutoSequences.isAutoTimeBetween(8, 10)) {
           SwerveSubsystem.DriveDriverOriented(0, 0, 0);
-          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
         }
         else if (AutoSequences.isAutoTimeBetween(10, 10.5)) {
           SwerveSubsystem.DriveDriverOriented(0, 0, 0);

@@ -37,8 +37,8 @@ public class PositionEstimator extends SubsystemBase {
   public static Vector2D velocity = new Vector2D(0, 0);
 
   public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
-  public static CameraConf cam1 = new CameraConf("camLeft", 0.18318, 0.20378, 0.6653, 0, 41, 0);
-  public static CameraConf cam2 = new CameraConf("camRight",  0.18227, -0.2038, 0.7103, 0, -51 ,0);
+  public static CameraConf cam1 = new CameraConf("camLeft", 0.18318, 0.20378, 0.6653, 0, -41, -15);
+  public static CameraConf cam2 = new CameraConf("camRight",  0.18227, -0.2038, 0.7103, 0, 22 ,20);
   public static CameraConf cam3 = new CameraConf("camBLeft", 0.18318, 0.20378, 0.6653, 0, 41, 0);
   public static CameraConf cam4 = new CameraConf("camBRight", 0.18318, 0.20378, 0.6653, 0, 41, 0);
   //public static CameraConf cam3 = new CameraConf("camLeftBack", 0, 0, 0, 0, -51 , 156.5);
@@ -145,9 +145,9 @@ public class PositionEstimator extends SubsystemBase {
     for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
-      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset, new Rotation2d(0)),
+      Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset-0.035, new Rotation2d(0)),
       pos.getRotation().getRadians());
-      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset, new Rotation2d(0)),
+      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset-0.035, new Rotation2d(0)),
       pos.getRotation().getRadians());
       positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
       positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));

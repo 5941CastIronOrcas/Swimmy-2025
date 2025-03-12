@@ -167,7 +167,7 @@ public class SwerveSubsystem extends SubsystemBase {
     double dist1 = Functions.AltAxisCoord(pos.x, pos.y, Math.toRadians(a+270));
     double mult = Functions.Clamp(Math.abs(dist1)/Constants.swerveAngledDriveToDeadZone,0,1);
     double dist2 = Functions.AltAxisCoord(pos.x, pos.y, Math.toRadians(a));
-    double finalDist2 = Functions.Pythagorean(pos.x,pos.y)>Constants.swerveAngledDriveToRadius?1.:(dist2*mult);
+    double finalDist2 = Functions.Pythagorean(pos.x,pos.y)>Constants.swerveAngledDriveToRadius?Constants.swerveAngledDriveToRadius:(dist2*mult);
     Vector2D targetOffset = new Vector2D(finalDist2*Math.cos(Math.toRadians(a)), finalDist2*Math.sin(Math.toRadians(a)));
     Vector2D target = new Vector2D(x-targetOffset.x, y-targetOffset.y);
     DriveTo(target.x, target.y, angle, speedLimit, turnLimit, XOffset, YOffset);
@@ -205,13 +205,19 @@ public class SwerveSubsystem extends SubsystemBase {
   public static void Drive(double x, double y, double rotate) { //this is the basis of the swerve code
     
     rotate*=-1.;
-    double currentMaxAccel = Constants.swerveMaxAccel;
+    double currentMaxAccelX = Constants.swerveMaxAccel;
+    double currentMaxAccelY = Constants.swerveMaxAccel;
     //uncomment the below line to enable adaptive acceleration limiterarm
-    currentMaxAccel = Functions.Clamp(Constants.swerveMaxAccelExtended + 
+    currentMaxAccelX = Functions.Clamp(Constants.swerveMaxAccelExtendedX + 
     ((1.-(ArmSubsystem.elevatorHeight/Constants.maxElevatorHeight))*
-    (Constants.swerveMaxAccel-Constants.swerveMaxAccelExtended)), 0.01, 2.0);
-    xOut += Functions.Clamp(x-xOut, -currentMaxAccel, currentMaxAccel); //xOut and yOut are x and y, but the acceleration is limited.
-    yOut += Functions.Clamp(y-yOut, -currentMaxAccel, currentMaxAccel);
+    (Constants.swerveMaxAccel-Constants.swerveMaxAccelExtendedX)), 0.01, 2.0);
+
+    currentMaxAccelY = Functions.Clamp(Constants.swerveMaxAccelExtendedY + 
+    ((1.-(ArmSubsystem.elevatorHeight/Constants.maxElevatorHeight))*
+    (Constants.swerveMaxAccel-Constants.swerveMaxAccelExtendedY)), 0.01, 2.0);
+
+    xOut += Functions.Clamp(x-xOut, -currentMaxAccelX, currentMaxAccelX); //xOut and yOut are x and y, but the acceleration is limited.
+    yOut += Functions.Clamp(y-yOut, -currentMaxAccelY, currentMaxAccelY);
     double flx =  xOut + (Constants.turnMult * rotate); //the x and y coordinates of each wheel. since the rotation affects each wheel differently, rotation is either added or subtracted from x and y.
     double fly =  yOut + (Constants.turnMult * rotate);
     double frx =  xOut + (Constants.turnMult * rotate);
