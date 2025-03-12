@@ -38,9 +38,9 @@ public class CameraConf {
     public double distance = 0;
     public CameraConf(String camName, double camx, double camy, double camz, double camroll, double campitch,
             double camyaw) {
-        x = Units.inchesToMeters(camx);
-        y = Units.inchesToMeters(camy);
-        z = Units.inchesToMeters(camz);
+        x = camx;
+        y = camy;
+        z = camz;
         roll = Units.degreesToRadians(camroll);
         yaw = Units.degreesToRadians(camyaw);
         pitch = Units.degreesToRadians(campitch);

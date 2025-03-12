@@ -41,8 +41,6 @@ public class PositionEstimator extends SubsystemBase {
   public static CameraConf cam2 = new CameraConf("camRight",  0.18227, -0.2038, 0.7103, 0, 22 ,20);
   public static CameraConf cam3 = new CameraConf("camBLeft", 0.18318, 0.20378, 0.6653, 0, 41, 0);
   public static CameraConf cam4 = new CameraConf("camBRight", 0.18318, 0.20378, 0.6653, 0, 41, 0);
-  //public static CameraConf cam3 = new CameraConf("camLeftBack", 0, 0, 0, 0, -51 , 156.5);
-  //public static CameraConf cam4 = new CameraConf("camRightBack", 0, 0, 0, 0 ,-51, )
   public static Vector2D[] deltaBuffer = new Vector2D[50];
   public static double sumX = 0;
   public static double sumY = 0;
