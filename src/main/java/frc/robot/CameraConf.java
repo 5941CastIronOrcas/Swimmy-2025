@@ -38,22 +38,16 @@ public class CameraConf {
     public double distance = 0;
     public CameraConf(String camName, double camx, double camy, double camz, double camroll, double campitch,
             double camyaw) {
+        x = Units.inchesToMeters(camx);
+        y = Units.inchesToMeters(camy);
+        z = Units.inchesToMeters(camz);
+        roll = Units.degreesToRadians(camroll);
+        yaw = Units.degreesToRadians(camyaw);
+        pitch = Units.degreesToRadians(campitch);
+
         cam = new PhotonCamera(camName);
-        robotToCam = new Transform3d(new Translation3d(camx, camy, camz), new Rotation3d(
-                Units.degreesToRadians(camroll), Units.degreesToRadians(campitch), Units.degreesToRadians(camyaw))); // x+
-                                                                                                                     // forward,
-                                                                                                                     // y+
-                                                                                                                     // left,
-                                                                                                                     // z+
-                                                                                                                     // up.
-                                                                                                                     // reference
-                                                                                                                     // https://docs.google.com/document/d/18HxdTfdSlbWWq5aoK3luFQ8dL1g96O6ZJo3THPoD0w0/edit?usp=sharing
-        x = camx;
-        y = camy;
-        z = camz;
-        roll = camroll;
-        yaw = camyaw;
-        pitch = campitch;
+        robotToCam = new Transform3d(new Translation3d(x, y, z), new Rotation3d(roll, pitch, yaw));
+        // x+ = forward, y+ = left, z+ = up. reference https://docs.google.com/document/d/18HxdTfdSlbWWq5aoK3luFQ8dL1g96O6ZJo3THPoD0w0/edit?usp=sharing
         field = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
         photonPoseEstimator = new PhotonPoseEstimator(field, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToCam);
         photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
