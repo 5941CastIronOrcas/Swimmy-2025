@@ -210,8 +210,8 @@ public final class Constants {
   //public static final double climberMaxSpeed = 1;
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
-  public static final double minClimberAngle = 20;
-  public static final double maxClimberAngle = 55;
+  public static final double minClimberAngle = 0;
+  public static final double maxClimberAngle = 215;
   public static final double minClawAngle = -3600.;
   public static final double maxClawAngle = 3600.;
 
@@ -252,6 +252,8 @@ public final class Constants {
   public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
                                                                           aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
   public static final double reefSideOffset = 0.1651;
+  public static final double leftReefSideOffset = 0.005;
+  public static final double rightReefSideOffset = 0.005;
   public static final double reefDist = 0.4;
   public static final double coralStationSideOffset = 0.54;
   public static final double coralStationDist = 0.38;

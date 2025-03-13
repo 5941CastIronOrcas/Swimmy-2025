@@ -39,8 +39,8 @@ public class PositionEstimator extends SubsystemBase {
   public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
   public static CameraConf cam1 = new CameraConf("camLeft", 0.1899, 0.1937, 0.6728, 0, 26, -20);
   public static CameraConf cam2 = new CameraConf("camRight",  0.1877, -0.1961, 0.7045, 0, -49 ,15);
-  public static CameraConf cam3 = new CameraConf("camBLeft", -0.55448, 0.27523, 0.1857, 0, -20, 33);
-  public static CameraConf cam4 = new CameraConf("camBRight", -0.5549, -0.2751, 0.1857, 0, -20, -33);
+ // public static CameraConf cam3 = new CameraConf("camBLeft", -0.55448, 0.27523, 0.1857, 0, -20, 33);
+  //public static CameraConf cam4 = new CameraConf("camBRight", -0.5549, -0.2751, 0.1857, 0, -20, -33);
   public static Vector2D[] deltaBuffer = new Vector2D[50];
   public static double sumX = 0;
   public static double sumY = 0;
@@ -143,9 +143,9 @@ public class PositionEstimator extends SubsystemBase {
     for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
-        Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset-0.035+0.04, new Rotation2d(0)),
+        Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset+Constants.leftReefSideOffset, new Rotation2d(0)),
       pos.getRotation().getRadians());
-      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset-0.035+0.04, new Rotation2d(0)),
+      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset+Constants.rightReefSideOffset, new Rotation2d(0)),
       pos.getRotation().getRadians());
       positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
       positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
@@ -195,8 +195,8 @@ public class PositionEstimator extends SubsystemBase {
 public PositionEstimator(){
   cameras.add(0, cam1);
   cameras.add(1, cam2);
-  cameras.add(2, cam3);
-  cameras.add(3, cam4);
+  //cameras.add(2, cam3);
+ // cameras.add(3, cam4);
     }
 
   @Override

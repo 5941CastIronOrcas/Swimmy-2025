@@ -129,8 +129,8 @@ public class DriverDisplay extends SubsystemBase {
   public static ShuffleboardTab position = Shuffleboard.getTab("Position Estimator");
   public static GenericEntry isPresent1 = position.add("Is Present 1", false).getEntry();
   public static GenericEntry isPresent2 = position.add("Is Present 2", false).getEntry(); 
-  public static GenericEntry isPresent3 = position.add("Is Present 3", false).getEntry();   
-  public static GenericEntry isPresent4 = position.add("Is Present 4", false).getEntry();
+ // public static GenericEntry isPresent3 = position.add("Is Present 3", false).getEntry();   
+ // public static GenericEntry isPresent4 = position.add("Is Present 4", false).getEntry();
     public static GenericEntry ambiguity1 = position.add("Ambiguity 1", 0).getEntry();
 
     public static GenericEntry targetIds1 = position.add("Target Ids 1", new double[]{-2}).getEntry();
@@ -337,8 +337,8 @@ public class DriverDisplay extends SubsystemBase {
     //position estimator
     DriverDisplay.isPresent1.setBoolean(PositionEstimator.cameras.get(0).camCheck());
     DriverDisplay.isPresent2.setBoolean(PositionEstimator.cameras.get(1).camCheck());
-    DriverDisplay.isPresent3.setBoolean(PositionEstimator.cameras.get(2).camCheck());
-    DriverDisplay.isPresent4.setBoolean(PositionEstimator.cameras.get(3).camCheck());
+    //DriverDisplay.isPresent3.setBoolean(PositionEstimator.cameras.get(2).camCheck());
+    //DriverDisplay.isPresent4.setBoolean(PositionEstimator.cameras.get(3).camCheck());
     DriverDisplay.ambiguity1.setDouble(PositionEstimator.cameras.get(0).ambiguity);
     DriverDisplay.ambiguity2.setDouble(PositionEstimator.cameras.get(1).ambiguity);
     DriverDisplay.targetIds1.setDoubleArray(PositionEstimator.cameras.get(0).getIds());
