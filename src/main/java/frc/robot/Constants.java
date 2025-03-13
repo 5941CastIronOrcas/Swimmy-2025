@@ -155,7 +155,7 @@ public final class Constants {
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
   public static final double reef1Angle = 0.0;
   public static final double reef2Angle = 65;
-  public static final double reef4Angle = 60.;
+  public static final double reef4Angle = 70.;
   public static final double coralIntakeSpeed = 1.;
   public static final double reef1Speed = 0.2;
   public static final double minCoralAngle = -5;

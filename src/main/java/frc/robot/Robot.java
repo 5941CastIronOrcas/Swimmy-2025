@@ -237,10 +237,10 @@ public class Robot extends TimedRobot {
         ArmSubsystem.moveElevator(LSY2*0.4);
         ArmSubsystem.rotateCoralIntake(-RSY2*(ArmSubsystem.hasCoral?0.6:0.4));
       }
-      ArmSubsystem.intakeAlgae(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
-      if (Constants.controller2.getLeftBumperButton()) ArmSubsystem.intakeCoral(1.);
-      else if (Constants.controller2.getRightBumperButton()) ArmSubsystem.intakeCoral(-1.);
-      else ArmSubsystem.intakeCoral(0.);
+      ArmSubsystem.intakeCoral(Constants.controller2.getLeftTriggerAxis()-Constants.controller2.getRightTriggerAxis());
+      if (Constants.controller2.getLeftBumperButton()) ArmSubsystem.intakeAlgae(1.);
+      else if (Constants.controller2.getRightBumperButton()) ArmSubsystem.intakeAlgae(-1.);
+      else ArmSubsystem.intakeAlgae(0.);
     }
     
 
