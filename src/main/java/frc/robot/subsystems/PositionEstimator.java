@@ -35,6 +35,7 @@ public class PositionEstimator extends SubsystemBase {
   public static Pose2d robotPosition = new Pose2d();
   public static Pose2d previousPosition = new Pose2d();
   public static Vector2D velocity = new Vector2D(0, 0);
+  
 
   public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
   public static CameraConf cam1 = new CameraConf("camLeft", 0.1899, 0.1937, 0.6728, 0, 26, -20);

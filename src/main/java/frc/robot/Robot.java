@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
   public static double timeSinceRPSstart = 0;
   public static int RPS = -1; //variable that chooses which thing in RPS
   public static Pose2d[] reef = new Pose2d[]{};
+  public static boolean hasSeenApriltag=false;
   //public static boolean limpButtonOld = Constants.limpRobotButton.get();
 
   private RobotContainer m_robotContainer;
@@ -397,6 +398,7 @@ public class Robot extends TimedRobot {
     //for (int i = 0; i < Constants.allCoralsPos.length; i++) PositionEstimator.realCoralList.add(Constants.allCoralsPos[i]);
     Constants.timeSinceStartAtAutoStart = Timer.getFPGATimestamp();
     PositionEstimator.calculateObjectiveLocations();
+    hasSeenApriltag=false;
     
     
 
@@ -474,23 +476,29 @@ public class Robot extends TimedRobot {
         }
         break;
       case 3:
-        if (AutoSequences.isAutoTimeBetween(0, 2)) {
-          SwerveSubsystem.DriveDriverOrientedAtAngle(0.3, 0.31, 180., 0.3);
+        if (AutoSequences.isAutoTimeBetween(0, 7)) {
+          if (PositionEstimator.cam1.camCheck()) hasSeenApriltag=true;
+          if (hasSeenApriltag) {
+            ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
+            SwerveSubsystem.DriveToNearestReef(0.2, 0.2, 0, 0);
+          }
+          else {
+            SwerveSubsystem.DriveDriverOriented(0, -0.2, 0);
+          }
         }
-        else if  (AutoSequences.isAutoTimeBetween(2, 8)){
-          SwerveSubsystem.DriveDriverOrientedAtAngle(0.3, 0.31, 240., 0.3);
-        }
-        else if (AutoSequences.isAutoTimeBetween(8, 9)) {
-          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
-        }
-        else if (AutoSequences.isAutoTimeBetween(9, 11)){
-          SwerveSubsystem.DriveDriverOriented(0., 0., 0.);
+        else if (AutoSequences.isAutoTimeBetween(7, 8)) {
           ArmSubsystem.spinCoralIntake(-0.8);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntake(0);
         }
         else {
-          ArmSubsystem.spinCoralIntake(0.0);
+          ArmSubsystem.spinCoralIntake(0);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntake(0);
         }
-        break;
+      break;
 
     
     }

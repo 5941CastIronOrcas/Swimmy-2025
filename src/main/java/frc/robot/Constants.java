@@ -254,7 +254,7 @@ public final class Constants {
   public static final double reefSideOffset = 0.1651;
   public static final double leftReefSideOffset = 0.005;
   public static final double rightReefSideOffset = 0.005;
-  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.4};
+  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.45};
   public static final double coralStationSideOffset = 0.54;
   public static final double coralStationDist = 0.38;
 
