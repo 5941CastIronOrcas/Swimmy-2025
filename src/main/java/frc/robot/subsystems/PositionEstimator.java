@@ -51,7 +51,7 @@ public class PositionEstimator extends SubsystemBase {
   public static double lastTimestamp2 = 0;
   public static double trueLatency = 0;
 
-  public static Pose2d[] reefPositionPose2ds;
+  public static Pose2d[][] reefPositionPose2ds;
   public static Pose2d[] coralStationPose2ds;
 
 
@@ -135,20 +135,21 @@ public class PositionEstimator extends SubsystemBase {
     realCoralList.remove(nearestAutoCoral());
   }
 
-  public static Pose2d[] getReefPositions() {
+  public static Pose2d[][] getReefPositions() {
     Pose2d[] apriltags;
     if (Robot.isRedAlliance) apriltags = Constants.redReefApriltags;
     else apriltags = Constants.blueReefApriltags;
-    Pose2d[] positions = new Pose2d[apriltags.length*2];
+    double[] dists = Constants.reefDist;
+    Pose2d[][] positions = new Pose2d[apriltags.length*2][dists.length];
     for (int i = 0; i < apriltags.length; i++) {
       Pose2d pos = apriltags[i];
       Rotation2d angle = pos.getRotation();
-        Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist, -Constants.reefSideOffset+Constants.leftReefSideOffset, new Rotation2d(0)),
-      pos.getRotation().getRadians());
-      Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist, Constants.reefSideOffset+Constants.rightReefSideOffset, new Rotation2d(0)),
-      pos.getRotation().getRadians());
-      positions[i*2] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
-      positions[i*2+1] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
+      for (int j = 0; j < dists.length; j++) {
+        Pose2d rotatedPosL = Functions.RotatePose(new Pose2d(Constants.reefDist[j], -Constants.reefSideOffset+Constants.leftReefSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
+        Pose2d rotatedPosR = Functions.RotatePose(new Pose2d(Constants.reefDist[j], Constants.reefSideOffset+Constants.rightReefSideOffset, new Rotation2d(0)), pos.getRotation().getRadians());
+        positions[i*2][j] = new Pose2d(pos.getX()+rotatedPosL.getX(), pos.getY()+rotatedPosL.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
+        positions[i*2+1][j] = new Pose2d(pos.getX()+rotatedPosR.getX(), pos.getY()+rotatedPosR.getY(), new Rotation2d(Math.toRadians(-angle.getDegrees()-90)));
+      }
     }
     return positions;
   }
@@ -188,6 +189,24 @@ public class PositionEstimator extends SubsystemBase {
     }
     if (dist == 1000) closest = robotPosition;
     return closest;
+  }
+
+  public static Pose2d getNearestReefAtLevel() {
+    int level = (ArmSubsystem.elevatorLevel-1<0)?0:(ArmSubsystem.elevatorLevel-1);
+    Pose2d[] reefPose2dsAtLevel = new Pose2d[reefPositionPose2ds.length];
+    for (int i=0; i<reefPositionPose2ds.length; i++) {
+      reefPose2dsAtLevel[i] = reefPositionPose2ds[i][level];
+    }
+    return getNearest(reefPose2dsAtLevel);
+  }
+
+  public static Pose2d getNearestAtLevel() {
+    int level = (ArmSubsystem.elevatorLevel-1<0)?0:(ArmSubsystem.elevatorLevel-1);
+    Pose2d[] reefPose2dsAtLevel = new Pose2d[reefPositionPose2ds.length];
+    for (int i=0; i<reefPositionPose2ds.length; i++) {
+      reefPose2dsAtLevel[i] = reefPositionPose2ds[i][level];
+    }
+    return getNearest(Functions.CombinePose2dArrays(coralStationPose2ds, reefPose2dsAtLevel));
   }
 
 

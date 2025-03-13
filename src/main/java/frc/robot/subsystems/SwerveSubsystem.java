@@ -60,8 +60,7 @@ public class SwerveSubsystem extends SubsystemBase {
     currentSpeed.vxMetersPerSecond = newVelocityX;
     currentSpeed.vyMetersPerSecond = newVelocityY;
     currentSpeed.omegaRadiansPerSecond = angularVelocity;
-    nearestPos = PositionEstimator.getNearest(Functions.CombinePose2dArrays
-    (PositionEstimator.coralStationPose2ds, PositionEstimator.reefPositionPose2ds));
+    nearestPos = PositionEstimator.getNearestAtLevel();
   }
 
   @Override
@@ -80,7 +79,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public static void DriveToNearestReef(double speedLimit, double turnLimit, double XOffset, double YOffset) {
-    Pose2d pos = PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds);
+    Pose2d pos = PositionEstimator.getNearestReefAtLevel();
     AngledDriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset);
     //SquareDriveTo(pos.getX(), pos.getY(), pos.getRotation().getDegrees(), speedLimit, turnLimit, XOffset, YOffset, false);
   }

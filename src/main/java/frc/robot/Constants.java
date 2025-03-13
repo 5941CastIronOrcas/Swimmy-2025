@@ -129,9 +129,9 @@ public final class Constants {
   public static final double maxElevatorSpeed = 1.; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
-  public static final double intakeHeightFromGround = 17;
+  //public static final double intakeHeightFromGround = 17;
   public static final double intakeHeight = 10.;//36.5-intakeHeightFromGround;
-  public static final double reef1Height = 14.5-intakeHeightFromGround;
+  public static final double reef1Height = 0.;
   public static final double reef2Height = 16;
   public static final double reef3Height = 27.5;
   public static final double reef4Height = 47; //72.
@@ -254,7 +254,7 @@ public final class Constants {
   public static final double reefSideOffset = 0.1651;
   public static final double leftReefSideOffset = 0.005;
   public static final double rightReefSideOffset = 0.005;
-  public static final double reefDist = 0.4;
+  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.4};
   public static final double coralStationSideOffset = 0.54;
   public static final double coralStationDist = 0.38;
 

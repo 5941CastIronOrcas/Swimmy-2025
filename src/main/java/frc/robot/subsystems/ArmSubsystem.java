@@ -45,6 +45,9 @@ public class ArmSubsystem extends SubsystemBase {
   public static double intakeIntegral = 0.;
   public static double elevatorThrottle = 0.;
   public static double intakeThrottle = 0;
+  public static int elevatorLevel = 0;
+  private static double deltaHeight = 100000;
+  private static double[] heights = {Constants.intakeHeight, Constants.reef1Height, Constants.reef2Height, Constants.reef3Height, Constants.reef4Height};
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
 
   public ArmSubsystem() {
@@ -88,6 +91,15 @@ public class ArmSubsystem extends SubsystemBase {
     //if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
     intakeIntegral += Functions.DeltaAngleDeg(coralAngle, coralAngleTarget)*Constants.coralIMult;
     intakeIntegral = Functions.Clamp(intakeIntegral, -Constants.coralIClamp, Constants.coralIClamp);
+
+    deltaHeight = 100000.;
+    for (int i=0; i<heights.length; i++) {
+      double h = Math.abs(heights[i]-elevatorHeight);
+      if (h<deltaHeight) {
+        deltaHeight = h;
+        elevatorLevel = i;
+      }
+    }
   }
 
   @Override

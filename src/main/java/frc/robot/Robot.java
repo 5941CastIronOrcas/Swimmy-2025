@@ -172,7 +172,7 @@ public class Robot extends TimedRobot {
     Constants.brtMotor.set(1);
     Constants.braMotor.set(1);
      */
-    if(Constants.controller1.getLeftBumper()) //snaps to specific directions to climb and score amp
+    if(Constants.controller1.getLeftBumperButton()) //snaps to specific directions to climb and score amp
     {
       double closestAngle = 0.;
       double angleDist = 100000;
@@ -186,7 +186,7 @@ public class Robot extends TimedRobot {
       RSAngle = closestAngle;
     }
 
-    if (Constants.controller1.getRightBumperPressed()) { //resets the robot's yaw
+    if (Constants.controller1.getRightBumperButton()) { //resets the robot's yaw
       Constants.gyro.setYaw(180);
     }
 

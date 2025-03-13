@@ -394,7 +394,7 @@ public class DriverDisplay extends SubsystemBase {
 
     //   }
     // }
-    m_field.getObject("nearest reef").setPose(PositionEstimator.getNearest(PositionEstimator.reefPositionPose2ds));
+    m_field.getObject("nearest reef").setPose(PositionEstimator.getNearestReefAtLevel());
     m_field.getObject("nearest station").setPose(PositionEstimator.getNearest(PositionEstimator.coralStationPose2ds));
 
 
