@@ -106,8 +106,11 @@ public class Robot extends TimedRobot {
     isBlueAlliance = DriverStation.getAlliance().toString().equals("Optional[Blue]");
     //selectedAutoSequence = (m_robotContainer.getAutonomousCommand().getName()=="0"?0:(m_robotContainer.getAutonomousCommand().getName()=="1"?1:(m_robotContainer.getAutonomousCommand().getName()=="2"?2:(m_robotContainer.getAutonomousCommand().getName()=="3"?3:0))));
     selectedAutoSequence = (m_robotContainer.getAutonomousCommand().getName().equals("0")?0:
-    (m_robotContainer.getAutonomousCommand().getName().equals("1")?1:(m_robotContainer.getAutonomousCommand().getName().equals("2")?2:
-    (m_robotContainer.getAutonomousCommand().getName().equals("3")?3:0))));
+    (m_robotContainer.getAutonomousCommand().getName().equals("1")?1:
+    (m_robotContainer.getAutonomousCommand().getName().equals("2")?2:
+    (m_robotContainer.getAutonomousCommand().getName().equals("3")?3:
+    (m_robotContainer.getAutonomousCommand().getName().equals("4")?4:
+    (m_robotContainer.getAutonomousCommand().getName().equals("5")?5:0))))));
     oldTime = newTime;
     newTime = Timer.getFPGATimestamp();
     deltaTime = newTime-oldTime;
@@ -479,7 +482,7 @@ public class Robot extends TimedRobot {
         if (AutoSequences.isAutoTimeBetween(0, 7)) {
           if (PositionEstimator.cam1.camCheck()) hasSeenApriltag=true;
           if (hasSeenApriltag) {
-            ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
+            ArmSubsystem.moveArmTo(Constants.reef4Height, Constants.reef4Angle, 0, 0);
             SwerveSubsystem.DriveToNearestReef(0.2, 0.2, 0, 0);
           }
           else {
@@ -490,7 +493,12 @@ public class Robot extends TimedRobot {
           ArmSubsystem.spinCoralIntake(-0.8);
           SwerveSubsystem.DriveDriverOriented(0, 0, 0);
           ArmSubsystem.moveElevator(0);
-          ArmSubsystem.rotateCoralIntake(0);
+          ArmSubsystem.rotateCoralIntakeTo(20, 0);
+        }
+        else if (AutoSequences.isAutoTimeBetween(8, 11)) {
+          ArmSubsystem.spinCoralIntake(0);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
         }
         else {
           ArmSubsystem.spinCoralIntake(0);
@@ -498,6 +506,10 @@ public class Robot extends TimedRobot {
           ArmSubsystem.moveElevator(0);
           ArmSubsystem.rotateCoralIntake(0);
         }
+      break;
+      case 4:
+      break;
+      case 5:
       break;
 
     

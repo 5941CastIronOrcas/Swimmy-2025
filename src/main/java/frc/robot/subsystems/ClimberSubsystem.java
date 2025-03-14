@@ -34,7 +34,7 @@ public class ClimberSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     oldClimberAngle = climberAngle;
-    climberAngle = (360.*climberEncoder.get()-19.);
+    climberAngle = Functions.DeltaAngleDeg(360.*climberEncoder.get()-1.,0);
     winchAngle = Math.toDegrees(Constants.climber.getPosition().getValueAsDouble());
     climberVelocity = (climberAngle-oldClimberAngle)/Robot.DeltaTime();
     //clawAngle = Constants.climberClaw.getEncoder().getPosition();
@@ -72,7 +72,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }*/
 
   public static void pullInClimber(double speed) {
-    //speed = Functions.Clamp(speed, climberAngle<=Constants.minClimberAngle?0:-1, climberAngle>=Constants.maxClimberAngle?0:1);
+    speed = Functions.Clamp(speed, climberAngle>=Constants.maxClimberAngle?0:-1, climberAngle<=Constants.minClimberAngle?0:1);
     Constants.climber.set((Constants.climberInvert)?-speed:speed);
     //Constants.climber2.set((Constants.climber2Invert)?-speed:speed);
   }

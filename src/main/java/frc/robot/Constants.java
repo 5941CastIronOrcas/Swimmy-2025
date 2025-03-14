@@ -153,7 +153,7 @@ public final class Constants {
   public static final double maxCoralPivotSpeed = 1.0;
   //public static final double coralAngleVariation = 1.0;
   public static final double coralIntakeAngle = 0.0; //the angle in degrees the coral intake should be at to intake coral
-  public static final double reef1Angle = 0.0;
+  public static final double reef1Angle = -1.;
   public static final double reef2Angle = 65;
   public static final double reef4Angle = 70.;
   public static final double coralIntakeSpeed = 1.;
@@ -210,8 +210,8 @@ public final class Constants {
   //public static final double climberMaxSpeed = 1;
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
-  public static final double minClimberAngle = 0;
-  public static final double maxClimberAngle = 215;
+  public static final double minClimberAngle = -13;
+  public static final double maxClimberAngle = 125;
   public static final double minClawAngle = -3600.;
   public static final double maxClawAngle = 3600.;
 
@@ -252,9 +252,9 @@ public final class Constants {
   public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
                                                                           aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
   public static final double reefSideOffset = 0.1651;
-  public static final double leftReefSideOffset = 0.005;
-  public static final double rightReefSideOffset = 0.005;
-  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.45};
+  public static final double leftReefSideOffset = -0.025;
+  public static final double rightReefSideOffset = -0.025;
+  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.51};
   public static final double coralStationSideOffset = 0.54;
   public static final double coralStationDist = 0.38;
 
