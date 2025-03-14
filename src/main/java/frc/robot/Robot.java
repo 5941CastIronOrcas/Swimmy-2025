@@ -508,8 +508,68 @@ public class Robot extends TimedRobot {
         }
       break;
       case 4:
+        if (AutoSequences.isAutoTimeBetween(0, 3)) {
+          SwerveSubsystem.DriveDriverOrientedAtAngle(0, -0.2, 120, 0.2);
+        }
+        else if (AutoSequences.isAutoTimeBetween(3, 9)) {
+          if (PositionEstimator.cam1.camCheck()) hasSeenApriltag=true;
+          if (hasSeenApriltag) {
+            ArmSubsystem.moveArmTo(Constants.reef4Height, Constants.reef4Angle, 0, 0);
+            SwerveSubsystem.DriveToNearestReef(0.2, 0.2, 0, 0);
+          }
+          else {
+            SwerveSubsystem.DriveDriverOrientedAtAngle(0.1, -0.2, 120., 0.2);
+          }
+        }
+        else if (AutoSequences.isAutoTimeBetween(9, 10)) {
+          ArmSubsystem.spinCoralIntake(-0.8);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntakeTo(20, 0);
+        }
+        else if (AutoSequences.isAutoTimeBetween(10, 14)) {
+          ArmSubsystem.spinCoralIntake(0);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
+        }
+        else {
+          ArmSubsystem.spinCoralIntake(0);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntake(0);
+        }
       break;
       case 5:
+        if (AutoSequences.isAutoTimeBetween(0, 3)) {
+          SwerveSubsystem.DriveDriverOrientedAtAngle(0, -0.2, 240, 0);
+        }
+        else if (AutoSequences.isAutoTimeBetween(3, 9)) {
+          if (PositionEstimator.cam1.camCheck()) hasSeenApriltag=true;
+          if (hasSeenApriltag) {
+            ArmSubsystem.moveArmTo(Constants.reef4Height, Constants.reef4Angle, 0, 0);
+            SwerveSubsystem.DriveToNearestReef(0.2, 0.2, 0, 0);
+          }
+          else {
+            SwerveSubsystem.DriveDriverOrientedAtAngle(-0.1, -0.2, 240., 0.2);
+          }
+        }
+        else if (AutoSequences.isAutoTimeBetween(9, 10)) {
+          ArmSubsystem.spinCoralIntake(-0.8);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntakeTo(20, 0);
+        }
+        else if (AutoSequences.isAutoTimeBetween(10, 14)) {
+          ArmSubsystem.spinCoralIntake(0);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveArmTo(Constants.reef1Height, Constants.reef1Angle, 0, 0);
+        }
+        else {
+          ArmSubsystem.spinCoralIntake(0);
+          SwerveSubsystem.DriveDriverOriented(0, 0, 0);
+          ArmSubsystem.moveElevator(0);
+          ArmSubsystem.rotateCoralIntake(0);
+        }
       break;
 
     
