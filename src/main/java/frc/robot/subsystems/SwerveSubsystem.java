@@ -35,10 +35,10 @@ public class SwerveSubsystem extends SubsystemBase {
   public static double accelX = 0;
   public static double accelY = 0;
   public static double angularVelocity = 0.;
-  public static SwerveModule flModule = new SwerveModule(Constants.flaMotor,Constants.fltMotor,Constants.flEncoder,true,Constants.fltInvert,45); //assigns each swerve module
-  public static SwerveModule frModule = new SwerveModule(Constants.fraMotor,Constants.frtMotor,Constants.frEncoder,true,Constants.frtInvert,-45);
-  public static SwerveModule blModule = new SwerveModule(Constants.blaMotor,Constants.bltMotor,Constants.blEncoder,true,Constants.bltInvert,-45);
-  public static SwerveModule brModule = new SwerveModule(Constants.braMotor,Constants.brtMotor,Constants.brEncoder,true,Constants.frtInvert,45);
+  public static SwerveModule flModule = new SwerveModule(Constants.flaMotor,Constants.fltMotor,Constants.flEncoder,true,Constants.fltInvert,45,Constants.FLDriveRatio); //assigns each swerve module
+  public static SwerveModule frModule = new SwerveModule(Constants.fraMotor,Constants.frtMotor,Constants.frEncoder,true,Constants.frtInvert,-45,Constants.FRDriveRatio);
+  public static SwerveModule blModule = new SwerveModule(Constants.blaMotor,Constants.bltMotor,Constants.blEncoder,true,Constants.bltInvert,-45,Constants.BLDriveRatio);
+  public static SwerveModule brModule = new SwerveModule(Constants.braMotor,Constants.brtMotor,Constants.brEncoder,true,Constants.frtInvert,45,Constants.BRDriveRatio);
   public static boolean atTargetPosition = false;
   public static boolean atTargetAngle = false;
   public static Pose2d nearestPos = new Pose2d();
@@ -202,8 +202,9 @@ public class SwerveSubsystem extends SubsystemBase {
 
  
   public static void Drive(double x, double y, double rotate) { //this is the basis of the swerve code
-    
+
     rotate*=-1.;
+    double currentMaxRot = Constants.swerveMaxRot;
     double currentMaxAccelX = Constants.swerveMaxAccel;
     double currentMaxAccelY = Constants.swerveMaxAccel;
     //uncomment the below line to enable adaptive acceleration limiterarm
@@ -215,8 +216,13 @@ public class SwerveSubsystem extends SubsystemBase {
     ((1.-(ArmSubsystem.elevatorHeight/Constants.maxElevatorHeight))*
     (Constants.swerveMaxAccel-Constants.swerveMaxAccelExtendedY)), 0.01, 2.0);
 
+    currentMaxRot = Functions.Clamp(Constants.swerveMaxRotExtended + 
+    ((1.-(ArmSubsystem.elevatorHeight/Constants.maxElevatorHeight))*
+    (Constants.swerveMaxRot-Constants.swerveMaxRotExtended)), 0.01, 2.0);
+
     xOut += Functions.Clamp(x-xOut, -currentMaxAccelX, currentMaxAccelX); //xOut and yOut are x and y, but the acceleration is limited.
     yOut += Functions.Clamp(y-yOut, -currentMaxAccelY, currentMaxAccelY);
+    rotate = Functions.Clamp(rotate, -currentMaxRot, currentMaxRot);
     double flx =  xOut + (Constants.turnMult * rotate); //the x and y coordinates of each wheel. since the rotation affects each wheel differently, rotation is either added or subtracted from x and y.
     double fly =  yOut + (Constants.turnMult * rotate);
     double frx =  xOut + (Constants.turnMult * rotate);

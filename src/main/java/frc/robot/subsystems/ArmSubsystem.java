@@ -175,7 +175,7 @@ public Command comMoveArm(int level){
   public static void moveElevator(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     elevatorThrottle += Functions.Clamp(t-elevatorThrottle, -Constants.elevatorAccelLimit, Constants.elevatorAccelLimit);
     t = Functions.Clamp(elevatorThrottle, -Functions.Clamp(0.2*(elevatorHeight), 0, elevatorHeight<8?0.5:1), Functions.Clamp(-
-    (0.2*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
+    (0.4*(elevatorHeight-Constants.maxElevatorHeight)), 0, 1)) + (elevatorBottom?0:Constants.elevatorGravMult);
     Constants.elevator1.set((Constants.elevator1Invert)?-t:t);
     Constants.elevator2.set((Constants.elevator2Invert)?-t:t);
   }

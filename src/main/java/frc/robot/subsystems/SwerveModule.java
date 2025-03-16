@@ -13,12 +13,13 @@ public class SwerveModule {
     private SparkMax angleMotor;
     private SparkMax throttleMotor;
     private CANcoder encoder;
+    private double driveRatio = 1./8.14;
     private float aMult;
     private float tMult;
     public double anglePos;
     //public double velocity;
     public double defaultAngle;
-    public SwerveModule (SparkMax angleMotorIN, SparkMax throttleMotorIN, CANcoder encoderIN, boolean aMotorInvert, boolean tMotorInvert, double dAngle) { //constructor used for each swerve module
+    public SwerveModule (SparkMax angleMotorIN, SparkMax throttleMotorIN, CANcoder encoderIN, boolean aMotorInvert, boolean tMotorInvert, double dAngle, double driveRatioIN) { //constructor used for each swerve module
         
         angleMotor = angleMotorIN;
         throttleMotor = throttleMotorIN;
@@ -26,12 +27,13 @@ public class SwerveModule {
         aMult = ((aMotorInvert)?-1:1);
         tMult = ((tMotorInvert)?-1:1);
         defaultAngle = dAngle;
+        driveRatio=driveRatioIN;
         
     }
     public double GetVelocity() //gets the velocity that the wheel is moving at in m/s
     {
         return tMult * Functions.DeadZone(((throttleMotor.getEncoder().getVelocity() + 
-        (encoder.getVelocity().getValueAsDouble()*(27.0 / 17.0)*(1.0/3.0)*60))/60.0) * Constants.swerveDriveRatio * 
+        (encoder.getVelocity().getValueAsDouble()*(27.0 / 17.0)*(1.0/3.0)*60))/60.0) * driveRatio * 
         Constants.swerveWheelCircumference, 0.00001);
     }
     public double GetAngle() //gets the angle of the wheel
