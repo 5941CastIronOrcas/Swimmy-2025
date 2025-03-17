@@ -198,6 +198,7 @@ public Command comMoveArm(int level){
     DriverDisplay.intakeTarget.setDouble(a);
   }
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
+    t = Functions.Clamp(t, -Constants.maxIntakePivotSpeed, Constants.maxIntakePivotSpeed);
     intakeThrottle += Functions.Clamp(t-intakeThrottle, -Constants.intakeAccelLimit, Constants.intakeAccelLimit);
     t = Functions.Clamp(intakeThrottle, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
     //t = Functions.Clamp(t, (coralAngle < (elevatorHeight/Constants.maxElevatorHeight)
@@ -234,7 +235,7 @@ public Command comMoveArm(int level){
 
   public static void spinAlgaeIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
-    Constants.algaeIntake.set(Functions.Clamp(input, -0.5,  1));
+    Constants.algaeIntake.set(Functions.Clamp(input, -1,  1));
   }
   public static void intakeAlgae(double input) //spins the intake motor in an attempt to pick up a Coral, stops once a Coral has been collected.
   {

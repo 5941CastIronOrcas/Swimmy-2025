@@ -98,6 +98,7 @@ public final class Constants {
   public static final double swerveAngledDriveToDeadZone = 0.3;
   public static final double swerveAngledDriveToRadius = 2.;
   public static final double[] snapAngles = new double[]{0.,60.,120.,180.,240.,300.,360.,234.,126.};
+  public static final double cageDist = 0.390779;
   //Swerve Collect Ring Constants
   public static final double swerveCollectCoralPMult = 0.5;
 
@@ -135,13 +136,13 @@ public final class Constants {
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
   //public static final double intakeHeightFromGround = 17;
-  public static final double intakeHeight = 10.;//36.5-intakeHeightFromGround;
+  public static final double intakeHeight = 11.;//36.5-intakeHeightFromGround;
   public static final double reef1Height = 0.;
-  public static final double reef2Height = 15;
-  public static final double reef3Height = 27;
+  public static final double reef2Height = 16;
+  public static final double reef3Height = 28;
   public static final double reef4Height = 47; //72.
-  public static final double algaeBottomHeight = 11;
-  public static final double algaeTopHeight = 23;
+  public static final double algaeBottomHeight = 10.5;
+  public static final double algaeTopHeight = 22.5;
   public static final double maxElevatorHeight = 47;
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
   public static final double elevatorAccelLimit = 0.05;
@@ -164,10 +165,12 @@ public final class Constants {
   public static final double reef2Angle = 65;
   public static final double reef4Angle = 70.;
   public static final double algaeAngle = 45.;
+  public static final double bargeAngle = -8.;
   public static final double coralIntakeSpeed = 1.;
   public static final double reef1Speed = 0.2;
-  public static final double minCoralAngle = -5;
+  public static final double minCoralAngle = -8;
   public static final double maxCoralAngle = 95;
+  public static final double maxIntakePivotSpeed = .5;
   public static final double intakeMass = 1.81;
   public static final double intakeCenterRadius = 0.157445929589;
   public static final double intakeCenterAngle = 20.3440038775;
@@ -179,7 +182,7 @@ public final class Constants {
   public static final double gForceTimesRadius = intakeMass*gravity*intakeCenterRadius;
   public static final double sForceTimesRadius = 14.6346 * 2. * springRadius;
   public static final double compensationMinDeltaAngle = 0.1;
-  public static final double coralMaxAdaptiveAngle = 45;
+  public static final double coralMaxAdaptiveAngle = 85;
   public static final double coralMinAdaptiveAngle = 25;
   //Algae Intake Control Constants
   public static final double algaePMult = 0.005;
@@ -187,11 +190,11 @@ public final class Constants {
   public static final double algaeGravMult = 0.;
   public static final double maxAlgaePivotSpeed = 1.;
   public static final double algaeAngleVariation = 1.;
-  public static final double algaeIntakeAngle = 0.;
+  public static final double algaeIntakeAngle = 83.;
   public static final double processorAngle = 0.;
   public static final double algaeIntakeSpeed = 1.;
-  public static final double minAlgaeAngle = 0.;
-  public static final double maxAlgaeAngle = 30.;
+  //public static final double minAlgaeAngle = 0.;
+  //public static final double maxAlgaeAngle = 30.;
 
 
   //CLIMBER STUFF
