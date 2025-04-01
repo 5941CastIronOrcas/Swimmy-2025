@@ -18,11 +18,13 @@ import edu.wpi.first.cscore.HttpCamera.HttpCameraKind;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.net.WebServer;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
     //for (int i = 0; i < Constants.redCoralsPos.length; i++) Constants.allCoralsPos[i] = Robot.isRedAlliance ? Constants.redCoralsPos[i] : Constants.blueCoralsPos[i]; //gets the values in either redCoralsPos or blueCoralsPos depending on the current team, and adds them to the start of the allCoralsPos array.
     //for (int i = 0; i < Constants.centerCoralsPos.length; i++) Constants.allCoralsPos[i + Constants.redCoralsPos.length] = Constants.centerCoralsPos[i]; //adds the center corals to the end of the allCoralsPos array.
     PositionEstimator.calculateObjectiveLocations(); 
+    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
 
   }
 
@@ -157,7 +160,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() { 
-    double speed = 1-(0.75*Constants.controller1.getLeftTriggerAxis());
+    double speed = 0.25-(0.75*Constants.controller1.getLeftTriggerAxis());
     double LSX = Functions.Exponential(Functions.DeadZone(Constants.controller1.getLeftX(), Constants.controllerDeadZone)) * speed; //gets each controller's inputs
     double LSY = -Functions.Exponential(Functions.DeadZone(Constants.controller1.getLeftY(), Constants.controllerDeadZone)) * speed;
     double RSX = Functions.Exponential(Functions.DeadZone(Constants.controller1.getRightX(), Constants.controllerDeadZone)) * speed;
