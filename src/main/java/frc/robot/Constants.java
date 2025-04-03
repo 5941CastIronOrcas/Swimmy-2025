@@ -67,13 +67,18 @@ public final class Constants {
   public static final CANcoder blEncoder = new CANcoder(42);
   public static final CANcoder brEncoder = new CANcoder(43);
   //Swerve Module Constants
-  public static final double swerveDriveRatio = 1.00 / 8.14; //L1=1/8.14  L2=1/6.75  L3=1/6.12
+  public static final double FLDriveRatio = 1.00 / 8.14; //L1=1/8.14  L2=1/6.75  L3=1/6.12
+  public static final double FRDriveRatio = 1.00 / 8.14; //L1=1/8.14
+  public static final double BLDriveRatio = 1.00 / 8.14; //L1=1/8.14  L2=1/6.75  L3=1/6.12
+  public static final double BRDriveRatio = 1.00 / 8.14; //L1=1/8.14
   public static final double swerveWheelCircumference = 0.096774 * Math.PI; // in m
   public static final double modulePMult = 0.01;
   public static final double maxThrottleChange = 2.0; //the maximum amount the wheel throttle of each module is allowed to change per frame (max 2.0)
   public static final double swerveMaxAccel = 2.0; //the max amount swerve is allowed to accelerate, measured in percent per frame (max 2.0)
-  public static final double swerveMaxAccelExtendedX = 0.001; //the max amount swerve is allowed to accelerate when the arm is fully extended
-  public static final double swerveMaxAccelExtendedY = 0.01;
+  public static final double swerveMaxAccelExtendedX = 0.0005; //the max amount swerve is allowed to accelerate when the arm is fully extended
+  public static final double swerveMaxAccelExtendedY = 0.005;
+  public static final double swerveMaxRot = 1;
+  public static final double swerveMaxRotExtended = 0.15;
   //Swerve Drive Turning Constants
   public static final double turnMult = 1.0; //the max speed Swerve is EVER allowed to turn at
   public static final double swerveAutoTurnPMult = 0.007;
@@ -93,6 +98,7 @@ public final class Constants {
   public static final double swerveAngledDriveToDeadZone = 0.3;
   public static final double swerveAngledDriveToRadius = 2.;
   public static final double[] snapAngles = new double[]{0.,60.,120.,180.,240.,300.,360.,234.,126.};
+  public static final double cageDist = 0.390779;
   //Swerve Collect Ring Constants
   public static final double swerveCollectCoralPMult = 0.5;
 
@@ -123,18 +129,20 @@ public final class Constants {
   //public static final DigitalInput[] coralDetectionSwitches = new DigitalInput[]{new DigitalInput(0)};
   //Elevator Control Constants
   public static final double elevatorAngleOffsetThreshold = 330;
-  public static final double elevatorPMult = 0.075;
+  public static final double elevatorPMult = 0.1;
   public static final double elevatorDMult = 0.0;
   public static final double elevatorGravMult = 0.02; //how much the elevator PID compensates for gravity
   public static final double maxElevatorSpeed = 1.; //Max speed the elevator PID is allowed to output to the elevator motor
   public static final double elevatorVariation = 0.2; //how close the elevator has to be to the target height in inches to allow intake/deposit
   public static final double angleToHeightRatio = 42.75/5085.;
   //public static final double intakeHeightFromGround = 17;
-  public static final double intakeHeight = 10.;//36.5-intakeHeightFromGround;
+  public static final double intakeHeight = 11.;//36.5-intakeHeightFromGround;
   public static final double reef1Height = 0.;
   public static final double reef2Height = 16;
-  public static final double reef3Height = 27.5;
+  public static final double reef3Height = 28;
   public static final double reef4Height = 47; //72.
+  public static final double algaeBottomHeight = 10.5;
+  public static final double algaeTopHeight = 22.5;
   public static final double maxElevatorHeight = 47;
   public static final double maxElevatorAngle = ArmSubsystem.heightToAngle(maxElevatorHeight);
   public static final double elevatorAccelLimit = 0.05;
@@ -156,10 +164,13 @@ public final class Constants {
   public static final double reef1Angle = -1.;
   public static final double reef2Angle = 65;
   public static final double reef4Angle = 70.;
+  public static final double algaeAngle = 45.;
+  public static final double bargeAngle = -8.;
   public static final double coralIntakeSpeed = 1.;
   public static final double reef1Speed = 0.2;
-  public static final double minCoralAngle = -5;
+  public static final double minCoralAngle = -8;
   public static final double maxCoralAngle = 95;
+  public static final double maxIntakePivotSpeed = .5;
   public static final double intakeMass = 1.81;
   public static final double intakeCenterRadius = 0.157445929589;
   public static final double intakeCenterAngle = 20.3440038775;
@@ -171,7 +182,7 @@ public final class Constants {
   public static final double gForceTimesRadius = intakeMass*gravity*intakeCenterRadius;
   public static final double sForceTimesRadius = 14.6346 * 2. * springRadius;
   public static final double compensationMinDeltaAngle = 0.1;
-  public static final double coralMaxAdaptiveAngle = 45;
+  public static final double coralMaxAdaptiveAngle = 85;
   public static final double coralMinAdaptiveAngle = 25;
   //Algae Intake Control Constants
   public static final double algaePMult = 0.005;
@@ -179,11 +190,11 @@ public final class Constants {
   public static final double algaeGravMult = 0.;
   public static final double maxAlgaePivotSpeed = 1.;
   public static final double algaeAngleVariation = 1.;
-  public static final double algaeIntakeAngle = 0.;
+  public static final double algaeIntakeAngle = 83.;
   public static final double processorAngle = 0.;
   public static final double algaeIntakeSpeed = 1.;
-  public static final double minAlgaeAngle = 0.;
-  public static final double maxAlgaeAngle = 30.;
+  //public static final double minAlgaeAngle = 0.;
+  //public static final double maxAlgaeAngle = 30.;
 
 
   //CLIMBER STUFF
@@ -199,10 +210,10 @@ public final class Constants {
   public static DutyCycleEncoder climberEncoder = new DutyCycleEncoder(5);
   //public static DigitalInput tesDigitalInputHUH = new DigitalInput(7);
   //Climber Control Constants
-  public static final double climberPivotPMult = 0.01;
+  public static final double climberPivotPMult = 0.1;
   public static final double climberPivotDMult = 0.01;
   public static final double climberPivotGravMult = 0.1;
-  public static final double maxClimberPivotSpeed = 0.;
+  public static final double maxClimberPivotSpeed = 1;
   public static final double climberMaxHitSpeed = 0.5;
   public static final double climberSmoothingStart = 20;
   public static final double climberSmoothingEnd = 10;
@@ -210,8 +221,9 @@ public final class Constants {
   //public static final double climberMaxSpeed = 1;
   public static final double climberMaxHeight = 95;
   public static final double climberGoToPMult = 0.2;
-  public static final double minClimberAngle = -13;
-  public static final double maxClimberAngle = 125;
+  public static final double minClimberAngle = 10;//-13;
+  public static final double maxClimberAngle = 150;
+  public static final double climbAngle = 96;
   public static final double minClawAngle = -3600.;
   public static final double maxClawAngle = 3600.;
 
@@ -252,9 +264,9 @@ public final class Constants {
   public static final Pose2d[] redCoralStationsApriltags = new Pose2d[] {aprilTagFieldLayout.getTagPose(1).get().toPose2d(),
                                                                           aprilTagFieldLayout.getTagPose(2).get().toPose2d()};
   public static final double reefSideOffset = 0.1651;
-  public static final double leftReefSideOffset = -0.025;
-  public static final double rightReefSideOffset = -0.025;
-  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.51};
+  public static final double leftReefSideOffset = 0.005;//-0.025;
+  public static final double rightReefSideOffset = 0.005;//-0.025;
+  public static final double[] reefDist = new double[]{0.4,0.4,0.4,0.545};
   public static final double coralStationSideOffset = 0.54;
   public static final double coralStationDist = 0.38;
 

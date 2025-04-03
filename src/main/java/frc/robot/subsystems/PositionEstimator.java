@@ -35,6 +35,7 @@ public class PositionEstimator extends SubsystemBase {
   public static Pose2d robotPosition = new Pose2d();
   public static Pose2d previousPosition = new Pose2d();
   public static Vector2D velocity = new Vector2D(0, 0);
+  public static boolean useCameras = true;
   
 
   public static ArrayList<CameraConf> cameras = new ArrayList<CameraConf>();
@@ -246,13 +247,15 @@ public PositionEstimator(){
        - (Math.sin(Math.toRadians(SwerveSubsystem.frModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.frModule.GetVelocity())
        - (Math.sin(Math.toRadians(SwerveSubsystem.flModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.flModule.GetVelocity())
        - (Math.sin(Math.toRadians(SwerveSubsystem.brModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.brModule.GetVelocity())
-       - (Math.sin(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
+       - (Math.sin(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity())
+       )
         / 4.0);
     velocity.y = ((
        - (Math.cos(Math.toRadians(SwerveSubsystem.frModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.frModule.GetVelocity())
        - (Math.cos(Math.toRadians(SwerveSubsystem.flModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.flModule.GetVelocity())
        - (Math.cos(Math.toRadians(SwerveSubsystem.brModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.brModule.GetVelocity())
-       - (Math.cos(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity()))
+       - (Math.cos(Math.toRadians(SwerveSubsystem.blModule.GetAngle() + robotPosition.getRotation().getDegrees())) * SwerveSubsystem.blModule.GetVelocity())
+       )
         / 4.0);
 
     /*for (int i = deltaBuffer.length-1; i > 0; i--) {
@@ -266,7 +269,7 @@ public PositionEstimator(){
     double camsactive = 0;
     double combx = 0;
     double comby = 0;
-
+if (useCameras){
     for(int i = 0; i < cameras.size(); i++){
               CameraConf currentcam = cameras.get(i);
               currentcam.refresh();
@@ -281,6 +284,7 @@ public PositionEstimator(){
             }
 
         }
+      }
 if(camsactive != 0){
    robotPosition = new Pose2d(combx/camsactive, comby/camsactive, robotPosition.getRotation());
 }else{
