@@ -40,7 +40,6 @@ public class DriverDisplay extends SubsystemBase {
 
   // Auto Sequences selector
   public static GenericEntry coralIgnorancePreset = AutoStuff.add("coralPatternPreset", "N/A").getEntry();
-  //public static GenericEntry coralIgnoranceHEX = AutoStuff.add("coralPatternHEX", "N/A").getEntry();
   public static GenericEntry coralIgnoranceCheck = AutoStuff.add("Selected Coral Ignorance [0 - ignore, 1 - include]", "N/A").getEntry();
 
   public static GenericEntry coralsIgnorance = AutoStuff.add("coralsToggleInput", "12345678").getEntry();
@@ -80,10 +79,8 @@ public class DriverDisplay extends SubsystemBase {
 
   //Climber
   public static ShuffleboardTab climber = Shuffleboard.getTab("Climber");
-  //public static GenericEntry climberR = climber.add("ClimberR Input", 0).getEntry();
   public static GenericEntry climberInput = climber.add("Climber Input", 0).getEntry();
   public static GenericEntry climberAngle = climber.add("Winch Motor Angle", 0).getEntry();
-  //public static GenericEntry rClimberAngle = climber.add("RPosition", 0).getEntry();
   public static GenericEntry climberPivotAngle = climber.add("Climber Pivot Angle", 0).getEntry();
   public static GenericEntry climberTarget = climber.add("Climber Target Angle", 0).getEntry();
   public static GenericEntry robotRoll = climber.add("RobotRoll", 0).getEntry();
@@ -128,9 +125,7 @@ public class DriverDisplay extends SubsystemBase {
   //position estimator
   public static ShuffleboardTab position = Shuffleboard.getTab("Position Estimator");
   public static GenericEntry isPresent1 = position.add("Is Present 1", false).getEntry();
-  public static GenericEntry isPresent2 = position.add("Is Present 2", false).getEntry(); 
- // public static GenericEntry isPresent3 = position.add("Is Present 3", false).getEntry();   
- // public static GenericEntry isPresent4 = position.add("Is Present 4", false).getEntry();
+  public static GenericEntry isPresent2 = position.add("Is Present 2", false).getEntry();
     public static GenericEntry ambiguity1 = position.add("Ambiguity 1", 0).getEntry();
 
     public static GenericEntry targetIds1 = position.add("Target Ids 1", new double[]{-2}).getEntry();
@@ -155,8 +150,6 @@ public class DriverDisplay extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //if(ArmSubsystem.hasCoral) ControllerRumble.RumbleBothControllersBothSides(0.5);
-    //else ControllerRumble.RumbleBothControllersBothSides(0);
 
     AutoSuccesfullShots.setInteger((int)AutoSequences.succesfulShots);
     switch ((int)DriverDisplay.gyroOrientation.getInteger(0)) {
@@ -253,8 +246,6 @@ public class DriverDisplay extends SubsystemBase {
     if (coralIgnoranceInpt.length() >= 8) coralIgnoranceInpt = coralIgnoranceInpt.substring(0, 8);
     if (coralIgnoranceInpt.length() < 1) coralIgnoranceInpt = "12345678";
     coralIgnoranceInpt = Functions.RemoveMultiples(coralIgnoranceInpt);
-    //for (int i = 0; i < 8; i++) coralIgnoranceInpt = coralIgnoranceInpt.substring(0, i) + (coralIgnoranceInpt.charAt(i) == '0' ? '0' : '1') + coralIgnoranceInpt.substring(i, coralIgnoranceInpt.length() - 1);
-      //for (int i = 0; i < coralIgnoranceInpt.length(); i++) AutoSequences.coralsIncluded[i] = coralIgnoranceInpt.charAt(i) == '1' ? true : false;
     AutoSequences.coralList = new int[coralIgnoranceInpt.length()];
 
     for (int i = 0; i < coralIgnoranceInpt.length(); i++) {
@@ -292,9 +283,7 @@ public class DriverDisplay extends SubsystemBase {
 
     //Climber
     DriverDisplay.climberInput.setDouble(Constants.climber.get());
-    //DriverDisplay.climberR.setDouble(Constants.climber2.get());
     DriverDisplay.climberAngle.setDouble(ClimberSubsystem.winchAngle);
-    //DriverDisplay.rClimberAngle.setDouble(ClimberSubsystem.rClimberAngle);
     DriverDisplay.climberPivotAngle.setDouble(ClimberSubsystem.climberAngle);
     DriverDisplay.robotRoll.setDouble(Constants.gyro.getRoll().getValueAsDouble());
     DriverDisplay.robotPitch.setDouble(Constants.gyro.getPitch().getValueAsDouble());
@@ -337,8 +326,6 @@ public class DriverDisplay extends SubsystemBase {
     //position estimator
     DriverDisplay.isPresent1.setBoolean(PositionEstimator.cameras.get(0).camCheck());
     DriverDisplay.isPresent2.setBoolean(PositionEstimator.cameras.get(1).camCheck());
-    //DriverDisplay.isPresent3.setBoolean(PositionEstimator.cameras.get(2).camCheck());
-    //DriverDisplay.isPresent4.setBoolean(PositionEstimator.cameras.get(3).camCheck());
     DriverDisplay.ambiguity1.setDouble(PositionEstimator.cameras.get(0).ambiguity);
     DriverDisplay.ambiguity2.setDouble(PositionEstimator.cameras.get(1).ambiguity);
     DriverDisplay.targetIds1.setDoubleArray(PositionEstimator.cameras.get(0).getIds());
@@ -366,18 +353,6 @@ public class DriverDisplay extends SubsystemBase {
     }
     m_field.getObject("DriveTo Target").setPose(new Pose2d(SwerveSubsystem.targetPos.x, SwerveSubsystem.targetPos.y, new Rotation2d(0)));
 
-    // m_field.getObject("Robot1").setPose(new Pose2d(positionPose2d.getX()+1., positionPose2d.getY(), positionPose2d.getRotation()));
-    // m_field.getObject("Robot2").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()+1., positionPose2d.getRotation()));
-    // m_field.getObject("Robot3").setPose(new Pose2d(positionPose2d.getX()-1., positionPose2d.getY(), positionPose2d.getRotation()));
-    // m_field.getObject("Robot4").setPose(new Pose2d(positionPose2d.getX(), positionPose2d.getY()-1., positionPose2d.getRotation()));
-    // for (int i = 0; i < 5; i++) {
-    //   for (int j = 0; j < 6; j++) {
-    //     m_field.getObject("Robot"+i+j).setPose(new Pose2d(positionPose2d.getX()+(i*Math.cos(positionPose2d.getRotation().getRadians())+()), positionPose2d.getY(), positionPose2d.getRotation()));
-    //   }
-    // }
-
-    //m_field.setRobotPose(positionPose2d);
-    //PositionEstimator.calculateObjectiveLocations();
     // for (int i = 0; i < PositionEstimator.reefPositionPose2ds.length; i++) {
     //   try {
     //   m_field.getObject("Reef"+i).setPose(PositionEstimator.reefPositionPose2ds[i]);
@@ -396,11 +371,5 @@ public class DriverDisplay extends SubsystemBase {
     // }
     m_field.getObject("nearest reef").setPose(PositionEstimator.getNearestReefAtLevel());
     m_field.getObject("nearest station").setPose(PositionEstimator.getNearest(PositionEstimator.coralStationPose2ds));
-
-
-
-
-
-
   }
 }

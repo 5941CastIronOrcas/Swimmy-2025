@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-//import javax.smartcardio.CommandAPDU;
-
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
@@ -51,9 +49,7 @@ public class ArmSubsystem extends SubsystemBase {
   int noCoralFrames = 0; //the number of frames that have passed since the last time the ultrasonic sensor saw a Coral
 
   public ArmSubsystem() {
-    //coralEncoder.setPosition(0);
-    //Constants.coralIntakeConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
-    //Constants.coralIntakeConfig.closedLoop.maxMotion.;
+    
   }
 
   @Override
@@ -69,26 +65,17 @@ public class ArmSubsystem extends SubsystemBase {
       elevator2Encoder.setPosition(Constants.maxElevatorAngle);
     }
     oldCoralAngle = coralAngle;
-    coralAngle = (coralEncoder.getPosition()*360)-242;//-(Math.toDegrees(coralEncoder.getPosition()))*2.09; //sets the coralAngle appropriately
+    coralAngle = (coralEncoder.getPosition()*360)-242; //sets the coralAngle appropriately
     oldElevatorAngle = newElevatorAngle;
     if (oldElevatorAngle-newElevatorAngle>Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset += 360;
     if (oldElevatorAngle-newElevatorAngle<-Constants.elevatorAngleOffsetThreshold) elevatorAngleOffset -= 360;
     newElevatorAngle = Math.toDegrees(-elevator2Encoder.getPosition()) + elevatorAngleOffset;
     elevatorHeight = angleToHeight(newElevatorAngle);
     dist = PositionEstimator.distToSpeaker();
-    //coralCompensation = getCompensation();
-   // inRange = dist < Constants.maxShootingRange; //checks if robot is in range of the speaker
     lineBreak = Constants.linebreakSensor.get();
 
-    //recalledValue = Arduino.getCallArduino((byte) 0x2e); //????????
-    if(!lineBreak) //if linebreak can see a coral
-    {
-      hasCoral = true; //immediately assume the coral is real
-      //noCoralFrames = 0; //set the number of frames since a coral was seen to 0
-    }
-    else hasCoral=false;
-    //else noCoralFrames++; //if linebreak can't see a coral, increase noCoralFrames
-    //if(noCoralFrames>5) hasCoral = false; //if it has been 40 frames since linebreak saw a coral, then assume the robot is not holding a coral
+    hasCoral = !lineBreak;
+    
     intakeIntegral += Functions.DeltaAngleDeg(coralAngle, coralAngleTarget)*Constants.coralIMult;
     intakeIntegral = Functions.Clamp(intakeIntegral, -Constants.coralIClamp, Constants.coralIClamp);
 
@@ -200,10 +187,7 @@ public Command comMoveArm(int level){
   public static void rotateCoralIntake(double t) { //moves the arm with a certain amount of power, ranging from 1 to -1. the funky stuff in the first line just limits the arm angle.
     t = Functions.Clamp(t, -Constants.maxIntakePivotSpeed, Constants.maxIntakePivotSpeed);
     intakeThrottle += Functions.Clamp(t-intakeThrottle, -Constants.intakeAccelLimit, Constants.intakeAccelLimit);
-    t = Functions.Clamp(intakeThrottle, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));//+getCompensation();
-    //t = Functions.Clamp(t, (coralAngle < (elevatorHeight/Constants.maxElevatorHeight)
-   // *Constants.coralMinAdaptiveAngle)?0.2:-1, (coralAngle > ((Constants.maxElevatorHeight
-   // -elevatorHeight)/Constants.maxElevatorHeight)*Constants.coralMaxAdaptiveAngle)?-0.2:1);
+    t = Functions.Clamp(intakeThrottle, -Functions.Clamp(0.2*(coralAngle-(Constants.minCoralAngle)), 0, 1), Functions.Clamp(-(0.2*(coralAngle-Constants.maxCoralAngle)), 0, 1));
     t = Functions.Clamp(t - (hasCoral?Constants.withCoralGravMult:Constants.coralGravMult)*
     Math.sin(Math.toRadians(coralAngle-(hasCoral?Constants.coralGravOffset:Constants.withCoralGravOffset))), 
     -Constants.maxCoralPivotSpeed, Constants.maxCoralPivotSpeed);
@@ -212,9 +196,6 @@ public Command comMoveArm(int level){
 
   public static void moveArmTo(double h, double a, double o1, double o2) {
     moveElevatorTo(h, o2);
-    //if (Math.abs(h-elevatorHeight)<3.) rotateCoralIntakeTo(a,o);
-    //else rotateCoralIntakeTo(Functions.Clamp(a, Constants.coralMinAdaptiveAngle, Constants.coralMaxAdaptiveAngle),o); //rotateCoralIntakeTo(45.,o);
-    
     rotateCoralIntakeTo(Functions.Clamp(a, Math.abs(h-elevatorHeight)<7.?Constants.minCoralAngle:Constants.coralMinAdaptiveAngle, elevatorHeight<10?Constants.coralMaxAdaptiveAngle:80), o1);
 
   }
@@ -228,10 +209,6 @@ public Command comMoveArm(int level){
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
     spinCoralIntake(-input<0.?((hasCoral)?0.05:input):input);
   }
-  // public static void moveToIntakeCoral() { //moves the arm to the intake position, and tries to pick up a Coral
-  //   moveElevatorTo(Constants.intakeHeight);
-  //   intakeCoral(0.75);
-  // }
 
   public static void spinAlgaeIntake(double input) //spins the intake at the inputted speed (-1 to 1), applying safety limits as needed.
   {
@@ -242,11 +219,6 @@ public Command comMoveArm(int level){
     Constants.coralIntakeConfig.idleMode(IdleMode.kBrake);
     spinAlgaeIntake(input<0.?((hasAlgae)?0.05:input):input);
   }
-  // public static void moveToIntakeAlgae() { //moves the arm to the intake position, and tries to pick up a Coral
-  //   moveElevatorTo(Constants.reef1Height);
-  //   intakeAlgae(0.75);
-  // }
-
 
   public static double angleToHeight (double angle) {
     return angle*Constants.angleToHeightRatio;
@@ -256,19 +228,5 @@ public Command comMoveArm(int level){
     return height/Constants.angleToHeightRatio;
   }
 
-  /*public static double getCompensation() {
-    if (Math.abs(coralAngle-oldCoralAngle)>Constants.compensationMinDeltaAngle) return coralCompensation;
-    double centerRadius = Constants.intakeCenterRadius;
-    double centerAngle = Math.toRadians(coralAngle+Constants.intakeCenterAngle);
-    double springRadius = Constants.springRadius;
-    double springAngle = Math.toRadians(coralAngle-Constants.springAngle);
-    Vector2D springPos = new Vector2D(springRadius*Math.cos(springAngle), springRadius*Math.sin(springAngle));
-    double totalSpringAngle = springAngle + Constants.springEndAngle;
-    double springDist = Functions.Pythagorean(springPos.x+Constants.springEndPos.x, springPos.y-Constants.springEndPos.y);
-    double angleToSpring = Math.asin((springDist*Math.sin(totalSpringAngle))/springRadius);
-    double netTorque = (Constants.gForceTimesRadius*Math.sin(centerAngle))-(Constants.sForceTimesRadius*Math.sin(angleToSpring));
-    coralCompensation = netTorque/2.6;
-    return coralCompensation;
-  }*/
 
 }
