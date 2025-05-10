@@ -24,8 +24,8 @@ public class SwerveModule {
         angleMotor = angleMotorIN;
         throttleMotor = throttleMotorIN;
         encoder = encoderIN;
-        aMult = ((aMotorInvert)?-1:1);
-        tMult = ((tMotorInvert)?-1:1);
+        aMult = Constants.aMult*((aMotorInvert)?-1:1);
+        tMult = Constants.tMult*((tMotorInvert)?-1:1);
         defaultAngle = dAngle;
         driveRatio=driveRatioIN;
         

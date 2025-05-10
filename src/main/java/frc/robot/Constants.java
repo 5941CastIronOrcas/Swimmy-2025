@@ -79,6 +79,8 @@ public final class Constants {
   public static final double swerveMaxAccelExtendedY = 0.005;
   public static final double swerveMaxRot = 1;
   public static final double swerveMaxRotExtended = 0.15;
+  public static final float tMult = .4f; //throttle multiplier for swerve throttle motors
+  public static final float aMult = 1; //angle multiplier for swerve angle motors
   //Swerve Drive Turning Constants
   public static final double turnMult = 1.0; //the max speed Swerve is EVER allowed to turn at
   public static final double swerveAutoTurnPMult = 0.007;
