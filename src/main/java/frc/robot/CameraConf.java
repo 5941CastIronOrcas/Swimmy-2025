@@ -48,7 +48,7 @@ public class CameraConf {
         cam = new PhotonCamera(camName);
         robotToCam = new Transform3d(new Translation3d(x, y, z), new Rotation3d(roll, pitch, yaw));
         // x+ = forward, y+ = left, z+ = up. reference https://docs.google.com/document/d/18HxdTfdSlbWWq5aoK3luFQ8dL1g96O6ZJo3THPoD0w0/edit?usp=sharing
-        field = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+        field = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
         photonPoseEstimator = new PhotonPoseEstimator(field, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, robotToCam);
         photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
         result = new PhotonPipelineResult();
